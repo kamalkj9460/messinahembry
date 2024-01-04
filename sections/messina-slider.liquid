@@ -1,16 +1,18 @@
 <div class="messina-column" style="padding-top:{{ section.settings.space_top }};padding-bottom:{{ section.settings.space_bottom }};background-color:{{ section.settings.background_color }}">
    <div class="messina-row-container">
         {% for block in section.blocks %}
+         
             <div class="messina-item" id="messina-{% increment count %}">
-                <div class="messina-content-overlay"></div>
                 <a href="{{ block.settings.link_url }}">
+                <div class="messina-content-overlay"></div>
                   <div class="messina-item-imgsec" style="background-image:url(https:{{ block.settings.image | img_url: '700x' }})">
                     <div class="messina-content">
                     <h3>{{ block.settings.heading }}</h3>    
                     </div>
                   </div>
-                </a>
+                          </a>
             </div>
+     
         {% endfor %}
    </div>
 </div>
@@ -65,7 +67,7 @@
           "label": "Background colour",
           "default": "#FFF"
         },
-        {
+          {
           "id": "space_top",
           "type": "text",
           "label": "Margin top",
@@ -200,7 +202,7 @@ div#messina-0, div#messina-1, div#messina-2 {
 }
 </style>
 
-<script>
+<script type="lazyload_int">
   $('.messina-row-container').slick({
     infinite: true,
     speed: 500,

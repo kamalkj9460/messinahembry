@@ -33,7 +33,7 @@
                 width="{{ image_size_parts.first }}"
                 height="{{ image_size_parts.last }}"
                 class="img-fluid lazyload"
-                src="{{ 'img_lazysrc.png' | asset_url }}"
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
                 data-src="{{ block.settings.image | img_url: image_size, crop: 'center', format: 'pjpg' }}"
                 alt="{{ block.settings.heading }}"
               >

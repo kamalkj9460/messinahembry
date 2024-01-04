@@ -1,36 +1,44 @@
+
 <div class="slideshow-row section-id-{{ section.id }}" data-section-type="slideshow">
+ 
   {% unless settings.use_fullwidth_layout %}<div class="container uncontain-desktop-down">{% endunless %}
   <div class="slideshow auto-play scaled-text-base">
     {% for block in section.blocks %}
+    
       <div class="slide slide-{{ forloop.index }}" {{ block.shopify_attributes }}>
+      
         {% if block.settings.image == blank %}
           <div class="placeholder-image placeholder--banner {% if block.settings.heading != blank or block.settings.text != blank %}dark{% endif %}">
             {% capture current %}{% cycle 1, 2 %}{% endcapture %}
             {{ 'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
           </div>
         {% elsif block.settings.mobile_image == blank %}
-          {% include 'responsive-image', image: block.settings.image, manual_image_load: true, no_max_width: true %}
+          {% render 'responsive-image', image: block.settings.image, manual_image_load: true, no_max_width: true %}
         {% else %}
+           <a href="{{ routes.root_url }}">
           <div class="desktop-only">
-            {% include 'responsive-image', image: block.settings.image, manual_image_load: true, no_max_width: true %}
+            {% render 'responsive-image', image: block.settings.image, manual_image_load: true, no_max_width: true %}
           </div>
+           </a>
           <div class="mobile-only">
-            {% include 'responsive-image',
+            {% render 'responsive-image',
               image: block.settings.mobile_image,
               manual_image_load: true,
               no_max_width: true
             %}
           </div>
         {% endif %}
-
+       
         {% if block.settings.heading != blank or block.settings.text != blank or block.settings.button_text != blank %}
-          <div class="overlay-text overlay-{{ block.settings.position }} {% if block.settings.mobile_image != blank %}overlay-text--no-mobile-stack{% endif %}">
-            <div class="inner">
+     
+        <div class="overlay-text overlay-{{ block.settings.position }} {% if block.settings.mobile_image != blank %}overlay-text--no-mobile-stack{% endif %}">
+              
+          <div class="inner">
               <div class="text">
                 <div class="scaled-text new_one">
                   <div class="scaled-heading">
-                    <h1 style="color:{{ block.settings.heading_color }}">{{ block.settings.heading_new }}</h1>
-                    <h3 style="color:{{ block.settings.sub_color }}">{{ block.settings['sub-heading'] }}</h3>
+                    <h2 style="color:{{ block.settings.heading_color }}">{{ block.settings.heading_new }}</h2>
+                    <h1 style="color:{{ block.settings.sub_color }}">{{ block.settings['sub-heading'] }}</h1>
                   </div>
                   {% if block.settings.button_link != blank %}
                     <div class="scale-button">
@@ -53,14 +61,22 @@
                 </div>
               </div>
             </div>
+       
           </div>
+
+             
         {% endif %}
+           
       </div>
+  
+
     {% endfor %}
   </div>
   {% unless settings.use_fullwidth_layout %}{% endunless %}
  
 </div>
+
+
 {% schema %}
 {
   "name": "New Slideshow",
@@ -274,7 +290,7 @@
     height: 90%;
 }
 #shopify-section-{{ section.id }} a.btn.btn--cta:hover {
-    background: #367bbb !important;
-   color: #fff !important;
+    background: #f6de62 !important;
+   color: #000 !important;
 }
   </style>

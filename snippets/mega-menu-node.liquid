@@ -48,7 +48,7 @@
 			<div class="node-image d-none d-lg-block">
 			{%- endif -%}
 				<div class="node-image-inner" style="background-image: url({{ image | img_url: image_size }})">
-					<img class="lazyload" data-src="{{ image | img_url: image_size }}" src="{{ 'img_lazysrc.png' | asset_url }}" alt="{{ anchor }}">
+					<img class="lazyload" data-src="{{ image | img_url: image_size }}" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" alt="{{ anchor }}">
 					{%- if url != blank -%}
 					<a class="stretched-link" href="{{ url }}"></a>
 					{%- endif -%}

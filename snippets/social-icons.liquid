@@ -1,9 +1,7 @@
 {% capture social_icon_html %}
   <div class="social-links {{ container_class }}">
     <ul class="social-links__list">
-      {% if settings.social_twitter_url != blank %}
-        <li><a title="Twitter" class="twitter" target="_blank" href="{{ settings.social_twitter_url }}">{% include 'svg-twitter' %}</a></li>
-      {% endif %}
+      
       {% if settings.social_facebook_url != blank %}
         <li><a title="Facebook" class="facebook" target="_blank" href="{{ settings.social_facebook_url }}">{% include 'svg-facebook' %}</a></li>
       {% endif %}
@@ -19,7 +17,15 @@
       {% if settings.social_pinterest_url != blank %}
         <li><a title="Pinterest" class="pinterest" target="_blank" href="{{ settings.social_pinterest_url }}">{% include 'svg-pinterest' %}</a></li>
       {% endif %}
-
+  {% if settings.social_twitter_url != blank %}
+        <li><a title="Twitter" class="twitter" target="_blank" href="{{ settings.social_twitter_url }}">
+        <!-- {% include 'svg-twitter' %} -->
+        <i class="fa-brands fa-x-twitter"></i>
+        </a></li>
+      {% endif %}
+ {% if settings.tik_tok != blank %}
+        <li><a title="tik_tok" class="tik_tok" target="_blank" href="{{ settings.tik_tok }}"><i class="fa fa-brands fa-tiktok"></i></a></li>
+      {% endif %}
       {% if settings.social_custom_url != blank %}
         <li>
           <a title="{{ icon_setting.alt }}" class="social-custom" target="_blank" href="{{ settings.social_custom_url }}">

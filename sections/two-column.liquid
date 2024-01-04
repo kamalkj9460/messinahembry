@@ -3,22 +3,19 @@
   <div class="two-row-container">
 
         {% for block in section.blocks %}  
-            
                 <div class="tcr-item1" id="carousel-{% increment count %}">
-                <div class="content-overlay"></div>
-                <a href="{{ block.settings.link_url }}">
-                    <div class="tcr-item-imgsec" style="background-image:url(https:{{ block.settings.image | img_url: 'master' }})"> 
-                        <div class="two-content">
-                           <h3>{{ block.settings.heading }}</h3> 
-                        </div>
-                           
-                    </div>
-                </a>
-            
-          </div>
-            
+                                        <a href="{{ block.settings.link_url }}">
+                  <div class="content-overlay"></div>
+
+                          <div class="tcr-item-imgsec" style="background-image:url(https:{{ block.settings.image | img_url: 'master' }})"> 
+                            <div class="two-content">
+                               <h2>{{ block.settings.heading }}</h2> 
+                            </div>
+                          </div>
+                        </a>
+                </div>
+          
         {% endfor %}
-  
   </div>
 
 </div>  
@@ -48,6 +45,8 @@
       "type": "item",
       "name": "Item",
       "settings": [
+       
+        
         {
           "id": "image",
           "type": "image_picker",
@@ -63,6 +62,7 @@
           "type": "url",
           "label": "URL"
         }
+        
       ]
     }
   ],
@@ -97,7 +97,7 @@
 
 
 
-{% stylesheet %}
+<style>
  #shopify-section-{{ section.id }} .two-column {
     padding: 0 15px;
 }
@@ -114,7 +114,7 @@
 #shopify-section-{{ section.id }}  .tcr-item1 {
   position: relative;
   overflow: hidden;
-  width: 100%;
+  width: 50%;
 }
 #shopify-section-{{ section.id }} .tcr-item1 h3:hover {
     background: #367bbb !important;
@@ -225,9 +225,9 @@
 }
 
 
-{% endstylesheet %}
+</style>
 
-<script>
+<script type="lazyload_int">
   $('.two-row-container').slick({
     infinite: true,
     speed: 500,

@@ -1,33 +1,37 @@
-
+    <!-- slick slider -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>  
+ <script src="https://npmcdn.com/flickity@2/dist/flickity.pkgd.js"></script>
+ 
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js" ></script>
 
 <script>
 jQuery(document).ready(function($) {
-      jQuery('.slider2').slick({
-        dots: false,
-        infinite: false,
-        speed: 500,
-        slidesToShow: 4,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 2000,
-        arrows: true,
-            nextArrow: '<button id="next"><i class="fa fa-long-arrow-right" aria-hidden="true"></i>',
-        prevArrow: '<button id="previous"><i class="fa fa-long-arrow-left" aria-hidden="true"></i>',  
-        responsive: [{
-          breakpoint: 768,
-          settings: {
-            arrows: true,
-            slidesToShow: 2,
-            slidesToScroll: 2
-          }
-        }]
-    });
+    //   jQuery('.slider5').slick({
+    //     dots: false,
+    //     infinite: false,
+    //     speed: 500,
+    //     slidesToShow: 4,
+    //     slidesToScroll: 1,
+    //     autoplay: false,
+    //     autoplaySpeed: 2000,
+    //     arrows: true,
+    //         nextArrow: '<button id="next"><i class="fa fa-angle-right" aria-hidden="true"></i>',
+    //     prevArrow: '<button id="previous"><i class="fa fa-angle-left" aria-hidden="true"></i>',  
+    //     responsive: [{
+    //       breakpoint: 768,
+    //       settings: {
+    //         arrows: true,
+    //         slidesToShow: 1,
+    //         slidesToScroll: 1
+    //       }
+    //     }]
+    // });
 });
 </script>
 
 <div class="recently-viewed-wrapper page-width heading_style_div">
-    <h2 class="custom_style_heading">Recently Viewed</h2>
-    <ul class="recently-viewed-grid slider2">
+    <h2 class="custom_style_heading">RECENTLY VIEWED</h2>
+    <ul class="recently-viewed-grid slider5">
     <!-- Recently viewed products will appear here -->
     </ul>
 </div>
@@ -77,13 +81,16 @@ function getRecentlyViewedProducts() {
   const recentlyViewedHtml = [];
   productData.map(item => {
     recentlyViewedHtml.unshift(`
+     
     <li class="recently-viewed-grid-item">
-      <a class="product_grid" "href="${item.productUrl}"> 
+      <a class="product_grid" href="${item.productUrl}">
 		<img class="recently-viewed-img" src='${item.productImg}' loading="lazy" alt="${item.productImageAltText}"/>
-      </a>
+     
        <h3><a class="recently-viewed-a" href="${item.productUrl}">${item.productTitle}</a></h3>
        <p>${item.productPrice}</p>
+         </a>
     </li>
+   
    `);
   });
   const newProductData = `${recentlyViewedHtml.join("")}`;
@@ -121,7 +128,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
   display: flex;
   flex-direction: column;
   text-align: center;
-       padding: 0 5px;
+  padding: 0 5px;
+   margin-right:30px;
+   margin-left:30px;
 }
   
  #shopify-section-{{ section.id }} .recently-viewed-a {
@@ -164,12 +173,62 @@ right:-14px;
     border-radius: 50px;
 }
   
-  #shopify-section-{{ section.id }}  a.recently-viewed-a:hover{
+  #shopify-section-{{ section.id }}  a.recently-viewed-a:hover {
   border-bottom:1px solid #000;
   }
   #shopify-section-{{ section.id }}  h2.custom_style_heading {
     text-align: center;
 }
+#shopify-section-{{ section.id }} ul.recently-viewed-grid.slider5 {
+    display: flex;
+}
+#shopify-section-{{ section.id }} a.product_grid {
+     border: unset;    
+}
+#shopify-section-{{ section.id }} .fa {
+    color: #fff;
+}
+#shopify-section-{{ section.id }} .recently-viewed-a {
+    font-size: 13px;
+    line-height: 18px;
+}
+  #shopify-section-{{ section.id }} h3, #shopify-section-{{ section.id }} p {
+    text-align: left;
+    line-height: 18px;
+  font-weight:700 !important;
+}
+#shopify-section-{{ section.id }} img.recently-viewed-img {
+    display: block;
+    bottom: -100%;
+    left: -50%;
+    margin: auto !important;
+    max-width: 250px !important;
+    max-height: 300px;
+    vertical-align: middle;
+    width: auto;
+    height: auto;
+}
+ .slick-track.w3_bg {
+    width: 100% !important;
+}
+ .slick-track.w3_bg li{
+   width:unset !important;
+}
+  @media screen and (max-width:991px) {
+#shopify-section-{{ section.id }} button#next {
+    top: 35%;
+    right: 0px;
+}
+#shopify-section-{{ section.id }} button#previous {
+    top: 35%;
+    left: 0px;
+}
+    #shopify-section-{{ section.id }} .recently-viewed-grid-item {
+    padding: 0 30px;
+    margin-right: 0;
+    margin-left: 0;
+}
+  }
 </style>
 
 {% schema %}

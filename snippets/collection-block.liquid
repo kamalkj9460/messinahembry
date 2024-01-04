@@ -1,35 +1,41 @@
-                                          <div class="product-block collection-block" data-collection-id="{{ collection.id }}" {{ custom_attrs }}>
-                                            <div class="block-inner">
-                                              <a class="product-link" href="{{ collection.url }}">
-                                                  <div class="overlay"></div>
-                                                  <div class="image-cont" {% if block.settings.collection-img != blank %} style="background-image: url('{{ block.settings.collection-img | img_url: 'master' }}')" {% endif %}>
-                                                      {% if collection.image %}
-                                                    {% assign collection_image = collection.image %}
-                                                  {% else %}
-                                                    {% assign collection_image = collection.products.first.featured_media.preview_image %}
-                                                  {% endif %}
-                                          
-                                                  {% if collection_image != blank %}
-                                          
-                                                    {% include 'responsive-image', image: collection_image, manual_image_load: manual_image_load %}
-                                          
-                                                  {% else %}
-                                          
-                                                    <div class="placeholder-image">{{ 'collection-1' | placeholder_svg_tag }}</div>
-                                          
-                                                  {% endif %}
-                                                  </div>
-                                                  <div class="product-info" >
-                                                        <span class="title">{{ collection.title }}</span>
-                                                      {% if section.settings.show_count and collection.all_products_count > 0 %}
-                                                      <span class="count">{{ 'collections.general.product_count' | t: count: collection.all_products_count }}</span>
-                                                      {% endif %}
-                                                    
-                                                      {% comment %}
-                                                       <span class="productlabel general">
-                                                      </span>
-                                                      {% endcomment %}
-                                                  </div>
-                                              </a>
-                                            </div>
-                                          </div>
+ 
+<div class="product-block collection-block" data-collection-id="{{ collection.id }}" {{ custom_attrs }}>
+  <div class="block-inner 123">
+   
+         <a class="product-link" href="{{ collection.url }}"> <div class="overlay"></div></a>
+      
+       <a href="{{ block.settings.link_url }}">
+        <div class="image-cont" {% if block.settings.collection-img != blank %} style="background-image: url('{{ block.settings.collection-img | img_url: 'master' }}')" {% endif %}>
+            {% if collection.image %}
+          {% assign collection_image = collection.image %}
+        {% else %}
+          {% assign collection_image = collection.products.first.featured_media.preview_image %}
+        {% endif %}
+
+        {% if collection_image != blank %}
+
+          {% include 'responsive-image', image: collection_image, manual_image_load: manual_image_load %}
+
+        {% else %}
+
+          <div class="placeholder-image">{{ 'collection-1' | placeholder_svg_tag }}</div>
+
+        {% endif %}
+        </div>
+       </a>
+<a href="{{ collection.url }}">
+        <div class="product-info 111" >
+              <span class="title">{{ collection.title }}</span>
+            {% if section.settings.show_count and collection.all_products_count > 0 %}
+            <span class="count">{{ 'collections.general.product_count' | t: count: collection.all_products_count }}</span>
+            {% endif %}
+          
+            {% comment %}
+             <span class="productlabel general">
+            </span>
+            {% endcomment %}
+        </div>
+</a>
+
+  </div>
+</div>

@@ -1,0 +1,24 @@
+#shopify-section-new-recently ul.recently-viewed-grid.slider5 {
+    display: flex !Important;
+    overflow-x: auto !important;
+}
+ul#tab-slider {
+    list-style: none !important;
+}
+ul.grid.product-grid.grid--2-col-tablet-down.grid--4-col-desktop {
+    display: flex;
+    overflow-x: scroll;
+  overflow-y:hidden !importanr;
+}
+ul.grid.product-grid.grid--2-col-tablet-down.grid--4-col-desktop .image-cont.w3_bg {
+    width: 133px;
+}
+
+
+
+@media screen and (max-width: 480px) {
+div#tabs {
+    overflow: hidden !important;
+    height: 397px !important;
+}
+}

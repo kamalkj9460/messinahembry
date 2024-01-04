@@ -10,7 +10,7 @@
   {% endunless %}
 
   <div class="{% if section.settings.use_carousel %}collection-slider{% endif %}">
-    <h1 class="hometitle h4-style align-center has-paging">
+    <h2 class="hometitle h4-style align-center has-paging">
       {% if section.settings.use_carousel -%}
         <a class="prev" href="#">{% include 'svg-chevron-left' %}</a>
       {%- endif %}
@@ -20,7 +20,7 @@
       {% if section.settings.use_carousel -%}
         <a class="next" href="#">{% include 'svg-chevron-right' %}</a>
       {%- endif %}
-    </h1>
+    </h2>
 
     <div class="view-all align-center">
       <a

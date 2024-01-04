@@ -1,6 +1,37 @@
 <!doctype html>
 <html class="no-js" lang="{{ shop.locale }}">
   <head>
+    <style>
+       @media only screen and (max-width: 767px){
+         #pageheader .logo-area {
+              display: none;
+          }
+         #mobile-header{
+           min-height:53px;
+         }
+        #mobile-header .cart-count {
+            position: absolute;
+            top: 5%;
+            right: 11%;
+            left: auto;
+            bottom: auto;
+        }
+         #shopify-section-header div#search {
+            position: absolute;
+            right: 3%;
+            top: 20%;
+            z-index: 99999;
+        }
+       }
+        @media (max-width:599px){
+        #shopify-section-ddbdbf17-6c1b-4903-85e0-79b3dd27b800 .product-grid:not(.slick-initialized) .product-block {
+            flex:0 0 50%;
+            max-width:50%;
+        }
+      }
+    </style>
+    {% render 'font-css' %}
+    {% render 'wnw_header' %}
     <meta name="uri-translation" content="on">
     <meta name="robots" content="noodp,noydir">
     <meta name="google-site-verification" content="XEgCmPell6kfP6cYAchwJVnfwL0xIZ1-VfpyHGSA4Cg">
@@ -13,266 +44,264 @@
     <meta name="geo.position" content="39.78373;-100.445882">
     <meta name="ICBM" content="39.78373, -100.445882">
     <meta name="msvalidate.01" content="6B567743E033813524541C1D0018F3EC">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- jQuery CDN -->
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <!-- slick Carousel CDN -->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.7/slick.min.js"></script>
+
     <!-- slick slider -->
-    
-    <script>
+    <script type="lazyload_int">
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-57HYTKTGZ9');
     </script>
     {% include 'booster-seo' %}
-
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-913529352"></script>
+    <script data-src="https://www.googletagmanager.com/gtag/js?id=AW-913529352"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'AW-913529352');
     </script>
-
-    <link rel="alternate" hreflang="en" href="messinahembry.com/">
-    <link rel="alternate" hreflang="en" href="zh-cn.messinahembry.com/">
-    <link rel="alternate" hreflang="en" href="hr.messinahembry.com/">
-    <link rel="alternate" hreflang="en" href="da.messinahembry.com/">
-    <link rel="alternate" hreflang="en" href="nl.messinahembry.com/">
-    <link rel="alternate" hreflang="en" href="fr.messinahembry.com/">
-    <link rel="alternate" hreflang="en" href="de.messinahembry.com/">
-    <link rel="alternate" hreflang="en" href="el.messinahembry.com/">
-    <link rel="alternate" hreflang="en" href="it.messinahembry.com/">
-    <link rel="alternate" hreflang="en" href="pl.messinahembry.com/">
-    <link rel="alternate" hreflang="en" href="pt.messinahembry.com/">
-    <link rel="alternate" hreflang="en" href="ro.messinahembry.com/">
-    <link rel="alternate" hreflang="en" href="ru.messinahembry.com/">
-    <link rel="alternate" hreflang="en" href="es.messinahembry.com/">
-    <link rel="alternate" hreflang="en" href="hu.messinahembry.com/">
 
     <!-- Symmetry 4.9.4 -->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta name="theme-color" content="{{ settings.btn_col }}">
-
     {% if settings.favicon != blank and settings.favicon contains '.png' %}
       <link rel="shortcut icon" href="{{ settings.favicon | img_url: 'master' }}" type="image/png">
     {% elsif settings.favicon != blank and settings.favicon contains '.ico' %}
       <link rel="shortcut icon" href="{{ settings.favicon | img_url: 'master' }}" type="image/x-icon">
     {% endif %}
-
     {% comment %}
       <title>
-        {{ page_title }}{% if current_tags %}{% assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
+          {{ page_title }}{% if current_tags %}{% assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
       </title>
     {% endcomment %}
     {% if page_description %}
       {% comment %}<meta name="description" content="{{ page_description | escape }}" />{% endcomment %}
     {% endif %}
     <link rel="canonical" href="{{ canonical_url }}">
-
     {% include 'social-meta-tags' %}
-
-    {{ 'styles.scss.css' | asset_url | stylesheet_tag }}
-
+    {% if template contains 'index' %}
+      {% render 'homepage-critical-css' %}
+    {% elsif template contains 'collection' %}
+      {% render 'collection-critical-css' %}
+    {% elsif template contains 'product' %}
+      {% render 'product-critical-css' %}
+    {% elsif template contains 'cart' %}
+      <link rel="stylesheet" href="{{ 'styles.scss.css' | asset_url }}">
+    {% else %}
+      {% render 'theme-css' %}
+    {% endif %}
+    <link rel="stylesheet" data-href="{{ 'styles.scss.css' | asset_url }}">
     {{ 'https://code.jquery.com/jquery-3.3.1.min.js' | script_tag }}
     <script>
       window.theme = window.theme || {};
       theme.jQuery = jQuery;
       theme.money_format = {{ shop.money_format | json }};
       theme.strings = {
-        previous: {{ 'general.accessibility_labels.previous' | t | json }},
-        next: {{ 'general.accessibility_labels.next' | t | json }},
-        addressError: {{ 'map.errors.address_error' | t | json }},
-        addressNoResults: {{ 'map.errors.address_no_results' | t | json }},
-        addressQueryLimit: {{ 'map.errors.address_query_limit_html' | t | json }},
-        authError: {{ 'map.errors.auth_error_html' | t | json }},
-        icon_labels_left: {{ 'general.icon_labels.left' | t | escape | json }},
-        icon_labels_right: {{ 'general.icon_labels.right' | t | escape | json }},
-        icon_labels_down: {{ 'general.icon_labels.down' | t | escape | json }},
-        icon_labels_close: {{ 'general.icon_labels.close' | t | escape | json }},
-        cart_terms_confirmation: {{ 'cart.terms.confirmation' | t | json }},
-        products_listing_from: {{ 'products.listing.from' | t | json }},
-        layout_live_search_see_all: {{ 'layout.live_search.see_all' | t | json }},
-        products_variant_non_existent: {{ 'products.variant.non_existent' | t | json }},
-        products_product_add_to_cart: {{ 'products.product.add_to_cart' | t | json }},
-        products_variant_no_stock: {{ 'products.variant.no_stock' | t | json }},
-        products_variant_non_existent: {{ 'products.variant.non_existent' | t | json }},
-        products_variant_unit_price_separator: {{ 'products.variant.unit_price_separator' | t | json }},
-        general_navigation_menu_toggle_aria_label: {{ 'general.navigation.menu_toggle_aria_label' | t | json }},
-        products_added_notification_title: {{ 'products.added_notification.title' | t | json }},
-        products_added_notification_item: {{ 'products.added_notification.item' | t | json }},
-        products_added_notification_quantity: {{ 'products.added_notification.quantity' | t | json }},
-        products_added_notification_unit_price: {{ 'products.added_notification.unit_price' | t | json }},
-        products_added_notification_quantity: {{ 'products.added_notification.quantity' | t | json }},
-        products_added_notification_total_price: {{ 'products.added_notification.total_price' | t | json }},
-        products_added_notification_subtotal: {{ 'products.added_notification.subtotal' | t | json }},
-        products_added_notification_shipping_note: {{ 'products.added_notification.shipping_note' | t | json }},
-        products_added_notification_keep_shopping: {{ 'products.added_notification.keep_shopping' | t | json }},
-        products_added_notification_cart: {{ 'products.added_notification.cart' | t | json }},
-        products_product_adding_to_cart: {{ 'products.product.adding_to_cart' | t | json }},
-        products_product_added_to_cart: {{ 'products.product.added_to_cart' | t | json }},
-        products_added_notification_subtotal: {{ 'products.added_notification.subtotal' | t | json }}
+          previous: {{ 'general.accessibility_labels.previous' | t | json }},
+          next: {{ 'general.accessibility_labels.next' | t | json }},
+          addressError: {{ 'map.errors.address_error' | t | json }},
+          addressNoResults: {{ 'map.errors.address_no_results' | t | json }},
+          addressQueryLimit: {{ 'map.errors.address_query_limit_html' | t | json }},
+          authError: {{ 'map.errors.auth_error_html' | t | json }},
+          icon_labels_left: {{ 'general.icon_labels.left' | t | escape | json }},
+          icon_labels_right: {{ 'general.icon_labels.right' | t | escape | json }},
+          icon_labels_down: {{ 'general.icon_labels.down' | t | escape | json }},
+          icon_labels_close: {{ 'general.icon_labels.close' | t | escape | json }},
+          cart_terms_confirmation: {{ 'cart.terms.confirmation' | t | json }},
+          products_listing_from: {{ 'products.listing.from' | t | json }},
+          layout_live_search_see_all: {{ 'layout.live_search.see_all' | t | json }},
+          products_variant_non_existent: {{ 'products.variant.non_existent' | t | json }},
+          products_product_add_to_cart: {{ 'products.product.add_to_cart' | t | json }},
+          products_variant_no_stock: {{ 'products.variant.no_stock' | t | json }},
+          products_variant_non_existent: {{ 'products.variant.non_existent' | t | json }},
+          products_variant_unit_price_separator: {{ 'products.variant.unit_price_separator' | t | json }},
+          general_navigation_menu_toggle_aria_label: {{ 'general.navigation.menu_toggle_aria_label' | t | json }},
+          products_added_notification_title: {{ 'products.added_notification.title' | t | json }},
+          products_added_notification_item: {{ 'products.added_notification.item' | t | json }},
+          products_added_notification_quantity: {{ 'products.added_notification.quantity' | t | json }},
+          products_added_notification_unit_price: {{ 'products.added_notification.unit_price' | t | json }},
+          products_added_notification_quantity: {{ 'products.added_notification.quantity' | t | json }},
+          products_added_notification_total_price: {{ 'products.added_notification.total_price' | t | json }},
+          products_added_notification_subtotal: {{ 'products.added_notification.subtotal' | t | json }},
+          products_added_notification_shipping_note: {{ 'products.added_notification.shipping_note' | t | json }},
+          products_added_notification_keep_shopping: {{ 'products.added_notification.keep_shopping' | t | json }},
+          products_added_notification_cart: {{ 'products.added_notification.cart' | t | json }},
+          products_product_adding_to_cart: {{ 'products.product.adding_to_cart' | t | json }},
+          products_product_added_to_cart: {{ 'products.product.added_to_cart' | t | json }},
+          products_added_notification_subtotal: {{ 'products.added_notification.subtotal' | t | json }}
       };
       theme.routes = {
-        search_url: '{{ routes.search_url }}',
-        cart_url: '{{ routes.cart_url }}',
-        cart_add_url: '{{ routes.cart_add_url }}',
-        cart_change_url: '{{ routes.cart_change_url }}'
+          search_url: '{{ routes.search_url }}',
+          cart_url: '{{ routes.cart_url }}',
+          cart_add_url: '{{ routes.cart_add_url }}',
+          cart_change_url: '{{ routes.cart_change_url }}'
       };
       document.documentElement.className = document.documentElement.className.replace('no-js', '');
     </script>
-
-    {{ '//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css' | stylesheet_tag }}
-
-    {{ content_for_header }}
-
+    <link rel="stylesheet" data-href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
+    {%- if request.design_mode or template contains 'cart' or template contains 'checkout' -%}
+      {{ content_for_header }}
+    {%- else -%}
+      {% capture content_for_header2 %}{{ content_for_header }}{% endcapture %}
+      {{
+        content_for_header2
+        | replace: ' async="async" ', ' type="lazyload_int" '
+        | replace: ' defer="defer" ', ' type="lazyload_int" '
+        | replace: ' src=', ' data-src='
+        | replace: 'DOMContentLoaded', 'w3-DOMContentLoaded'
+        | replace: "window.addEventListener('load', asyncLoad, false);",
+          "window.addEventListener('w3-DOMContentLoaded', asyncLoad, false);"
+        | replace: "addEventListener('load', prefetchAssets);",
+          "addEventListener('w3-DOMContentLoaded', prefetchAssets);"
+      }}
+      <script>
+        var trekkie=[];trekkie.integrations=!0;window.BOOMR={},window.BOOMR.version=true;
+      </script>
+    {%- endif -%}
     {{ shop.metafields.loox.global_html_head }}
-
     <!-- Microsoft Ads UET -->
-    <script>
+    <script type="lazyload_int">
       (function(w,d,t,r,u){var f,n,i;w[u]=w[u]||[],f=function(){var o={ti:"137004356", tm:"shpfy_ui"};o.q=w[u],w[u]=new UET(o),w[u].push("pageLoad")},n=d.createElement(t),n.src=r,n.async=1,n.onload=n.onreadystatechange=function(){var s=this.readyState;s&&s!=="loaded"&&s!=="complete"||(f(),n.onload=n.onreadystatechange=null)},i=d.getElementsByTagName(t)[0],i.parentNode.insertBefore(n,i)})(window,document,"script","//bat.bing.com/bat.js","uetq");
     </script>
-
     <!-- Microsoft Ads Purchase Event Tag -->
-    <script>
+    {% assign totalPrice = 0 %}
+    {% for item in cart.itmes %}
+      {% assign totalPrice = cart.total_price %}
+    {% endfor %}
+    <script type="lazyload_int">
       window.uetq = window.uetq || [];
-      window.uetq.push('event', '', { 'revenue_value': {{ total_price | money_without_currency }}, 'currency': '{{ shop.currency }}' });
+      window.uetq.push('event', '', { 'revenue_value': {{ totalPrice | money_without_currency }}, 'currency': '{{ shop.currency }}' });
     </script>
-
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    >
-    <link rel="stylesheet" href="https://use.typekit.net/gaqliud.css">
-
+    <link rel="stylesheet" data-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" data-href="https://use.typekit.net/gaqliud.css">
     <!-- ADDED FROM REAL FUN DEVELOPOEMENT 2 THEME FOR IMAGE GRID -->
     <!-- ADDED FROM REAL FUN DEVELOPOEMENT 2 THEME FOR IMAGE GRID -->
     <!-- ADDED FROM REAL FUN DEVELOPOEMENT 2 THEME FOR IMAGE GRID -->
-    <link rel="stylesheet" data-href="{{ 'theme.scss.css' | asset_url }}">
-
+    {% comment %}
+      <link rel="stylesheet" data-href="{{ 'theme.scss.css' | asset_url }}">
+    {% endcomment %}
     <!-- ADDED FROM REAL FUN DEVELOPOEMENT 2 THEME FOR IMAGE GRID -->
     <!-- ADDED FROM REAL FUN DEVELOPOEMENT 2 THEME FOR IMAGE GRID -->
     <!-- ADDED FROM REAL FUN DEVELOPOEMENT 2 THEME FOR IMAGE GRID -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.helper.ie8.js" async></script>
-    <link rel="stylesheet" data-href="{{ 'vendor__tinyslider.min.css' | asset_url }}">
-    <link rel="stylesheet" data-href="{{  'vendor__slick.min.css' | asset_url }}">
-    <link rel="stylesheet" data-href="{{ 'vendor__bootstrap.min.css' | asset_url }}">
+    <script
+      type="lazyload_int"
+      data-src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.helper.ie8.js"
+    ></script>
+    {% comment %}
+      <link rel="stylesheet" data-href="{{ 'vendor__tinyslider.min.css' | asset_url }}">
+      <link rel="stylesheet" data-href="{{  'vendor__slick.min.css' | asset_url }}">
+      <link rel="stylesheet" data-href="{{ 'vendor__bootstrap.min.css' | asset_url }}">
+    {% endcomment %}
+    {% render 'app-block' %}
+    {% render 'custom-css' %}
+    {{ 'custom.css' | asset_url | stylesheet_tag }}
   </head>
-
   <body class="template-{{ template | split: '.' | first }}">
     <script>
       window.KlarnaThemeGlobals={};{%case template.name%} {%when"product"%} {% if product.first_available_variant.price %}window.KlarnaThemeGlobals.data_purchase_amount = {{ product.first_available_variant.price }};{% endif %}window.KlarnaThemeGlobals.productVariants={{product.variants|json}};window.KlarnaThemeGlobals.documentCopy=document.cloneNode(true);{%when"cart"%} window.KlarnaThemeGlobals.data_purchase_amount={{cart.total_price}};window.KlarnaThemeGlobals.documentCopy=document.cloneNode(true);{%endcase%}
     </script>
-
     <a class="skip-link visually-hidden" href="#content">{{ 'general.accessibility_labels.skip_to_content' | t }}</a>
-
     {% section 'header' %}
     {% section 'mega-menu' %}
     <main id="content" role="main">
-      <div class="container cf">
+      <div class="container">
         {{ content_for_layout }}
       </div>
       <!-- /.container -->
     </main>
     <!-- /#content -->
-
     <div id="pagefooter">
       {% section 'cross-page-promos' %}
-
       {% section 'footer' %}
     </div>
     <!-- /#pagefooter -->
-
-    {{ 'vendor.js' | asset_url | script_tag }}
-    {{ 'theme.js' | asset_url | script_tag }}
-
+    <script type="lazyload_int" data-src="{{ 'vendor.js' | asset_url }}"></script>
+    <script type="lazyload_int" data-src="{{ 'theme.js' | asset_url }}"></script>
     <script type="text/javascript">
-          jQuery( document ).ready(function() {
-
+      jQuery( document ).ready(function() {
           jQuery(".slideshow-row .slide a").append("<div class='overlay'></div>");
           jQuery("#shopify-section-1493812685340 .product-list .owl-item .product-link").append("<div class='overlay'></div>");
-
-
           jQuery(".product-block[data-collection-id='25588699'] .title").html("Mens");
           jQuery(".product-block[data-collection-id='25588647'] .title").html("Womens");
           jQuery(".product-block[data-collection-id='426082115'] .title").html("Boys");
           jQuery(".product-block[data-collection-id='426082179'] .title").html("Girls");
           jQuery(".product-block[data-collection-id='23406772256'] .title").html("Baby");
-
-
-            jQuery('.tier-1 > ul > li').each(function(i) {
-       jQuery(this).attr('id','mi-'+i);
-       i++;
-      });
-
-
+          jQuery('.tier-1 > ul > li').each(function(i) {
+              jQuery(this).attr('id','mi-'+i);
+              i++;
+          });
       });
     </script>
-    {{ 'searchanise-custom.js' | asset_url | script_tag }}
-
-    {{ shop.metafields.loox.global_html_body }}
+    <script type="lazyload_int" data-src="{{ 'searchanise-custom.js' | asset_url }}"></script>
+    {{
+      shop.metafields.loox.global_html_body
+      | replace: '<script async src="', '<script type="lazyload_int" data-src="'
+    }}
     {% include 'smile-initializer' %}
-
     <!-- google dynamic remarketing tag for theme.liquid -->
     {% if template contains 'product' %}
-      <script type="text/javascript">
+      <script type="lazyload_int">
         var json_product = {{ product | json }};
       </script>
-      <script>
+      <script type="lazyload_int">
         var ecomm_prodid=[];
         for(var i=0;i<json_product.variants.length;i++)
-          ecomm_prodid.push('shopify_GB_{{product.id}}_'+json_product.variants[i].id);
+        ecomm_prodid.push('shopify_GB_{{product.id}}_'+json_product.variants[i].id);
       </script>
-      <script type="text/javascript">
+      <script type="lazyload_int">
         var google_tag_params = {
-          ecomm_prodid: ecomm_prodid,
-          ecomm_pagetype: 'product',
-          ecomm_totalvalue: parseFloat('{{ product.price | money_without_currency | remove: ","}}')
+            ecomm_prodid: ecomm_prodid,
+            ecomm_pagetype: 'product',
+            ecomm_totalvalue: parseFloat('{{ product.price | money_without_currency | remove: ","}}')
         };
       </script>
     {% elsif template contains 'collection' %}
-      <script type="text/javascript">
+      <script type="lazyload_int">
         var google_tag_params = {
-          ecomm_pagetype: 'category'
+            ecomm_pagetype: 'category'
         };
       </script>
     {% elsif template contains 'cart' %}
-      <script type="text/javascript">
+      <script type="lazyload_int">
         var id = new Array();
         {% for item in cart.items %}
-        id.push('shopify_GB_{{item.product.id}}_{{item.variant.id}}');
-         {% endfor %}
-
-         var google_tag_params = {
-           ecomm_prodid: id,
-           ecomm_pagetype: 'cart',
-           ecomm_totalvalue: parseFloat('{{ cart.total_price | money_without_currency | remove: ","}}')
-         };
+            id.push('shopify_GB_{{item.product.id}}_{{item.variant.id}}');
+        {% endfor %}
+        var google_tag_params = {
+            ecomm_prodid: id,
+            ecomm_pagetype: 'cart',
+            ecomm_totalvalue: parseFloat('{{ cart.total_price | money_without_currency | remove: ","}}')
+        };
       </script>
     {% elsif template contains 'search' %}
-      <script type="text/javascript">
+      <script type="lazyload_int">
         var google_tag_params = {
-          ecomm_pagetype: 'searchresults'
+            ecomm_pagetype: 'searchresults'
         };
       </script>
     {% elsif template contains 'index' %}
-      <script type="text/javascript">
+      <script type="lazyload_int">
         var google_tag_params = {
-          ecomm_pagetype: 'home'
+            ecomm_pagetype: 'home'
         };
       </script>
     {% else %}
-      <script type="text/javascript">
+      <script type="lazyload_int">
         var google_tag_params = {
-          ecomm_pagetype: 'other'
+            ecomm_pagetype: 'other'
         };
       </script>
     {% endif %}
+
     <script>
       gtag('event', 'page_view', {'send_to': 'AW-913529352',
                                   'ecomm_prodid':window.google_tag_params.ecomm_prodid,
@@ -280,66 +309,55 @@
                                   'ecomm_totalvalue':window.google_tag_params.ecomm_totalvalue
                                  });
     </script>
-<!-- Divide description into column -->
-    <!-- <script type="text/javascript">
-      jQuery( document ).ready(function() {
+    <!--
+      Divide description into column
 
-        jQuery('#x-main-desc').append('<div id="tabs-nav"><div id="tabs-1" class="tn-equal"><p>Description</p><ul></ul></div><div id="tabs-2" class="tn-equal"><p>Sizing & Measurements</p><ul></ul></div><div id="tabs-3"><p>Condition</p><ul></ul></div></div>');
-
-        jQuery('.x-tins ul li').each(function(i) {
-          var str = jQuery(this).text();
-          if (str.indexOf('inches') >= 0) {
-            jQuery(this).appendTo('#tabs-2 ul');
-          }
-        });
-
-        jQuery('.x-tins ul li').each(function(i) {
-          var str = jQuery(this).text();
-          if (str.indexOf('Size') >= 0) {
-            jQuery(this).appendTo('#tabs-2 ul');
-          }
-        });
-
-        jQuery('.x-tins ul li').each(function(i) {
-          var str = jQuery(this).text();
-          if (str.indexOf('Condition') >= 0) {
-            jQuery(this).appendTo('#tabs-3 ul');
-          }
-        });
-
-        jQuery('.x-tins ul li').each(function(i) {
-          var str = jQuery(this).text();
-          if (str.indexOf('inches') < 0 || str.indexOf('Condition') < 0 ) {
-            jQuery(this).appendTo('#tabs-1 ul');
-          }
-        });
-
-        if( jQuery(window).width() >=1101) {
-
-          // Cache the highest
-          var highestBox = 0;
-
-          // Select and loop the elements you want to equalise
-          jQuery('.tn-equal').each(function(){
-
-            // If this box is higher than the cached highest then store it
-            if(jQuery(this).height() > highestBox) {
-              highestBox = jQuery(this).height();
-            }
-
+      <script type="text/javascript">
+          jQuery( document ).ready(function() {
+              jQuery('#x-main-desc').append('<div id="tabs-nav"><div id="tabs-1" class="tn-equal"><p>Description</p><ul></ul></div><div id="tabs-2" class="tn-equal"><p>Sizing & Measurements</p><ul></ul></div><div id="tabs-3"><p>Condition</p><ul></ul></div></div>');
+              jQuery('.x-tins ul li').each(function(i) {
+                  var str = jQuery(this).text();
+                  if (str.indexOf('inches') >= 0) {
+                      jQuery(this).appendTo('#tabs-2 ul');
+                  }
+              });
+              jQuery('.x-tins ul li').each(function(i) {
+                  var str = jQuery(this).text();
+                  if (str.indexOf('Size') >= 0) {
+                      jQuery(this).appendTo('#tabs-2 ul');
+                  }
+              });
+              jQuery('.x-tins ul li').each(function(i) {
+                  var str = jQuery(this).text();
+                  if (str.indexOf('Condition') >= 0) {
+                      jQuery(this).appendTo('#tabs-3 ul');
+                  }
+              });
+              jQuery('.x-tins ul li').each(function(i) {
+                  var str = jQuery(this).text();
+                  if (str.indexOf('inches') < 0 || str.indexOf('Condition') < 0 ) {
+                      jQuery(this).appendTo('#tabs-1 ul');
+                  }
+              });
+              if( jQuery(window).width() >=1101) {
+                  // Cache the highest
+                  var highestBox = 0;
+                  // Select and loop the elements you want to equalise
+                  jQuery('.tn-equal').each(function(){
+                      // If this box is higher than the cached highest then store it
+                      if(jQuery(this).height() > highestBox) {
+                          highestBox = jQuery(this).height();
+                      }
+                  });
+                  // Set the height of all those children to whichever was highest
+                  jQuery('.tn-equal').height(highestBox);
+              }
           });
-
-          // Set the height of all those children to whichever was highest
-          jQuery('.tn-equal').height(highestBox);
-
-        }
-
-      });
-    </script> -->
+      </script>
+    -->
 
     {% if product %}
       <script>
-       
 window.addEventListener('load', function() {
 var _learnq = window._learnq || [];
 function addedToCart() {
@@ -384,19 +402,72 @@ for (var i = 0; i < atcButtons.length; i++) {
     })
 }
 });
-
-
-
-
-
-
-
-
-
-
-
-
       </script>
     {% endif %}
+    <script>
+      var site_nav_link_burger = true;
+      document.addEventListener("DOMContentLoaded", function() {
+           var icon_menu = document.querySelector("#mobile-header button.notabutton.mobile-nav-toggle");
+           icon_menu.addEventListener("click", function() {
+      		if(site_nav_link_burger) {
+      			event.preventDefault();
+      			site_nav_link_burger = false;
+      		}
+      	});
+      })
+    </script>
+
+    {% render 'footer-app-block' %}
+    {% render 'wnw_footer' %}
+
+    <!-- Add this script to handle the click event -->
+    <!-- <script>
+      $(document).ready(function() {
+        // Handle click event on .remove
+        $('.remove').on('click', function(e) {
+          e.preventDefault(); // Prevent the default behavior of the link
+
+          // Show a confirmation dialog
+          var confirmation = confirm('Are you sure you want to remove this item?');
+
+          // If user confirms, redirect to the cart page
+          if (confirmation) {
+            window.location.href = '/cart'; // Change the URL to your actual cart page URL
+          }
+        });
+      });
+    </script> -->
+
+    <script>
+        function handleRemoveItem(lineItemIndex) {
+    fetch('/cart/change.js', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            id: lineItemIndex,
+            quantity: 0
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Network response was not ok ${response.statusText}`);
+        }
+        window.location.href = '/cart';
+        // return response.json();
+    })
+    .then(cart => {
+        console.log('Item removed. Cart is now:', cart);
+        // Update the cart display here (e.g., refresh the page or dynamically update the cart UI)
+    })
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+    });
+
+    // Prevent default link behavior
+    return false;
+}
+    </script>
   </body>
 </html>

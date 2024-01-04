@@ -9,7 +9,10 @@
     </li>
     <li class="twitter">
       <a target="_blank" class="sharing-link" href="//twitter.com/share?text={{ share_title | url_param_escape }}&amp;url={{ shop.url | append: share_permalink }}">
-        <span aria-hidden="true">{% include 'svg-twitter' %}</span>
+        <span aria-hidden="true">
+        <i class="fa-brands fa-x-twitter"></i>
+        <!-- {% include 'svg-twitter' %} -->
+        </span>
         <span class="visually-hidden">{{ 'general.social.share_on_twitter' | t }}</span>
       </a>
     </li>
@@ -29,3 +32,10 @@
     
   </ul>
 </div>
+
+<style>
+  
+  #shopify-section-product-template .w3_bg .product-detail .gallery-layout-under .desktop-only  .social-links .sharing-list .twitter .fa-x-twitter{
+	font-size: 22px;
+}
+</style>

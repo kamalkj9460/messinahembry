@@ -10,10 +10,10 @@
   {% endunless %}
 
   <div class="{% if section.settings.use_carousel %}collection-slider{% endif %}">
-    <h1 class="align-center"><a href="{{ collection.url }}"><span>{{ section.settings.title | escape }}</span></a></h1>
+    <h2 class="align-center"><a href="{{ collection.url }}"><span>{{ section.settings.title | escape }}</span></a></h2>
     
     {% comment %}
-    <h1 class="hometitle h4-style align-center has-paging">
+    <h2 class="hometitle h4-style align-center has-paging">
       {% if section.settings.use_carousel -%}
         <a class="prev" href="#next">{% include 'svg-chevron-left' %}</a>
       {%- endif %}
@@ -21,7 +21,7 @@
       {% if section.settings.use_carousel -%}
         <a class="next" href="#">{% include 'svg-chevron-right' %}</a>
       {%- endif %}
-    </h1>
+    </h2>
     {% endcomment %}
     
     
@@ -232,7 +232,7 @@
 }
 }
 </style>
-<script>
+<script type="lazyload_int">
 jQuery(document).ready(function($) {
       jQuery('.slider-2').slick({
         dots: false,

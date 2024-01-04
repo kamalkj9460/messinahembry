@@ -9,13 +9,14 @@
       data-sizes="auto"
       data-parent-fit="cover"{% endif %}>
       {% if section.settings.image == blank %}
+  
       <div class="placeholder-image placeholder--banner {% if section.settings.title != blank or section.settings.text != blank %}dark{% endif %}">
         {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
       </div>
       {% else %}
-        {% include 'responsive-image', image: section.settings.image, manual_image_load: true %}
+{% include 'responsive-image', image: section.settings.image, manual_image_load: true %}
       {% endif %}
-
+   
       {% if section.settings.title != blank or section.settings.text != blank %}
       <div class="overlay-text overlay-{{ section.settings.position }}">
         <div class="inner">
@@ -276,7 +277,10 @@
 }
 }
  #shopify-section-{{ section.id }} a.btn.btn--cta:hover {
-    background: #367bbb !important;
-   color: #fff !important;
+    background: #f6de62 !important;
+   color: #000 !important;
+}
+ #shopify-section-{{ section.id }} .first-button,  #shopify-section-{{ section.id }} .second-button {
+    z-index: 999 !important;
 }
 </style>

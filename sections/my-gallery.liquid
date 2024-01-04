@@ -1,14 +1,12 @@
-{{ 'demo.js' | asset_url | script_tag }}
-
 {%  if section.blocks.size > 0 %}
   <div class="tabs-section page-width">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-    <script src="//code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <link rel="stylesheet" data-href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script type="lazyload_int" data-src="//code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     {%  if section.settings.useslider %}
-      <script src="//cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+      <script type="lazyload_int" data-src="//cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
     
-    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
-    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+    <link rel="stylesheet" type="text/css" data-href="//cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+    <link rel="stylesheet" type="text/css" data-href="//cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
     {%  endif %}
     {%  if section.settings.title != blank %}
       <h2 class="h1">{{ section.settings.title }}</h2>
@@ -47,7 +45,7 @@
  
 
   
-    <script>
+    <script type="lazyload_int">
   $( function() {
     {%  if section.settings.useslider %}
     function tabSlider(){
@@ -198,6 +196,10 @@
   #shopify-section-{{ section.id }} a, #shopify-section-{{ section.id }} h2.h1 {
      letter-spacing: 0px;
   }
+    html:not(.jsload) div#tabs:not(.ui-tabs) ul#tab-slider li.demo_new:nth-child(1) a{
+      background-color:#f6de62 !important;
+      color:#000 !important;
+    }
     @media screen and (min-width:1400px{
       .tabs.ui-tabs .ui-tabs-nav {
       background: none;
@@ -346,12 +348,12 @@
     line-height: 21px;
 }
   ul#tab-slider a:hover {
-    background: #367bbb;
-    color:#fff;
+    background: #f6de62;
+    color:#000;
 }
 #shopify-section-{{ section.id }} .tabs.ui-tabs .ui-tabs-nav li.ui-tabs-active a {
-    color: #fff;
-    background: #367bbb;
+    color: #000;
+    background: #f6de62;
 }
  @media screen and (max-width:425px){
 #shopify-section-{{ section.id }} .tabs.ui-tabs .ui-tabs-nav li  a {

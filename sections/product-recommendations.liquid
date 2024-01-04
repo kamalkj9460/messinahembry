@@ -12,13 +12,14 @@
 }
   
   .snize-recommendation-title {
-text-align: center;
+text-align: center !important;
 border-bottom: transparent !important;
 margin-bottom: 10px;
 }
   .snize-recommendations.snize-horizontal-padding {
-    padding: 40px 0;
+    padding: 40px !important;
 }
+
 #shopify-section-{{ section.id }} h3.snize-recommendation-title {
     text-transform: uppercase !important;
     font-weight: 700!important;
@@ -27,6 +28,9 @@ margin-bottom: 10px;
     color: #3f4b57 !important;
     line-height: 1.2em;
 }
+#shopify-section-{{ section.id }} h3.snize-recommendation-title {
+    text-align: center !important;
+  }
   @media screen and (max-width:767px){
     h3.snize-recommendation-title {
     font-size: 18px !important;

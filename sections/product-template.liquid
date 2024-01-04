@@ -9,6 +9,9 @@
 <div data-section-type="product-template">
   {% if in_lightbox == false %}
     <div class="container desktop-only">
+      
+      <button id="goBackButton">Go Back</button>
+
       <div class="page-header cf">
         <div class="filters">
           {% if section.settings.prod_show_tags and product.tags.size > 0 %}
@@ -249,40 +252,16 @@
             -->
           </div>
         </div>
-        <div class="quantity-submit-row input-row {% if section.settings.enable_payment_button %}has-spb{% endif %}">
-          {% if section.settings.show_quantity_selector %}
-            <label for="quantity">
-              {{- 'products.product.quantity' | t -}}
-            </label>
-            <div class="quantity-wrapper">
-              <a href="#" data-quantity="down">{% include 'svg-minus' %}</a>
-              <input aria-label="{{ 'products.product.quantity' | t }}" id="quantity" name="quantity" value="1">
-              <a href="#" data-quantity="up">{% include 'svg-plus' %}</a>
-            </div>
-          {% endif %}
-          <!-- <div class="quantity-submit-row__submit input-row">
-            <input class="button button--large" type="submit" value="{{ 'products.product.add_to_cart' | t }}">
-          </div> -->
-          <form method="post" action="/cart/add">
-  <input name="id" value="{{ product.variants.first.id }}" type="hidden" />
-   <input class="button button--large" type="submit" value="{{ 'products.product.add_to_cart' | t }}">
-</form>
-          {% if section.settings.enable_payment_button %}
-            {{ form | payment_button }}
-          {% endif %}
-        </div>
-
+        
         <div class="tags-mh">
-          <ul>
-            {% for tag in product.tags %}
-              <li class="{{ tag }}">
-                <a href="{% if collection %}{{ collection.url }}{% else %}{{ routes.collections_url }}{% endif %}/{{ tag | replace: " ", "-"}}">
-                  {{- tag -}}
-                </a>
-              </li>
-            {% endfor %}
-          </ul>
-        </div>
+      <ul>
+        {% for tag in product.tags %}
+        <li class="{{ tag }}"><a href="{% if collection %}{{ collection.url }}{% else %}{{ routes.collections_url }}{% endif %}/{{ tag | replace: " ", "-"}}">{{ tag }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  
+ 
       </div>
 
       <div class="product-form 111 section content-divider">
@@ -395,6 +374,33 @@
               {% endif %}
             </div>
 
+            <div class="quantity-submit-row input-row {% if section.settings.enable_payment_button %}has-spb{% endif %}">
+          {% if section.settings.show_quantity_selector %}
+            <label for="quantity">
+              {{- 'products.product.quantity' | t -}}
+            </label>
+            <div class="quantity-wrapper">
+              <a href="#" data-quantity="down">{% include 'svg-minus' %}</a>
+              <input aria-label="{{ 'products.product.quantity' | t }}" id="quantity" name="quantity" value="1">
+              <a href="#" data-quantity="up">{% include 'svg-plus' %}</a>
+            </div>
+          {% endif %}
+            <div class="quantity-submit-row__submit input-row">
+                <input class="button button--large" type="submit" value="{{ 'products.product.add_to_cart' | t }}" />
+              </div>
+              
+           <!-- <form method="post" action="/cart/add">
+  <input name="id" value="{{ product.variants.first.id }}" type="hidden" />
+   <input  class="button button--large" type="submit" value="{{ 'products.product.add_to_cart' | t }}">
+</form>  -->
+              
+      {% if section.settings.enable_payment_button %}
+            {{ form | payment_button }}
+          {% endif %}
+        </div>
+
+
+        
             {% capture backorder_message %}{{ 'products.product.backorder' | t }}{% endcapture %}
             {% unless backorder_message == blank %}
               {% if product.variants.size == 1 %}
@@ -434,24 +440,23 @@
       {% if section.settings.prod_desc_pos == 'beside' and in_lightbox == false %}
         {% comment %} Add code to show under the description on the line below this one, if beside the image {% endcomment %}
         <!-- Underneath the description -->
+        
 <div class="reword-buttons">
         
-          <!-- <a class="rewards-link" href="#smile-home"> -->
-            <!-- <img class="crown" src="https://cdn.shopify.com/s/files/1/0573/6433/t/63/assets/crown-green.png?v=1618527321" >-->
-            <!-- <span>EARN REWARDS WITH EVERY PURCHASE</span> <i class="fa fa-solid fa-box"></i> -->
-            <!-- <img class="crown" src="https://cdn.shopify.com/s/files/1/0573/6433/t/63/assets/crown-green.png?v=1618527321">  -->
-          <!-- </a> -->
-  <!--<div class="rewards-prompt">
-           <a class="rewards-link" href="#smile-home">
-            <span>EARN REWARDS WITH EVERY PURCHASE</span> <i class="fa fa-solid fa-box"></i>
-          </a> 
-    
-        </div>-->
-<a href="#smile-home" class="rewards-prompt" target="_blank">EARN REWARDS WITH EVERY PURCHASE<i class="fa fa-solid fa-box"></i></a>
-        <!-- <a href="https://messinahembry.com/pages/environment" class="planttree" target="_blank"
-          >Sustainable Fashion 🌱</a> -->
-      <a href="https://messinahembry.com/pages/environment" class="stud-dis" target="_blank">SUSTAINAILITY AND ENVIRONMENTAL POLICY<i class="fa fa-thin fa-tree"></i></a> 
+          
+ <button class="rewards-prompt"> <a class="rewards-link" href="#smile-home">
+<span>EARN REWARDS WITH EVERY PURCHASE</span><i class="fa fa-solid fa-box"></i>
+</a></button>
+  
+<button class="rewards-prompt"> <a class="stud-dis" href="https://messinahembry.com/pages/environment">
+<span>SUSTAINAILITY AND ENVIRONMENTAL POLICY</span><i class="fa fa-thin fa-tree"></i>
+</a></button>
+      <!-- <a href="https://messinahembry.com/pages/environment" class="stud-dis" target="_blank">SUSTAINAILITY AND ENVIRONMENTAL POLICY<i class="fa fa-thin fa-tree"></i></a>  -->
 </div>
+
+
+
+        
         <div class="pops-contain pop-1 pop-hide">
           <div class="pops">
             <h4>Guaranteed Authenticity</h4>
@@ -465,9 +470,7 @@
             <p>- We guarantee your item to be 100% authentic or your money back.</p>
 
             <p>
-              <a href="https://messinahembry.com/pages/quality-control"
-                >Click here for full details of our authentication process.</a
-              >
+              <a href="https://messinahembry.com/pages/quality-control">Click here for full details of our authentication process.</a>
             </p>
           </div>
         </div>
@@ -926,13 +929,14 @@
   </script>
 {% endif %}
 
-<!--
-  <div id="looxReviews" data-product-id="{{product.id}}" class="loox-reviews-default">
+  <!-- <div id="looxReviews" data-product-id="{{product.id}}" class="loox-reviews-default">
     {{ product.metafields.loox.reviews }}
-  </div>
--->
+  </div> -->
 
 <style>
+            div#delivery_timer_wrapper {
+    text-align: center !important;
+}
              #shopify-section-{{ section.id }} .accordion {
                background-color: transparent;
                color: #444;
@@ -980,15 +984,18 @@
                  color: #fff;
                  border: 1px solid;
                  margin-top: 20px;
+                 margin-bottom: 8px;
                  border-radius: 8px;
                  text-transform: uppercase;
                  font-weight: 700;
                  letter-spacing: 1px;
              }
-             #shopify-section-{{ section.id }} input.button.button--large:hover {
+             /* #shopify-section-{{ section.id }} input.button.button--large:hover {
                  background: #000;
                  color:#fff;
-             }
+             } */
+
+ 
              #shopify-section-{{ section.id }} .sharing-label {
                  font-size: 15px !important;
              }
@@ -1033,14 +1040,11 @@
              #shopify-section-{{ section.id }} .sharing a svg, #shopify-section-{{ section.id }} .sharing a svg g {
                  fill: #000000;
              }
-             #shopify-section-{{ section.id }} a.planttree, a.stud-dis {
+             #shopify-section-{{ section.id }} a.planttree {
                  color: #000;
                  background: #dcdcdc7d;
              }
-             #shopify-section-{{ section.id }} .planttree, #shopify-section-{{ section.id }} .stud-dis {
-                 border: solid 1px #dcdcdc7d;
-                border-radius: 8px;
-             }
+             
              #shopify-section-{{ section.id }} h1 {
                  color: #000000;
                  text-align: center;
@@ -1065,11 +1069,26 @@
                  line-height: 1;
                  text-align: left;
              }
+  #shopify-section-{{ section.id }} .reword-buttons.w3_bg button:hover {
+    background-color: #eeeeee!important;
+}
+#shopify-section-{{ section.id }} a.stud-dis, #shopify-section-{{ section.id }} a.rewards-link {
+    color: #000;
+}
+#shopify-section-{{ section.id }} button#goBackButton {
+    background: #000 !important;
+    border-radius: 8px !important;
+}
                @media screen and (max-width:767px) {
              #shopify-section-{{ section.id }} input.button.button--large {
                  width: 100%;
-                 max-width: 300px;
+                 max-width: 100%;
              }
+             #shopify-section-{{ section.id }} button.rewards-prompt {
+                  width: 96%!important;
+                   margin-left: 0 !important;
+             }
+                 
                }
                @media screen and (max-width:320px){
              #shopify-section-{{ section.id }} input.button.button--large {
@@ -1081,8 +1100,6 @@
 
 
              /*-----------------------------------------------********************----------------------------------------------------------*/
-             /* newly added css for changes 26-09-2023  */
-             /* newly added css for changes 26-09-2023  */
              /* newly added css for changes 26-09-2023  */
               #shopify-section-{{ section.id }} .button, #shopify-section-{{ section.id }} input[type=submit] {
 
@@ -1123,8 +1140,36 @@
              width: 100%;
              height: auto;
                 max-width:80% !important;
-         }}
+         }
           
+element.style {
+}
+#shopify-section-product-template .desktop-only {
+    text-align: left;
+}
+#shopify-section-product-template .container {
+    padding-right: 20px;
+}
+#shopify-section-product-template .desktop-only {
+    text-align: center;
+   margin-top: 0;
+}
+          div#delivery_timer_wrapper {
+    text-align: center !important;
+}          
+@media only screen and (max-width: 767px) {
+.container {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.desktop-only {
+    display: inline-block !important;
+}
+  .mobile-only.product-meta.w3_bg {
+    display:none !important;
+  }
+        }
+         
          #shopify-section-multicol .part-3{
         width: 50px;
           height: 60px;
@@ -1173,6 +1218,7 @@
     padding-right: 20px;
     padding-left:20px;
 }
+
 #shopify-section-{{ section.id }} a.rewards-prompt {
     font-size: 12px;
     text-align: center;
@@ -1188,7 +1234,7 @@
     display: flex;
     align-items: center;
 }
-#shopify-section-{{ section.id }} span.productlabel.soldout, #shopify-section-{{ section.id }} .social-area {
+#shopify-section-{{ section.id }} span.productlabel.soldout {
     display: none;
 }
 #shopify-section-{{ section.id }} .rimage-wrapper img.rimage__image.fade-in.lazyautosizes.lazyloaded {
@@ -1201,15 +1247,30 @@
 #shopify-section-{{ section.id }} .set_class > a {
     border-top: 2px solid #ddd;
   border-bottom:unset;
+  margin-bottom:0 !important;
 }
 #shopify-section-{{ section.id }} .description.user-content ul {
     padding-left: 30px;
+}
+#shopify-section-{{ section.id }} .sharing ul, #shopify-section-{{ section.id }} .sharing li {
+    line-height: 24px !important; 
+}
+#shopify-section-{{ section.id }} li.twitter .fa {
+    color: #fff;
+    background: #000;
+    padding: 2px;
+}
+#shopify-section-{{ section.id }} .detail.product-column-right.gallery-layout-under.w3_bg {
+    padding-left: 40px;
 }
     @media only screen and (max-width:767px){
        div#delivery_timer_wrapper {
       font-size: 13px;
       padding: 20px 0;
   }
+#shopify-section-{{ section.id }} .detail.product-column-right.gallery-layout-under.w3_bg {
+    padding-left: 0;
+}
 #shopify-section-{{ section.id }} .stud-dis {
     margin-left: 0px;
 }
@@ -1226,6 +1287,9 @@
 #shopify-section-{{ section.id }} .rewards-prompt .rewards-link {
     padding: 15px 0px;
 }
+      .fa-x-twitter {
+    font-size: 23px !important;
+}
     }
 @media screen and (min-width:768px) and (max-width:991px) {
 #shopify-section-{{ section.id }} a.stud-dis, #shopify-section-{{ section.id }} a.rewards-prompt {
@@ -1233,7 +1297,86 @@
    
 }
 }
+.rewards-prompt {
+  font-size: 2rem;
+  font-weight: 600;
+  padding: 1.75rem 3.5rem;
+  margin: 5rem 2rem;
+  border: none;
+  background-color: #fff;
+  color: #444;
+  border-radius: 10rem;
+  cursor: pointer;
+}
+.thumbnails .thumbnail {
+    display: inline-block;
+    width: 100% !important;
+}
+.rimage-wrapper.w3_bg {
+    width: 100% !important;
+    margin: 0 auto;
+}
+.close-modal {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 50px;
+  color: #333;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+.hidden {
+  display: none;
+}
 
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right:0;
+  width: 70%;
+  text-align: center;
+  background-color: white;
+  padding: 50px;
+  border-radius: 5px;
+  box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
+  z-index: 10;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+}
+.pops a {
+        cursor:pointer;
+}
+        a.rewards-link {
+    color: #000;
+}
+#shopify-section-{{ section.id }} button#goBackButton {
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 1px;
+    border-radius: 8px !important;
+    background: #000 !important;
+}
+#shopify-section-{{ section.id }} .desktop-only {
+    text-align: left;
+}
+#shopify-section-{{ section.id }} .thumbnails.desktop-only.w3_bg {
+    width: 60px;
+}
+#shopify-section-{{ section.id }} .thumbnails {
+    overflow: inherit;
+}
+.container.desktop-only.w3_bg {
+    text-align: left !important;
+}
              /*-----------------------------------------------********************----------------------------------------------------------*/
 </style>
 <script>
@@ -1251,4 +1394,22 @@
       }
     });
   }
+
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var referrer = document.referrer; // Get the referrer URL
+    var currentPage = window.location.href; // Get the current page URL
+
+    if (referrer && referrer !== currentPage) {
+      // Show the button if the referrer exists and is not the same as the current page
+      var goBackButton = document.getElementById('goBackButton');
+      goBackButton.style.display = 'block';
+
+      goBackButton.addEventListener('click', function() {
+        history.back(); // GO BACK to the previous page when the button is clicked
+      });
+    }
+  });
+
 </script>
+

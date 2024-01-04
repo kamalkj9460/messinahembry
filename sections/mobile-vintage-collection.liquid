@@ -3,15 +3,21 @@
  
           <div class="one-box">
             <div class="threecr-new img" style="background-image:url(https:{{ section.settings.image1 | img_url: 'large' }})">
-              <h3>{{ section.settings.heading1 }}</h3>
+               <a href="{{ section.settings.link1 }}" >
+                  <h3>{{ section.settings.heading1 }}</h3>
+              </a>
             </div> 
             <div class="threecr-new" style="background-image:url(https:{{ section.settings.image2 | img_url: 'large' }})">
-              <h3>{{ section.settings.heading2 }}</h3>
+              <a href="{{ section.settings.link2 }}" >
+                  <h3>{{ section.settings.heading2 }}</h3>
+              </a>
             </div>
           </div>
      <div class="vintage-inner">
         <div class="threecr-item-one" style="background-image:url(https:{{ section.settings.image3 | img_url: 'large' }})">
-              <h3>{{ section.settings.heading3 }}</h3>
+             <a href="{{ section.settings.link3 }}" >
+                  <h3>{{ section.settings.heading3 }}</h3>
+              </a>
             </div>
   </div>
    </div>
@@ -31,7 +37,11 @@
           "id": "heading1",
           "label": "Heading"
         },
-        
+        {
+          "type":"url",
+          "id":"link1",
+          "label":"URL"
+        },
                     {
           "type": "image_picker",
           "id": "image2",
@@ -42,7 +52,11 @@
           "id": "heading2",
           "label": "Heading"
         },
-        
+        {
+          "type":"url",
+          "id":"link2",
+          "label":"URL"
+        },
                     {
           "type": "image_picker",
           "id": "image3",
@@ -52,6 +66,11 @@
           "type": "text",
           "id": "heading3",
           "label": "Heading"
+        },
+      {
+          "type":"url",
+          "id":"link3",
+          "label":"URL"
         }
        
     ],
@@ -108,7 +127,7 @@
     margin: 0 auto;
     display: flex;
     margin: 30px 10px;
-    padding: 0 20px;
+    padding: 0 13px;
     align-items: center;
 }
  #shopify-section-{{ section.id }} .tcr-item:nth-child(2) {

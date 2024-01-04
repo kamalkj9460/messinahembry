@@ -457,7 +457,7 @@ $slick-product-prevnext-font-size: 44px;
 
 .slick-list {
   .slick-loading & {
-    background: #fff url(//messinahembry.com/cdn/shop/t/78/assets/ajax-load.gif?v=62939699503414190391695701753) center center no-repeat;
+    background: #fff url(//messinahembry.com/cdn/shop/t/87/assets/ajax-load.gif?v=62939699503414190391703682639) center center no-repeat;
   }
 }
 
@@ -2022,7 +2022,7 @@ $header-search-form-text: #666;
 
 #pageheader .search-box .results-box .load {
   display: block;
-  background: url('//messinahembry.com/cdn/shop/t/78/assets/ajax-load.gif?v=62939699503414190391695701753') center center no-repeat;
+  background: url('//messinahembry.com/cdn/shop/t/87/assets/ajax-load.gif?v=62939699503414190391703682639') center center no-repeat;
   text-align: center;
   padding: 15px 6px;
 }
@@ -3623,7 +3623,8 @@ ul.inline li {
   margin-left: -5px;
   padding-right: (100% / 12);
   overflow: hidden;
-  width: calc(100% - (100% / 12) + 5px);
+  
+  width:200px;
   white-space: normal;
   box-sizing: content-box;
 
@@ -4717,7 +4718,10 @@ $cart-item-column-gutter: 30px;
 }
 
 #cartform .checkout-col {
-  margin: 20px 0 0;
+  /* margin: 20px 0 0; */
+    width: 400px;
+    margin: 0 0 auto 0;
+    float: right;
 
   .button {
     min-width: 200px;
@@ -6880,21 +6884,22 @@ $gallery-viewer-thumbnail-size-mobile: 50px;
 }
 
 .gallery-viewer__zoom-image {
-  position: absolute;
-  width: auto;
+  position:absolute;
+  width: 60%;
   height: auto;
   max-width: none;
   max-height: none;
   min-width: 0;
   min-height: 0;
+  left:21%;
 }
 
 .gallery-viewer__thumbs {
   position: absolute;
+  left:21% !important;
   z-index: 2;
-  left: 0;
   bottom: 20px;
-  width: 100%;
+  width: 60%;
   text-align: center;
   overflow: auto;
   white-space: nowrap;
@@ -7166,7 +7171,7 @@ $gallery-viewer-thumbnail-size-mobile: 50px;
   width: 35%;
   cursor: pointer;
   outline: none;
-  background: transparent url(//messinahembry.com/cdn/shop/t/78/assets/blank.gif?v=164826798765693215961695701753);
+  background: transparent url(//messinahembry.com/cdn/shop/t/87/assets/blank.gif?v=164826798765693215961703682639);
   z-index: 5102;
   display: none;
 }
@@ -7527,7 +7532,7 @@ $_map-text-padding-mobile-horizontal: 20px;
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
+    width: auto;
     height: 100%;
     /* object-fit: contain;
  */
@@ -9719,7 +9724,7 @@ display:none;
 }
 
 .rimage-wrapper {
-    position: inherit;
+    position: sticky;
 }
 
 
@@ -10346,17 +10351,23 @@ input, textarea {
     text-align: center;
 }
 
+.reword-buttons.w3_bg button:hover{
+  background-color:transparent !important;
+}
 
-
-.rewards-prompt .rewards-link {
-    background-color: #42dd9c;
-    padding: 4px;
+button.rewards-prompt {
+    background-color: #dcdcdc7d;
+    padding: 20px 6px;
     text-align: center;
-    color: #fff;
+    color: #000;
     text-transform: uppercase;
-  width: 100% !important;
-display: inline-block;
-  font-weight:bold;
+    width: 100% !important;
+    display: inline-block;
+    font-weight:bold;
+    font-size: 12px !important;
+    border: solid 1px #dcdcdc7d;
+    border-radius: 8px;
+    margin: 0px 0px 10px 10px !important;
 }
 .rewards-prompt .rewards-link .crown {
     width: 20px;
@@ -10409,16 +10420,6 @@ display: inline-block;
     border: solid .8px rgba(109, 185, 24,.5);
     padding: 7px 12px;
 }
-
-
-/*.eco-home img {
-    width: 264px;
-    padding-top: 27px;
-}
-
-.gift-card-cont {
-    margin-top: 26px;
-}*/
 
 .eco-home img, .recycle-img {
     width: 260px;
@@ -10503,31 +10504,12 @@ display: inline-block;
   font-size:0 !important;
 }
 
-.rewards-prompt .rewards-link {
-    /* background-color: transparent; */
-    background-color: #eeeeee;
-    padding: 4px;
-    text-align: center;
-    color: #fff;
-    text-transform: uppercase;
-    width: 100% !important;
-    display: inline-block;
-    font-weight: bold;
-    border:solid 1px #dcdcdc7d;
-    /* border: solid #42dd9c 1px; */
-    /* color: #42dd9c; */
-    color:#000;
-    border-radius: 8px;
-    font-size: 13px;
-    padding: 15px 10px;
-}
+
 
 .planttree {
     border: solid 1px rgba(109, 185, 24, 0.5);
 }
-.stud-dis {
-    border: solid 1px rgba(25, 123, 189, 0.5);
-}
+
 
 
 .planttree {
@@ -10536,16 +10518,6 @@ display: inline-block;
   margin-bottom:10px;
 }
 
-.stud-dis {
-    /* margin-top: 10px; */
-    margin-bottom: 10px;
-    text-align: center;
-    border: solid 0.8px rgba(25, 123, 189, .5);
-    padding: 5px 10px;
-    width: calc(40% - 5px);
-    margin-left: 8px;
-    display: inline-block;
-}
 
 @media screen and (max-width:1060px) {
 .planttree {
@@ -10653,9 +10625,6 @@ background-color:#fff;
 }
 #pageheader {
     z-index: 9999999999;
-}
-.switcher {
-    /*display: none;*/
 }
 .switcher {
     width: 67px;
@@ -11029,11 +10998,8 @@ button.disclosure__toggle_user {
     padding: 0 7px;
 }
 div#shopify-section-header input{
-      padding: 11px 48px;
+      padding: 11px 35px;
 }
-/* div#shopify-section-header label.search-box-label {
-    border-bottom: 1px solid #878787;
-} */
 
 @import url("https://p.typekit.net/p.css?s=1&k=gaq1iud&ht=tk&f=30351.30354.30355&a=5950289&app=typekit&e=css");
 
@@ -11071,7 +11037,6 @@ font-display:auto;font-style:normal;font-weight:700;font-stretch:normal;
 
 .tab_content_item{
   display: none;
-  /* display: block; */
 }
 
 
@@ -11088,6 +11053,7 @@ svg{
 
 div#shopify-section-ddbdbf17-6c1b-4903-85e0-79b3dd27b800 .block-inner-inner {
     margin: 0 10px;
+    margin-left: 0;
 }
 .tabs-section.page-width, div#shopify-section-165417517743c04c56 .w-row-container {
     width: 100%;
@@ -11176,7 +11142,6 @@ div#shopify-section-3b8c48b2-ba7e-4d3e-b6a7-18c1014352bf .threecr-item-imgsec{
     align-items: flex-end !important;
 }
 div#shopify-section-3b8c48b2-ba7e-4d3e-b6a7-18c1014352bf .w-row-container{
-    /* width: 1200px;*/
     width:1400px;
     margin: 0 auto;
     text-align: center;
@@ -11307,8 +11272,8 @@ div.snize div.snize-main-panel-dropdown {
     float: left !important;
 }
 div.snize .snize-horizontal-right, div.snize .snize-horizontal-left {
-   /* min-width: 50% !important;
-    margin-left: 15px;*/
+  /*  min-width: 50% !important;
+    margin-left: 15px; */
 }
   .snize-horizontal-right {
     display: flex;
@@ -11411,6 +11376,7 @@ div#shopify-section-product-template .detail.gallery-layout-under {
     border: none;
     margin: 0;
     padding: 0;
+  text-align:center;
     font-weight: 700 !important;
     text-transform: uppercase !important;
     padding-bottom: 20px;
@@ -11420,3 +11386,49 @@ div#shopify-section-product-template .detail.gallery-layout-under {
 .product-block .rimage__image {
     object-fit: contain ;
 }
+
+.owl-item.active {
+    width: 77.5px !important;
+}
+
+/* 15-Nov-23 cart page */
+#shopify-section-cart-template #cartform .cart-item-list .cart-item-list__body .cart-item .cart-item__column	a .rimage-outer-wrapper .rimage-wrapper .rimage__image{
+    /* position: relative; */
+    height:auto;
+}
+.container.cf.w3_bg {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+input.button.button--large.grey.inverted{
+  background-color: grey !important;
+}
+ iframe#\:1\.container {
+    visibility: hidden !important;
+}
+ .snize-recommendation {
+    margin: 0 auto !important;
+    max-width: 1400px !important;
+}
+h3.snize-recommendation-title {
+    padding: 40px 0 !important;
+}
+.snize-recommendations.snize-horizontal-padding {
+    padding-bottom: 40px;
+}
+.snize-recommendation * {
+    overflow: hidden !important;
+}
+.mobile-only.product-meta {
+    display: none;
+}
+ .slick-track.w3_bg {
+    /* width: 100% !important; */
+}
+ .slick-track.w3_bg li {
+   width:unset !important;
+}
+.snize-recommendations.snize-horizontal-padding {
+    display: none !important;
+}
+

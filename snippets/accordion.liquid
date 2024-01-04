@@ -7,7 +7,7 @@
     </a>
     {% if block.settings.title != blank %}
     <div class="content_class" id="info_new-{% increment counter %}">
-      <p>{{ block.settings.answer }}</p>
+   {{ block.settings.answer }}
     </div>{% endif %}
   </div>
   {% endfor %}
@@ -15,11 +15,12 @@
 
 
 <style>
-.accordion-container{
+.accordion-container {
   position: relative;
   max-width: 800px;
   height: auto;
   margin: 10px auto;
+  padding-left: 2px;
 }
 .accordion-container > h2{
   text-align: center;
@@ -37,7 +38,7 @@
 }
 .set_class > a{
   display: block;
-      margin-bottom: 10px;
+  margin-bottom: 10px;
   padding: 10px 15px;
   text-decoration: none;
   color: #555;
@@ -47,9 +48,17 @@
   -moz-transition:all 0.2s linear;
   transition:all 0.2s linear;
 }
+#shopify-section-{{ section.id }} .description.user-content ul {
+    padding-left: 0px !important;
+}
 .set_class > a i{
   float: right;
   margin-top: 2px;
+}
+  
+.content_class {
+    padding-left: 0px;
+  padding-bottom: 15px;
 }
 .set_class > a.active{
     background-color: #ffff;
@@ -71,6 +80,15 @@
   div#info_new-0 {
     display: block;
 }
+#shopify-section-product-template .product-template .desktop-only .product-detail .gallery  .main-image{
+    z-index: 999999;
+}
+  
+
+#shopify-section-{{ section.id }} ul{
+    margin-top:0px !important;
+	margin-bottom:0px !important;
+  }
 </style>
 <script>
 $(document).ready(function() {

@@ -133,10 +133,11 @@
                       aria-label="{{ 'cart.general.quantity' | t | escape }}" />
                     <a id="updates_inc_{{ forloop.index }}" class="notabutton quantity-up {% unless can_increase %}unusable{% endunless %}" href="routes.cart_change_url?line={{ forloop.index }}&quantity={{ item.quantity | plus: 1 }}" aria-label="{{ 'cart.label.increase' | t | escape }}">{% include 'svg-plus' %}</a>
                   </div>
-                  <a class="remove" onclick="return confirm('{{ 'cart.general.confirm_remove' | t }}')" href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity=0">
-                    {{ 'cart.general.remove' | t }}
-                    {% include 'svg-x' %}
+                  <a class="remove" onclick="handleRemoveItem('{{ item.key }}')" href="javascript:void(0);">
+                      {{ 'cart.general.remove' | t }}
+                      {% include 'svg-x' %}
                   </a>
+               
                 </div>
 
                 <div class="cart-item__column cart-item__total" data-line="{{ forloop.index }}">
@@ -152,7 +153,7 @@
           {% endfor %}
         </div>
       </div>
-
+      
       <div class="checkout-subtotal-container">
         <div class="checkout-subtotal-container__left layout-column-half-left">
           {% if section.settings.enable_cart_notes %}
@@ -287,3 +288,18 @@
   ]
   }
 {% endschema %}
+<style>
+#shopify-section-{{ section.id }} .checkout-col.w3_bg {
+    width: 400px;
+    margin: 0 0 auto 0;
+    float: right;
+}
+#shopify-section-{{ section.id }} .layout-column-half-right {
+    width: 100%;
+}
+  @media screen and (max-width:767px) {
+#shopify-section-{{ section.id }} .checkout-col.w3_bg {
+    width: 100%;
+}
+  }
+</style>

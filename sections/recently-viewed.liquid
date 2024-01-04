@@ -1,6 +1,6 @@
 <script>
-jQuery(document).ready(function($) {
-      jQuery('.slider2').slick({
+$(document).ready(function($) {
+      $('.slider2').slick({
         dots: false,
         infinite: false,
         speed: 500,
@@ -21,13 +21,21 @@ jQuery(document).ready(function($) {
         }]
     });
 });
+  
+//   $('.slick-carousel').slick({
+//   infinite: true,
+//   slidesToShow: 3, // Shows a three slides at a time
+//   slidesToScroll: 1, // When you click an arrow, it scrolls 1 slide at a time
+//   arrows: true, // Adds arrows to sides of slider
+//   dots: true // Adds the dots on the bottom
+// });
 </script>
 
 <div class="recently-viewed-wrapper page-width heading_style_div">
     <h2 class="custom_style_heading">Recently Viewed</h2>
-    <ul class="recently-viewed-grid slider2">
+    <div class="recently-viewed-grid slider2">
     <!-- Recently viewed products will appear here -->
-    </ul>
+    </div>
 </div>
 
 <script>
@@ -75,13 +83,13 @@ function getRecentlyViewedProducts() {
   const recentlyViewedHtml = [];
   productData.map(item => {
     recentlyViewedHtml.unshift(`
-    <li class="recently-viewed-grid-item">
+    <div class="recently-viewed-grid-item">
       <a class="product_grid" "href="${item.productUrl}"> 
 		<img class="recently-viewed-img" src='${item.productImg}' loading="lazy" alt="${item.productImageAltText}"/>
       </a>
        <h3><a class="recently-viewed-a" href="${item.productUrl}">${item.productTitle}</a></h3>
        <p>${item.productPrice}</p>
-    </li>
+    </div>
    `);
   });
   const newProductData = `${recentlyViewedHtml.join("")}`;
@@ -175,6 +183,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
 }
 #shopify-section-{{ section.id }} button.slick-arrow {
   display:block !important;
+}
+#shopify-section-{{ section.id }} .recently-viewed-grid.slider2.w3_bg {
+    display: flex;
 }
   @media screen and (max-width:767px){
  .product-meta-row.further-nav {

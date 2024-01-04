@@ -1657,11 +1657,6 @@ footer#site-footer {
 				flex: 0 0 25%;
 				max-width: 25%;
 			}
-
-/* 			@media (min-width: 1600px) {
-				flex: 0 0 20%;
-				max-width: 20%;
-			} */
 		}
 	}
 		
@@ -4206,7 +4201,6 @@ form.search-form {
   a:hover,
   li.active a {
     color: #414042;
-  	/* font-family: UniformBold-Regular,sans-serif; */
     font-family:"forma-djr-display";
   }
 }
@@ -5520,3 +5514,16 @@ font-display:auto;font-style:normal;font-weight:700;font-stretch:normal;
 }
 
 .tk-forma-djr-display { font-family: "forma-djr-display",sans-serif; }
+.container.cf.w3_bg {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+input.button.button--large.inverted.grey {
+    background-color: antiquewhite !important;
+}
+input.button.button--large.grey.inverted{
+  background-color: red !important;
+}
+ iframe#\:1\.container {
+    visibility: hidden !important;
+}

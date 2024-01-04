@@ -3,14 +3,14 @@
   <div class="w-row-container">
   
         {% for block in section.blocks %}  
-
+<a href="{{ block.settings.link_url }}">
           <div class="threecr-item">
               <div class="three-overlay"></div>
-            <a href="{{ block.settings.link_url }}"><div class="threecr-item-imgsec" style="background-image:url(https:{{ block.settings.image | img_url: '700x' }})">
+            <div class="threecr-item-imgsec" style="background-image:url(https:{{ block.settings.image | img_url: '700x' }})">
               <h3>{{ block.settings.heading }}</h3>
-            </div></a>  
+            </div>
           </div>
-
+</a>  
         {% endfor %}
         
   
@@ -75,7 +75,7 @@
 
 
 
-{% stylesheet %}
+<style>
   
 
 #shopify-section-{{ section.id }} .threecr-item {
@@ -199,10 +199,7 @@ height: 400px;
   padding: 5px 25px;
 }
 #shopify-section-{{ section.id }} .threecr-item h3:hover {
-    background: #367bbb !important;
-    color: #fff !important;
+    background: #f6de62 !important;
+    color: #000 !important;
 }
-{% endstylesheet %}
-
-{% javascript %}
-{% endjavascript %}
+</style>

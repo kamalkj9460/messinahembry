@@ -21,7 +21,7 @@
     <div class="container {% unless section.settings.use_carousel %}uncontain-desktop-down{% endunless %}">
   {% endunless %}
   <div class="collection-slider">
-    <h1 class="hometitle h4-style align-center has-paging">
+    <h2 class="hometitle h4-style align-center has-paging">
       {% if section.settings.use_carousel -%}
         <a class="prev" href="#">{% include 'svg-chevron-left' %}</a>
       {%- endif %}
@@ -29,7 +29,7 @@
       {% if section.settings.use_carousel -%}
         <a class="next" href="#">{% include 'svg-chevron-right' %}</a>
       {%- endif %}
-    </h1>
+    </h2>
     <div class="vintage-button">
       <a href="{{ section.settings.link }}" class="btn btn--cta">{{ section.settings.linktext }}</a>
     </div>
@@ -67,6 +67,7 @@
   "name": "Collection list",
   "max_blocks": 20,
   "settings": [
+    
     {
       "type": "text",
       "id": "title",
@@ -166,7 +167,12 @@
         "type": "image_picker",
         "id": "collection-img",
         "label": "Collection image"
-      }
+      },
+        {
+          "id": "link_url",
+          "type": "url",
+          "label": "URL"
+        }
       ]
     }
   ],
@@ -367,9 +373,12 @@
     background-size: cover !important;
 }
 #shopify-section-{{ section.id }} span.title:hover {
-    background: #367bbb !important;
-     color: #fff !important;
+    background: #f6de62 !important;
+     color: #000 !important;
 }
+#shopify-section-{{ section.id }}  img.rimage__image.lazyautosizes.lazyloaded {
+    display: none;
+} 
   @media screen and (max-width:767px){
 #shopify-section-{{ section.id }} span.title {
     text-transform: uppercase;
