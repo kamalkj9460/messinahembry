@@ -1,0 +1,203 @@
+{%- if section.blocks.size == 1 -%}
+  {%- assign image_size = '2000x600' -%}
+  {%- assign font_tag = 'h4' -%}
+{%- endif -%}
+{%- if section.blocks.size == 2 -%}
+  {%- assign image_size = '1250x1250' -%}
+  {%- assign font_tag = 'h5' -%}
+{%- endif -%}
+{%- if section.blocks.size == 3 -%}
+  {%- assign image_size = '830x610' -%}
+  {%- assign font_tag = 'h5' -%}
+{%- endif -%}
+{%- if section.blocks.size > 3 -%}
+  {%- assign image_size = '340x340' -%}
+  {%- assign font_tag = 'h5' -%}
+{%- endif -%}
+
+<div data-section-type="image-grid" data-section-id="{{ section.id }}" class="1section_pLR page-width">
+  <section class="section-image-grid section-image-grid--{{ section.blocks.size }}">
+    {%- if section.blocks.size > 0 -%}
+      {%- assign index = 1 -%}
+      {%- for block in section.blocks -%}
+        <div
+          class="image-grid-block"
+          {{ block.shopify_attributes }}
+          data-block-id="{{ block.id }}"
+          data-slide-index="{{ index }}"
+        >
+          <div class="position-relative">
+            <div class="image-grid-block-image">
+              {% assign image_size_parts = image_size | split: 'x' %}
+              <img
+                width="{{ image_size_parts.first }}"
+                height="{{ image_size_parts.last }}"
+                class="img-fluid lazyload"
+                src="{{ 'img_lazysrc.png' | asset_url }}"
+                data-src="{{ block.settings.image | img_url: image_size, crop: 'center', format: 'pjpg' }}"
+                alt="{{ block.settings.heading }}"
+              >
+              {% if block.settings.url and block.settings.heading == blank %}
+                <a href="{{ block.settings.url }}" class="stretched-link"></a>
+              {% endif %}
+            </div>
+            <div class="image-grid-block-content">
+              {%- if block.settings.heading != blank -%}
+                <{{ font_tag }}>
+                  <a href="{{ block.settings.url }}" class="{{ block.settings.align }}">
+                    <span>{{ block.settings.heading }}</span>
+                  </a>
+                </{{ font_tag }}>
+              {%- else -%}
+                <a href="{{ block.settings.url }}"></a>
+              {%- endif -%}
+            </div>
+          </div>
+        </div>
+        {%- assign index = index | plus: 1 -%}
+      {%- endfor -%}
+    {%- endif -%}
+  </section>
+</div>
+
+{% schema %}
+{
+	"name": "Image Grid",
+	"max_blocks": 3,
+	"blocks": [
+		{
+			"type": "image",
+			"name": "Image Column",
+			"settings": [
+				{
+					"type": "image_picker",
+					"id": "image",
+					"label": "Image"
+				},
+				{
+					"type": "text",
+					"id": "heading",
+					"label": "Heading Text"
+				},
+				{
+					"type": "url",
+					"id": "url",
+					"label": "URL"
+				},
+				{
+					"type": "select",
+					"id": "align",
+					"label": "Align Content",
+					"options": [
+						{
+							"label": "Top",
+							"value": "justify-content-lg-start"
+						},
+						{
+							"label": "Center",
+							"value": "justify-content-lg-center"
+						},
+						{
+							"label": "Bottom",
+							"value": "justify-content-lg-end"
+						}
+					],
+					"default": "justify-content-lg-center"
+				}
+			]
+		}
+	],
+	"presets": [
+		{
+			"name": "Image Grid",
+			"category": "True Store"
+		}
+	]
+}
+{% endschema %}
+<style>
+                #shopify-section-{{ section.id }} .section-image-grid {
+                  display: flex;
+                  column-gap: 15px;
+
+              }
+
+                  #shopify-section-{{ section.id }} .section-image-grid .image-grid-block{position:relative; width:50%;}
+             #shopify-section-{{ section.id }} .section-image-grid .image-grid-block img{width:100%;max-width:none;height:auto;}
+              #shopify-section-{{ section.id }} .section-image-grid .image-grid-block .image-grid-block-content{display:flex;flex-direction:column;align-items:center;position:absolute;top:0;left:0;bottom:0;right:0;}
+             #shopify-section-{{ section.id }} .section-image-grid .image-grid-block .image-grid-block-content a{text-decoration:none;}
+              #shopify-section-{{ section.id }} .section-image-grid .image-grid-block .image-grid-block-content h5{position:absolute;top:0;left:0;right:0;bottom:0;padding:0;margin:0;}
+              #shopify-section-{{ section.id }} .section-image-grid .image-grid-block .image-grid-block-content h5>a{position:absolute;top:0;left:0;right:0;bottom:0;background-color:rgba(0,0,0,0);display:flex;flex-direction:column;align-items:center;}
+            @media (max-width:991px){
+              #shopify-section-{{ section.id }} .section-image-grid .image-grid-block .image-grid-block-content h5>a{justify-content:center;}
+            }
+             #shopify-section-{{ section.id }} .section-image-grid .image-grid-block .image-grid-block-content h5>a span{color:#fff;display:inline-block;font-size:20px;color:#fff;font-family:forma-djr-display;font-weight:400;text-transform:uppercase;padding:25px;}
+            @media (min-width:992px){
+             #shopify-section-{{ section.id }} .section-image-grid .image-grid-block .image-grid-block-content h5>a span{font-size:24px;padding:35px;}
+            }
+             #shopify-section-{{ section.id }} .section-image-grid .image-grid-block:hover .image-grid-block-content a{background-color:rgba(0,0,0,.5)!important;}
+             #shopify-section-{{ section.id }} .img-fluid{max-width:100%;height:auto;}
+             #shopify-section-{{ section.id }} .stretched-link::after{position:absolute;top:0;right:0;bottom:0;left:0;z-index:1;pointer-events:auto;content:"";background-color:rgba(0,0,0,0);}
+             #shopify-section-{{ section.id }} .position-relative{position:relative!important;}
+           #shopify-section-{{ section.id }} .justify-content-end{-ms-flex-pack:end!important;justify-content:flex-end!important;}
+           #shopify-section-{{ section.id }} .justify-content-center{-ms-flex-pack:center!important;justify-content:center!important;}
+          #shopify-section-{{ section.id }} .justify-content-between{-ms-flex-pack:justify!important;justify-content:space-between!important;}
+           #shopify-section-{{ section.id }} .align-items-start{-ms-flex-align:start!important;align-items:flex-start!important;}
+           #shopify-section-{{ section.id }} .align-items-center{-ms-flex-align:center!important;align-items:center!important;}
+          @media (min-width:992px){
+           #shopify-section-{{ section.id }} .justify-content-lg-start{-ms-flex-pack:start!important;justify-content:flex-start!important;}
+           #shopify-section-{{ section.id }} .justify-content-lg-end{-ms-flex-pack:end!important;justify-content:flex-end!important;}
+           #shopify-section-{{ section.id }} .justify-content-lg-center{-ms-flex-pack:center!important;justify-content:center!important;}
+          #shopify-section-{{ section.id }} .justify-content-lg-between{-ms-flex-pack:justify!important;justify-content:space-between!important;}
+          }
+
+           @media (min-width:992px){
+           #shopify-section-{{ section.id }} .section_pLR{
+             padding-left:80px;
+             padding-right:80px;
+           }
+           }
+          @media (max-width:991px){
+           #shopify-section-{{ section.id }} .section_pLR{
+             padding-left:20px;
+             padding-right:20px;
+           }
+            .page-width {
+          width: 100%;
+          margin: 0 auto;
+          padding: 0 15px;
+          }
+           }
+          .page-width {
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+        }
+         #shopify-section-{{ section.id }} img.img-fluid.lazyloaded {
+          padding-bottom: 0 !important;
+      }
+      #shopify-section-{{ section.id }}  .section-image-grid .image-grid-block .image-grid-block-content h5>a {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 10px !important;
+        background-color: rgba(0,0,0,0);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+        @media (max-width:580px){
+           #shopify-section-06b6e8a7-0015-4220-8413-1c2e6f105c35 .section-image-grid .image-grid-block .image-grid-block-content h5>a span {
+              color: #fff;
+              display: inline-block;
+              font-size: 15px !important;
+              color: #fff;
+              font-family: forma-djr-display;
+              font-weight: 400;
+              text-transform: uppercase;
+              padding: 16px 10px !important;
+  }
+      }
+</style>

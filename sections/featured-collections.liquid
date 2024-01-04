@@ -1,0 +1,407 @@
+<style>
+  .section-id-{{ section.id }} {
+    background-color: {{ section.settings.background_color }};
+  }
+  {%- assign background_alpha = section.settings.overlay_background_color | color_extract: 'alpha' -%}
+  .section-id-{{ section.id }} .product-block.collection-block .productlabel > span {
+    color: {{ section.settings.overlay_text_color }};
+    background-color: {% if background_alpha == 0 %}transparent{% else %}{{ section.settings.overlay_background_color | color_modify: 'alpha', 0.8 }}{% endif %};
+  }
+  .section-id-{{ section.id }} .product-block.collection-block:hover .productlabel > span {
+    background-color: {% if background_alpha == 0 %}transparent{% else %}{{ section.settings.overlay_background_color | color_modify: 'alpha', 0.9 }}{% endif %};
+  }
+</style>
+
+{%- assign bg_alpha = section.settings.background_color | color_extract: 'alpha' -%}
+<div
+  class="collection-slider-row {% if section.settings.background_color == settings.bg_col or bg_alpha == 0 %}no-bg{% endif %} for-collections section-id-{{ section.id }}"
+  data-section-type="featured-collections"
+>
+  {% unless settings.use_fullwidth_layout %}
+    <div class="container {% unless section.settings.use_carousel %}uncontain-desktop-down{% endunless %}">
+  {% endunless %}
+  <div class="collection-slider">
+    <h1 class="hometitle h4-style align-center has-paging">
+      {% if section.settings.use_carousel -%}
+        <a class="prev" href="#">{% include 'svg-chevron-left' %}</a>
+      {%- endif %}
+      <span>{{ section.settings.title | escape }}</span>
+      {% if section.settings.use_carousel -%}
+        <a class="next" href="#">{% include 'svg-chevron-right' %}</a>
+      {%- endif %}
+    </h1>
+    <div class="vintage-button">
+      <a href="{{ section.settings.link }}" class="btn btn--cta">{{ section.settings.linktext }}</a>
+    </div>
+    <div class="collection-listing overlay-mode-{{ section.settings.overlay_mode }} {% unless settings.use_fullwidth_layout %}fixed-mode{% endunless %}">
+      <div class="product-list product-list--per-row-{{ section.settings.collections_per_row }} product-list--image-shape-{{ settings.prod_thumb_shape }} {% if section.settings.use_carousel %}carousel{% endif %}">
+        {% if section.blocks.size > 0 %}
+          {% for block in section.blocks %}
+            <div class="collect-img">
+              {% assign collection = collections[block.settings.collection] %}
+            </div>
+            {% unless collection == blank %}
+              {% include 'collection-block',
+                custom_attrs: block.shopify_attributes,
+                manual_image_load: section.settings.use_carousel
+              %}
+            {% else %}
+              {% include 'onboarding-collection-block' %}
+            {% endunless %}
+          {% endfor %}
+
+        {% else %}
+          {% for i in (1..6) %}
+            {% include 'onboarding-collection-block' %}
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <!-- /.collection-listing -->
+  {% unless settings.use_fullwidth_layout %}</div>{% endunless %}
+</div>
+
+{% schema %}
+{
+  "name": "Collection list",
+  "max_blocks": 20,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Collection list"
+    },
+    {
+    "id": "link",
+    "type": "url",
+    "label": "Button link"
+  },
+  {
+    "id": "linktext",
+    "type": "text",
+    "label": "Button text",
+    "default": "Click here"
+  },
+    {
+      "type": "checkbox",
+      "id": "use_carousel",
+      "label": "Enable carousel",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#f5f5f5"
+    },
+    {
+      "type": "header",
+      "content": "Overlay"
+    },
+    {
+      "type": "select",
+      "id": "overlay_mode",
+      "label": "Position",
+      "default": "m",
+      "options": [
+        {
+          "value": "none",
+          "label": "Do not show"
+        },
+        {
+          "value": "t",
+          "label": "Top"
+        },
+        {
+          "value": "m",
+          "label": "Middle"
+        },
+        {
+          "value": "b",
+          "label": "Bottom"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_count",
+      "label": "Show product count",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "overlay_text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "overlay_background_color",
+      "label": "Background color",
+      "default": "#232323"
+    },
+    {
+      "type": "range",
+      "id": "collections_per_row",
+      "label": "Collections per row",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 4
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+                {
+        "type": "image_picker",
+        "id": "collection-img",
+        "label": "Collection image"
+      }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection list",
+      "category": "Collection",
+      "settings": {
+        "title": "Collection list",
+        "overlay_mode": "m"
+      },
+      "blocks": [
+      ]
+    }
+  ]
+}
+{% endschema %}
+<style>
+      #shopify-section-{{ section.id }} .vintage-button {
+          text-align: center;
+            padding-bottom: 30px;
+      }
+      #shopify-section-{{ section.id }} .vintage-button a.btn.btn--cta {
+          color: #8a8f93;
+      }
+      #shopify-section-{{ section.id }} h1.hometitle.h4-style.align-center.has-paging {
+          margin-bottom: 10px;
+      }
+
+      #shopify-section-{{ section.id }} .product-info {
+          background-size: cover;
+          background-position: center;
+          width: 100%;
+          height: 100%;
+      }
+
+      /* #shopify-section-{{ section.id }} span.title {
+          text-transform: uppercase;
+          letter-spacing: 0px;
+          font-size: 16px;
+          color: #000!important;
+          background: #FFFFFF 0% 0% no-repeat padding-box!important;
+          border: 2px solid #FFFFFF;
+          border-radius: 8px;
+          opacity: 1;
+          align-items: center;
+          text-align: center;
+          margin-bottom: 30px;
+      }
+      #shopify-section-{{ section.id }} span.productlabel.general {
+         text-transform: uppercase;
+          letter-spacing: 0px;
+          font-size: 16px;
+          color: #000!important;
+          background: #FFFFFF 0% 0% no-repeat padding-box!important;
+          box-shadow: 0 3px 6px #00000029;
+          border: 2px solid #FFFFFF;
+          border-radius: 8px;
+          opacity: 1;
+          text-align: center;
+          margin-bottom: 30px;
+      } */
+        @media screen and (max-width:767px) {
+      #shopify-section-{{ section.id }} .collection-listing .product-list .product-block {
+          width: 50%;
+      }
+
+      #shopify-section-{{ section.id }} span.productlabel.general {
+          width: 85% !important;
+      }
+      #shopify-section-{{ section.id }} span.title {
+          font-size: 12px;
+      }
+        #shopify-section-{{ section.id }}  h1.hometitle.h4-style.align-center.has-paging span {
+            font-size: 18px;
+        }
+          #shopify-section-{{ section.id }} h1.hometitle.h4-style.align-center.has-paging {
+          margin-bottom: -4px;
+      }
+        }
+       #shopify-section-{{ section.id }}  .image-cont {
+          background: white;
+      }
+      #shopify-section-{{ section.id }} .overlay-mode-b .product-block.collection-block .product-info {
+          align-items: flex-end !important;
+        background-color:none;
+      }
+
+     #shopify-section-{{ section.id }}  span.title {
+    text-transform: uppercase;
+    letter-spacing: 0px;
+    font-size: 15px;
+    color: #000 !important;
+    opacity: 1;
+    background: #fff;
+    align-items: center;
+    text-align: center;
+    padding: 5px 15px;
+    border-radius: 10px;
+    margin: 0 0 20px 0;
+    width: 180px;
+}
+         /* #shopify-section-{{ section.id }} span.productlabel.general {
+        text-transform: uppercase;
+          letter-spacing: 0px;
+          font-size: 20px;
+          color: white !important;
+          opacity: 1;
+          align-items: center;
+          text-align: center;
+      } */
+        #shopify-section-{{ section.id }} .image-cont {
+          background: white;
+      }
+      #shopify-section-{{ section.id }} .overlay-mode-b .product-block.collection-block .product-info {
+          align-items: center;
+        background-color:none;
+      }
+      #shopify-section-{{ section.id }} .product-block.collection-block .productlabel>span {
+        background-color: none!important;
+         background: none !important;
+      border: none !important;
+    }
+    #shopify-section-{{ section.id }} span.productlabel.general {
+        text-transform: uppercase;
+        letter-spacing: 0px;
+        font-size: 16px;
+        color: #000!important;
+        background: none !important;
+        box-shadow: none !important;
+        border: none !important;
+        border-radius: none !important;
+        opacity: 1;
+        width: 205px;
+        align-items: center;
+        padding: 5px 15px;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+  /* #shopify-section-{{ section.id }} .product-link :hover {
+        background: linear-gradient(to right, rgba(0,0,0,0.5), rgba(0,0,0,0.5) ) !important;
+        background-size: cover;
+        background-position: center;
+    } */
+
+ #shopify-section-{{ section.id }} .block-inner {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+#shopify-section-{{ section.id }}  .block-inner .overlay {
+    background: rgba(0,0,0,0.5);
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 0px;
+    top: 0px;
+    bottom: 0;
+    right: 0;
+    opacity: 0; 
+    -webkit-transition: all 0.4s ease-in-out 0s;
+    -moz-transition: all 0.4s ease-in-out 0s;
+    transition: all 0.4s ease-in-out 0s;
+}
+
+#shopify-section-{{ section.id }} .block-inner:hover .overlay{
+  opacity: 1;
+  z-index: 1;
+}  
+
+#shopify-section-{{ section.id }} .product-info {
+  position: absolute;
+  text-align: center;
+  padding-left: 1em;
+  padding-right: 1em;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  opacity: 1;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  -webkit-transition: all 0.3s ease-in-out 0s;
+  -moz-transition: all 0.3s ease-in-out 0s;
+  transition: all 0.3s ease-in-out 0s;
+}
+ #shopify-section-{{ section.id }} .block-inner:hover .product-info{
+  top: 50%;
+  left: 50%;
+  opacity: 1;
+  z-index: 1;
+} 
+ #shopify-section-{{ section.id }} .rimage-wrapper .rimage__image.fade-in.lazyloaded {
+    opacity: 0;
+}
+ #shopify-section-{{ section.id }} .image-cont {
+    background-size: cover !important;
+}
+#shopify-section-{{ section.id }} span.title:hover {
+    background: #367bbb !important;
+     color: #fff !important;
+}
+  @media screen and (max-width:767px){
+#shopify-section-{{ section.id }} span.title {
+    text-transform: uppercase;
+    letter-spacing: 0px;
+    font-size: 11px;
+    color: #000 !important;
+    opacity: 1;
+    background: #fff;
+    align-items: center;
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 0 0 20px 0;
+    line-height: 12px;
+    width: 200px;
+}
+#shopify-section-{{ section.id }} .collection-listing .product-block {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+#shopify-section-{{ section.id }} .product-block .block-inner {
+    margin: 0 0 10px;
+}
+  }
+    @media only screen and (max-width:992px) and (min-width:768px){
+     #shopify-section-{{ section.id }} span.title{
+    font-size:18px !important;
+    }
+   #shopify-section-{{ section.id }} .product-block.collection-block .product-info .productlabel {
+      width: 100%!important;
+      margin-bottom: 0px !important;
+  }
+
+    }
+</style>

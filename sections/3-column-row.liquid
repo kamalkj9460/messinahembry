@@ -1,0 +1,208 @@
+<div class="w-row three-column-row" style="padding-top:{{ section.settings.space_top }};padding-bottom:{{ section.settings.space_bottom }};background-color:{{ section.settings.background_color }}">
+  
+  <div class="w-row-container">
+  
+        {% for block in section.blocks %}  
+
+          <div class="threecr-item">
+              <div class="three-overlay"></div>
+            <a href="{{ block.settings.link_url }}"><div class="threecr-item-imgsec" style="background-image:url(https:{{ block.settings.image | img_url: '700x' }})">
+              <h3>{{ block.settings.heading }}</h3>
+            </div></a>  
+          </div>
+
+        {% endfor %}
+        
+  
+  </div>
+
+</div>
+
+{% schema %}
+{
+  "name": "Image w/ Link (3 Col)",
+  "max_blocks": 4,
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [
+        {
+          "id": "image",
+          "type": "image_picker",
+          "label": "Image"
+        },
+        {
+          "id": "heading",
+          "type": "text",
+          "label": "Heading"
+        },
+        {
+          "id": "link_url",
+          "type": "url",
+          "label": "URL"
+        }
+      ]
+    }
+  ],"settings": [
+		{
+          "type": "color",
+          "id": "background_color",
+          "label": "Background colour",
+          "default": "#FFF"
+        },
+        {
+          "id": "space_top",
+          "type": "text",
+          "label": "Margin top",
+		  "default": "30px"
+        },
+        {
+          "id": "space_bottom",
+          "type": "text",
+          "label": "Margin bottom",
+		  "default": "30px"
+        }
+   ],
+  "presets": [
+     {
+       "name": "Image w/ Link (3 Col)"
+     }
+   ]
+}
+{% endschema %}
+
+
+
+
+{% stylesheet %}
+  
+
+#shopify-section-{{ section.id }} .threecr-item {
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+#shopify-section-{{ section.id }} .threecr-item .three-overlay {
+    background: rgba(0,0,0,0.5) !important;
+    position: absolute !important;
+    height: 100% !important;
+    width: 97% !important;
+    left: 7px !important;
+    top: 0px !important;
+    bottom: 0 !important;
+    right: 0 !important;
+    opacity: 0 !important;
+    -webkit-transition: all 0.4s ease-in-out 0s;
+    -moz-transition: all 0.4s ease-in-out 0s;
+    transition: all 0.4s ease-in-out 0s;
+}
+#shopify-section-{{ section.id }} .threecr-item:hover .three-overlay{
+  opacity: 1 !important;
+}
+ #shopify-section-{{ section.id }} .threecr-item-imgsec h3 {
+    z-index: 1 !important;
+}
+
+  
+.three-column-row {
+  margin-left: auto;
+margin-right: auto;
+display: flex;
+}
+
+.w-row-container {
+  width: 1000px;
+  margin: -9px auto !important;
+}
+.threecr-item {
+  width: 33.33%;
+  padding: 0 7px;
+text-align: center;
+}
+.threecr-item {
+float:left;
+}
+.threecr-item-imgsec {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  height: 280px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+padding: 15px;
+}
+@media screen and (min-width:1031px) {
+.three-column-row .threecr-item:nth-child(4) {
+  display: none;
+}
+}
+
+
+@media screen and (max-width:1030px) {
+.threecr-item {
+  width: 50%;
+}
+.threecr-item-imgsec {
+height: 400px;
+}
+}
+
+@media screen and (max-width:930px) {
+.threecr-item-imgsec {
+  height: 300px;
+}
+}
+
+@media screen and (max-width:630px) {
+.threecr-item-imgsec {
+  height: 200px;
+}
+#shopify-section-{{ section.id }} .threecr-item-one {
+    height: 97% !important;
+    justify-content: center !important;
+}
+}
+
+@media screen and (max-width:440px) {
+.threecr-item-imgsec {
+  height: 180px;
+}
+}
+
+
+@media screen and (max-width:400px) {
+.threecr-item-imgsec {
+  height: 155px;
+}
+}
+
+.threecr-item h3 {
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0px;
+  text-shadow: 0 0 10px #000;
+  font-size: 22px;
+  margin-bottom:0;
+  
+}
+
+.threecr-button {
+  margin: 20px auto 0 !important;
+  display: inline-block !important;
+  text-align: center !important;
+  text-transform: uppercase;
+  padding: 5px 25px;
+}
+#shopify-section-{{ section.id }} .threecr-item h3:hover {
+    background: #367bbb !important;
+    color: #fff !important;
+}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

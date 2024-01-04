@@ -1,0 +1,268 @@
+<div class="three-column" style="padding-top:{{ section.settings.space_top }};padding-bottom:{{ section.settings.space_bottom }};background-color:{{ section.settings.background_color }}">
+   
+  <div class="three-row-container">
+
+        {% for block in section.blocks %}  
+
+          <div class="tcr-item" id="three-{% increment count %}">
+            <div class="three-content-overlay"></div>
+            <a href="{{ block.settings.link_url }}">
+                <div class="tcr-item-imgsec" style="background-image:url(https:{{ block.settings.image | img_url: '700x' }})">
+                  <div class="content">
+                      <h3>{{ block.settings.heading }}</h3>    
+                  </div>
+                
+              </div>
+            </a>
+            
+          </div>
+
+        {% endfor %}
+  
+  </div>
+
+</div>  
+
+{% schema %}
+{
+  "name": "Three Column",
+  "settings": [
+     {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "text",
+        "id": "subtitle",
+        "label": "Sub Title"
+      },
+      {
+      "id": "link",
+      "type": "url",
+      "label": "Button link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [
+        {
+          "id": "image",
+          "type": "image_picker",
+          "label": "Image"
+        },
+        {
+          "id": "heading",
+          "type": "text",
+          "label": "Heading"
+        },
+        {
+          "id": "link_url",
+          "type": "url",
+          "label": "URL"
+        }
+      ]
+    }
+  ],
+  "settings": [
+		{
+          "type": "color",
+          "id": "background_color",
+          "label": "Background colour",
+          "default": "#FFF"
+        },
+        {
+          "id": "space_top",
+          "type": "text",
+          "label": "Margin top",
+		  "default": "30px"
+        },
+        {
+          "id": "space_bottom",
+          "type": "text",
+          "label": "Margin bottom",
+		  "default": "30px"
+        }
+   ],
+  "presets": [
+     {
+       "name": "Three Column"
+     }
+   ]
+}
+{% endschema %}
+
+
+
+
+{% stylesheet %}
+#shopify-section-{{ section.id }} .tcr-item {
+  position: relative;
+  overflow: hidden;
+}
+
+#shopify-section-{{ section.id }} .tcr-item .three-content-overlay {
+    background: rgba(0,0,0,0.5);
+    position: absolute;
+    height: 93%;
+    width: 94%;
+    left: 15px;
+    top: 15px;
+    bottom: 0;
+    right: 0;
+    opacity: 0;
+    -webkit-transition: all 0.4s ease-in-out 0s;
+    -moz-transition: all 0.4s ease-in-out 0s;
+    transition: all 0.4s ease-in-out 0s;
+}
+
+#shopify-section-{{ section.id }} .tcr-item:hover .three-content-overlay{
+  opacity: 1;
+}
+
+#shopify-section-{{ section.id }} .content {
+  position: absolute;
+  text-align: center;
+  padding-left: 1em;
+  padding-right: 1em;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  opacity: 1;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  -webkit-transition: all 0.3s ease-in-out 0s;
+  -moz-transition: all 0.3s ease-in-out 0s;
+  transition: all 0.3s ease-in-out 0s;
+}
+
+#shopify-section-{{ section.id }} .tcr-item:hover .content{
+  top: 50%;
+  left: 50%;
+  opacity: 1;
+} 
+
+
+  
+#shopify-section-{{ section.id }} .three-row-container {
+  width: 1400px !important;
+  margin: 0 auto;
+  padding-top:20px;
+}
+
+#shopify-section-{{ section.id }} .three-row-container .tcr-item-imgsec {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    height: 400px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center !important;
+    justify-content: center;
+    padding: 15px;
+    
+}
+#shopify-section-{{ section.id }} button.slick-arrow {
+    display: none !important;
+}
+  
+@media screen and (max-width:930px) {
+#shopify-section-{{ section.id }} .tcr-item-imgsec {
+  height: 430px !important;
+}
+}
+
+@media screen and (max-width:630px) {
+#shopify-section-{{ section.id }} .tcr-item-imgsec {
+    height: 590px;
+    max-width: 600px !important;
+}
+#shopify-section-{{ section.id }} .tcr-item-imgsec h3 {
+    font-size: 12px !important;
+}
+}
+
+@media screen and (max-width:440px) {
+#shopify-section-{{ section.id }} .tcr-item-imgsec {
+    height: 410px;
+    max-width: 410px !important;
+}
+}
+
+@media screen and (max-width:400px) {
+#shopify-section-{{ section.id }} .tcr-item-imgsec {
+    height: 370px;
+    max-width: 370px !important;
+}
+}
+
+
+#shopify-section-{{ section.id }} .tcr-item h3 {
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 0 0 10px #000;
+  font-size: 28px;
+	margin-bottom:0;
+}
+#shopify-section-{{ section.id }} .vintage-title p {
+    color: #8a8f93;
+} 
+@media screen and (max-width:1030px) {
+#shopify-section-{{ section.id }} .tcr-item h3 {
+  font-size: 22px;
+}
+
+}
+
+#shopify-section-{{ section.id }} .tcr-button {
+  margin: 20px auto 0 !important;
+  display: inline-block !important;
+  text-align: center !important;
+  text-transform: uppercase;
+padding: 5px 25px;
+}
+
+
+
+
+{% endstylesheet %}
+
+<script>
+  $('.three-row-container').slick({
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 5000,
+    dots: false,
+    arrows: false,
+    prevArrow:"<button type='button' class=''><i class='fa fa-angle-left' aria-hidden='true'></i></button>",
+    nextArrow:"<button type='button' class=''><i class='fa fa-angle-right' aria-hidden='true'></i></button>",
+    responsive: [
+      {
+          breakpoint: 768,
+          settings: {
+            arrows: true,
+            dots: true,
+            slidesToShow: 2,
+            slidesToScroll: 1
+          }
+        },
+        {
+           breakpoint: 400,
+           settings: {
+              arrows: true,
+              dots: true,
+              slidesToShow: 1,
+              slidesToScroll: 1
+           }
+        }]
+});
+</script>

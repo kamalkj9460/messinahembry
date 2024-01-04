@@ -1,0 +1,163 @@
+<div class="page-header cf">
+  <div class="container cf">
+    <h1 class="majortitle">{{ page.title }}</h1>
+  </div>
+  </div>
+
+<div class="container cf">
+
+  <div class="row-spacing">
+    <div class="layout-column-half-left user-content">
+      {{ page.content }}
+    </div>
+    <div id="template" class="layout-column-half-right righty-form">
+      {% form 'contact' %}
+        {% if form.posted_successfully? %}
+          <p><strong>{{ 'contact.form.post_success' | t }}</strong></p>
+        {% else %}
+
+          <p>{{ 'contact.form.subtext' | t }}</p>
+
+          {% if form.errors %}
+            <ul class="errors">
+              {% for field in form.errors %}
+                <li>{{ field | replace: 'body','Message' | capitalize }} - {{ form.errors.messages[field] }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+
+          <div class="input-row">
+            <label for="contact_name">{{ 'contact.form.name' | t }}</label>
+            <input type="text" class="required" id="contact_name" name="contact[name]" />
+          </div>
+          <div class="input-row">
+            <label for="contact_email">{{ 'contact.form.email' | t }}</label>
+            <input type="email" class="required" id="contact_email" class="email" name="contact[email]" />
+          </div>
+          <div class="input-row">
+            <label for="message">{{ 'contact.form.message' | t }}</label>
+            <textarea id="message" class="required" name="contact[body]"></textarea>
+          </div>
+          <div class="action_bottom">
+            <input type="submit" value="{{ 'contact.form.send' | t }}" />
+          </div>
+
+        {% endif %}
+      {% endform %}
+    </div>
+  </div>
+</div>
+
+<style>
+  
+   .snize-recommendation .snize-recommendation-title {
+    display: none;
+}
+  
+  .padded-row {
+    padding-top: 20px;
+  }
+  
+  .template-page #content {
+    margin-top: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+  
+  .template-page .user-content.row-spacing {
+    max-width: 100%;
+}
+  
+  .two-row-col {
+    width: 48%;
+    float: left;
+}
+  
+  .trc-1 {
+    margin-right:2%;
+  }
+  .trc-2 {
+    margin-left:2%;
+  }
+  
+  .two-row {
+    width: 100%;
+    clear: both;
+    padding-bottom: 50px !important;
+    display: inline-block;
+}
+  
+  /*.collection-row div {
+    width: 50%;
+    float: left;
+}*/
+  
+  @media screen and (max-width:800px) {
+  .two-row-col {
+    width: 100%;
+    float: left;
+    margin: 0 !important;
+}
+    .two-row {
+    padding-bottom: 0px !important;
+    }
+  }
+  
+  .user-content a.text-link {
+    border-bottom: none;
+  }
+  
+  .page-header {
+    background-color: #197bbd;
+    margin-bottom: 50px;
+    width: 100% !important;
+}
+  
+  .majortitle {
+    text-transform: uppercase;
+    color: #fff;
+    margin-bottom: 0 !important;
+    padding: 10px 0 10px;
+    letter-spacing: 10px;
+    text-align:left !important;
+}
+  
+  @media screen and (max-width:900px) {
+  h1 {
+    font-size: 23px;
+}
+    .majortitle {
+    padding: 15px 0 15px;
+    }
+  }
+  
+  ul {
+    margin-left: 0;
+    margin-right: 0;
+}
+  
+  .template-page #content {
+    margin-top: 0;
+    padding-top: 0;
+  }
+  
+  .page-header {
+    padding-bottom: 0;
+}
+  
+  #template {
+    float: left;
+    margin-bottom: 50px;
+}
+  
+  .layout-column-half-left {
+    margin-bottom: 0;
+}
+  
+  @media screen and (max-width:760px) {
+    #template {
+    width: 100%;
+}
+  }
+  
+    </style>

@@ -1,0 +1,206 @@
+<div class="page-header cf">
+  <div class="container cf">
+    <h1 class="majortitle">{{ page.title }}</h1>
+  </div>
+  </div>
+
+<div class="container cf">
+  <div class="user-content row-spacing">
+    
+    
+     <video controls autoplay muted>
+  <source src="{{ 'messina-aboutus.mp4' | asset_url }}" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+    
+    <div class="two-row">
+      <div class="two-row-col trc-1">
+        <h4>Who are we?</h4>
+        <p> We are Messina Hembry; we’re all about giving second hand designer clothing another chance at life, 
+          and keeping an eye on the environmental impacts of the fashion industry.</p>
+        <p> We handpick the very best of vintage & preloved designer clothing to give them a new lease of life whilst dressing our 
+          customers in unique and one-off garments as a result. Our selection of high-quality premium clothes is second to none. 
+          With hundreds of designers from Calvin Klein to Nike, we consider our ranges to be the very best of second hand & vintage clothing.
+        </p>
+       
+
+      </div>
+    <div class="two-row-col trc-2">
+      
+      <img style="box-shadow: 0 0 1px rgba(0,0,0,.4);" src="{{ 'messina-p-2.jpg' | asset_url }}">
+      
+      </div>
+    </div>
+    
+    
+    <div class="two-row">
+      <div class="two-row-col trc-1">
+        <img style="box-shadow: 0 0 1px rgba(0,0,0,.4);" src="{{ 'messina-p-3.jpg' | asset_url }}">
+      
+      </div>
+    <div class="two-row-col trc-2">
+      
+      <h4>Where did we begin?</h4>
+      <p>Brothers Zac and Josh started by selling on their hand-picked finds from charity shops during uni. 
+        They realised that they could provide people with the designer brands that they wanted for significantly 
+        less cost and help reduce the environmental impact of the clothing industry by doing so.</p>
+      <p>Our vintage wardrobe is full of one-off items that are replenished weekly. 
+        When you shop with us, you can save up to 90% on original prices as well as reducing carbon emissions and the demand for mass material production.  </p>
+      
+      </div>
+    </div>
+    
+    
+    <div class="two-row">
+      <div class="two-row-col trc-1">
+        <h4>What we've done so far</h4>
+<p>Over the last six years of operation, Messina Hembry and its customers have <strong>rehomed hundreds of thousands of preloved clothing items, 
+  saved millions of tonnes of C02, and billions of litres of water.</strong> 
+  We now have a team of over 20 staff and upload thousands of new items every month. 
+  Everything that we sell is a single item in stock, so check back regularly to avoid missing out on your favourite brands at massive discounts.</p>
+<p>Entering the world of preloved clothing allows you to invest in individual, 
+  durable items that will not only let you wear your favourite designers for a fraction of the price
+  but also makes you a part of the <a href="https://messinahembry.com/blogs/news/how-designer-vintage-clothing-helps-the-environment">fashion recycling trend</a>.</p>
+      </div>
+    <div class="two-row-col trc-2">
+      
+      <img style="box-shadow: 0 0 1px rgba(0,0,0,.4);" src="{{ 'messina-p-4.jpg' | asset_url }}">
+      
+      </div>
+    </div>
+    
+
+    
+    
+    
+  </div>
+</div>
+
+    <div style="display:none;" class="collection-row">
+      <div class="{% unless settings.use_fullwidth_layout %}container{% endunless %} padded-row">
+<h4 class="align-center hometitle">Latest Products</h4>
+        <div class="collection-listing related-collection cf row-spacing">
+          <div class="product-list product-list--per-row-{{ section.settings.products_per_row }} product-list--image-shape-{{ settings.prod_thumb_shape }}">
+            <div class="searchanise-recommendations" id="4S6L4G8Y3B3I1I2"></div>
+          </div>
+        </div>
+
+      </div>   
+    </div>
+
+
+<div style="display:none;">{{ page.content }}</div>
+
+
+<style>
+  
+    .snize-recommendation .snize-recommendation-title {
+    display: none;
+}
+  
+  .padded-row {
+    padding-top: 20px;
+  }
+  
+  .template-page #content {
+    margin-top: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+  
+  .template-page .user-content.row-spacing {
+    max-width: 100%;
+}
+  
+  .two-row-col {
+    width: 48%;
+    float: left;
+}
+  
+  .trc-1 {
+    margin-right:2%;
+  }
+  .trc-2 {
+    margin-left:2%;
+  }
+  
+  .two-row {
+    width: 100%;
+    clear: both;
+    padding-bottom: 50px !important;
+    display: inline-block;
+}
+  
+  /*.collection-row div {
+    width: 50%;
+    float: left;
+}*/
+  
+  @media screen and (max-width:800px) {
+  .two-row-col {
+    width: 100%;
+    float: left;
+    margin: 0 !important;
+}
+    .two-row {
+    padding-bottom: 0px !important;
+    }
+  }
+  
+  .user-content a.text-link {
+    border-bottom: none;
+  }
+  
+  .page-header {
+    background-color: #197bbd;
+    margin-bottom: 50px;
+    width: 100% !important;
+}
+  
+  .majortitle {
+    text-transform: uppercase;
+    color: #fff;
+    margin-bottom: 0 !important;
+    padding: 10px 0 10px;
+    letter-spacing: 10px;
+    text-align:left !important;
+}
+  
+  @media screen and (max-width:900px) {
+  h1 {
+    font-size: 23px;
+}
+    .majortitle {
+    padding: 15px 0 15px;
+    }
+  }
+  
+  ul {
+    margin-left: 0;
+    margin-right: 0;
+}
+  
+  .template-page #content {
+    margin-top: 0;
+    padding-top: 0;
+  }
+  
+  .page-header {
+    padding-bottom: 0;
+}
+  
+  video {
+    width: 60%;
+    margin: 0 auto;
+        margin-bottom: 0px;
+    display: inherit;
+    margin-bottom: 50px;
+}
+  
+  @media screen and (max-width:1100px) {
+  video {
+    width: 100%;
+}
+  }
+  
+    </style>

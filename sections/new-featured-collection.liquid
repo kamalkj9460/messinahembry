@@ -1,0 +1,269 @@
+{%- assign product_limit = 20 -%}
+{%- assign collection = collections[section.settings.collection] -%}
+{%- assign bg_alpha = section.settings.background_color | color_extract: 'alpha' -%}
+<div
+  class="{% if section.settings.use_carousel %}collection-slider-row{% else %}padded-row{% endif %} {% if section.settings.background_color == settings.bg_col or bg_alpha == 0 %}no-bg{% endif %} section-id-{{ section.id }}"
+  data-section-type="featured-collection"
+>
+  {% unless settings.use_fullwidth_layout %}
+    <div class="container {% unless section.settings.use_carousel %}uncontain-desktop-down{% endunless %}">
+  {% endunless %}
+
+  <div class="{% if section.settings.use_carousel %}collection-slider{% endif %}">
+    <h1 class="align-center"><a href="{{ collection.url }}"><span>{{ section.settings.title | escape }}</span></a></h1>
+    
+    {% comment %}
+    <h1 class="hometitle h4-style align-center has-paging">
+      {% if section.settings.use_carousel -%}
+        <a class="prev" href="#next">{% include 'svg-chevron-left' %}</a>
+      {%- endif %}
+      
+      {% if section.settings.use_carousel -%}
+        <a class="next" href="#">{% include 'svg-chevron-right' %}</a>
+      {%- endif %}
+    </h1>
+    {% endcomment %}
+    
+    
+    <div class="view-all align-center">
+      <a
+        href="{{ section.settings.link }}"
+        class="btn btn--cta"
+      >
+        {{ section.settings.linktext }}
+      </a>
+    </div>
+  
+    <div class="collection-listing {% unless settings.use_fullwidth_layout %}fixed-mode{% endunless %}">
+      <div class="slider-2 ">
+        {% if section.settings.collection == blank %}
+          {% for i in (1..6) %}
+            {% include 'onboarding-product-block' %}
+          {% endfor %}
+
+        {% else %}
+          {% for product in collection.products limit: product_limit %}
+            {% include 'new-product-block' with product,
+              manual_image_load: section.settings.use_carousel,
+              no_quick_buy_markup: section.settings.use_carousel
+            %}
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  {% unless settings.use_fullwidth_layout %}</div>{% endunless %}
+
+  {% if settings.prod_thumb_detail_show and section.settings.use_carousel %}
+    <div class="quickbuy-container">
+      <a href="#" class="close-detail" aria-label="{{ 'products.quick_buy.close' | t }}" tabindex="-1">
+        {%- include 'svg-x' -%}
+      </a>
+      <div class="inner"></div>
+    </div>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "New Featured collection",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Featured collection"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_carousel",
+      "label": "Enable carousel"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#f5f5f5"
+    },
+    {
+      "type": "range",
+      "id": "products_per_row",
+      "label": "Products per row",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    },
+    {
+    "id": "link",
+    "type": "url",
+    "label": "Button link"
+  },
+  {
+    "id": "linktext",
+    "type": "text",
+    "label": "Button text",
+    "default": "Click here"
+  }
+  ],
+  "presets": [
+    {
+      "name": " New Featured collection",
+      "category": "Collection",
+      "settings": {
+        "title": "Featured collection",
+        "collection": "",
+        "use_carousel": "true"
+      }
+    }
+  ]
+}
+{% endschema %}
+<style type="text/css">
+ .section-id-{{ section.id }} {
+    background-color: {{ section.settings.background_color }};
+  }
+#shopify-section-{{ section.id }} .collection-listing i.fa.fa-long-arrow-left {
+    position: absolute;
+    color: #000 !important;
+    top: 42%;
+    left:0;
+    z-index: 1;
+}
+#shopify-section-{{ section.id }} .collection-listing i.fa.fa-long-arrow-right {
+    color: #000 !important;
+    position: absolute;
+    top: 42%;
+    right: 0;
+}
+#shopify-section-{{ section.id }} .collection-listing img.rimage__image {
+    background: #fff  !important;
+}
+#shopify-section-{{ section.id }} .collection-listing button.slick-arrow {
+    display: block !important;
+}
+#shopify-section-{{ section.id }} .collection-listing button#next, button#previous {
+    background: #fff !important;
+    border: none !important;
+}
+#shopify-section-{{ section.id }} .view-all {
+    margin-bottom: 40px;
+}
+#shopify-section-{{ section.id }} .view-all a.btn.btn--cta {
+    color: #8a8f93;
+    font-size: 14px;
+}
+#shopify-section-{{ section.id }} .title {
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 17px;
+   color:#333333;
+}
+#shopify-section-{{ section.id }} h1.align-center {
+  padding-bottom:15px;
+}
+#shopify-section-{{ section.id }} .title {
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 17px;
+    letter-spacing: 0px;
+    color: #000000;
+}
+#shopify-section-{{ section.id }} span.money {
+    color: #8a8f93;
+    letter-spacing: 0;
+    font-weight: 600 !important;
+    font-size:14px;
+}
+#shopify-section-{{ section.id }} .inner {
+    text-align: left;
+}
+  /*  */
+#shopify-section-{{ section.id }} button#previous {
+    position: absolute;
+    top: 35%;
+    left: 0%;
+    z-index: 999;
+}
+#shopify-section-{{ section.id }} button#next {
+    position: absolute;
+    top: 35%;
+    right: 0%;
+    z-index: 999;
+}
+#shopify-section-{{ section.id }} .collection-listing button#next, #shopify-section-{{ section.id }} button#previous {
+       background: #0c0c0c !important;
+    padding: 0px;
+    border-radius: 50%;
+    height: 20px;
+    width: 20px
+}
+#shopify-section-{{ section.id }} .collection-listing .fa {
+    color: #fff;
+}
+#shopify-section-{{ section.id }} .slick-arrow.slick-disabled {
+    opacity: 0.25;
+}
+#shopify-section-{{ section.id }} .productlabel>span {
+    font-size: 12px;
+}
+#shopify-section-{{ section.id }} h1.majortitle.in-content {
+    margin-bottom: 5px;
+}
+#shopify-section-{{ section.id }} .product-block .vendor {
+    font: medium 12px Forma DJR Display;
+    letter-spacing: 0px;
+    color: #707070 !important;
+    opacity: 1;
+    text-transform: uppercase;
+     margin: 5px 0 0;
+  font-weight:600;
+
+}
+@media screen and (max-width:767px){
+    #shopify-section-{{ section.id }} h1.align-center {
+    padding-bottom: 0px;
+}
+}
+</style>
+<script>
+jQuery(document).ready(function($) {
+      jQuery('.slider-2').slick({
+        dots: false,
+        infinite: false,
+        speed: 500,
+        slidesToShow: 6,
+        slidesToScroll: 1,
+        autoplay: false,
+        autoplaySpeed: 2000,
+        arrows: true,
+            nextArrow: '<button id="next"><i class="fa fa-angle-right" aria-hidden="true"></i>',
+        prevArrow: '<button id="previous"><i class="fa fa-angle-left" aria-hidden="true"></i>',  
+        responsive: [
+      {
+          breakpoint: 769,
+          settings: {
+            arrows: true,
+            dots: false,
+            slidesToShow: 4,
+            slidesToScroll: 1
+          }
+        },
+        {
+           breakpoint: 580,
+           settings: {
+              arrows: true,
+              dots: false,
+              slidesToShow: 2,
+              slidesToScroll: 1
+           }
+        }]
+  });
+});
+</script>

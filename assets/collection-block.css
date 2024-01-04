@@ -1,0 +1,24 @@
+/* .block-inner {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.block-inner .content-overlay {
+    background: rgba(0,0,0,0.5);
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 0px;
+    top: 0px;
+    bottom: 0;
+    right: 0;
+    opacity: 0;
+    -webkit-transition: all 0.4s ease-in-out 0s;
+    -moz-transition: all 0.4s ease-in-out 0s;
+    transition: all 0.4s ease-in-out 0s;
+}
+
+.block-inner:hover .-content-overlay{
+  opacity: 1;
+} */

@@ -1,0 +1,280 @@
+<div class="slideshow-row section-id-{{ section.id }}" data-section-type="slideshow">
+  {% unless settings.use_fullwidth_layout %}<div class="container uncontain-desktop-down">{% endunless %}
+  <div class="slideshow auto-play scaled-text-base">
+    {% for block in section.blocks %}
+      <div class="slide slide-{{ forloop.index }}" {{ block.shopify_attributes }}>
+        {% if block.settings.image == blank %}
+          <div class="placeholder-image placeholder--banner {% if block.settings.heading != blank or block.settings.text != blank %}dark{% endif %}">
+            {% capture current %}{% cycle 1, 2 %}{% endcapture %}
+            {{ 'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+          </div>
+        {% elsif block.settings.mobile_image == blank %}
+          {% include 'responsive-image', image: block.settings.image, manual_image_load: true, no_max_width: true %}
+        {% else %}
+          <div class="desktop-only">
+            {% include 'responsive-image', image: block.settings.image, manual_image_load: true, no_max_width: true %}
+          </div>
+          <div class="mobile-only">
+            {% include 'responsive-image',
+              image: block.settings.mobile_image,
+              manual_image_load: true,
+              no_max_width: true
+            %}
+          </div>
+        {% endif %}
+
+        {% if block.settings.heading != blank or block.settings.text != blank or block.settings.button_text != blank %}
+          <div class="overlay-text overlay-{{ block.settings.position }} {% if block.settings.mobile_image != blank %}overlay-text--no-mobile-stack{% endif %}">
+            <div class="inner">
+              <div class="text">
+                <div class="scaled-text new_one">
+                  <div class="scaled-heading">
+                    <h1 style="color:{{ block.settings.heading_color }}">{{ block.settings.heading_new }}</h1>
+                    <h3 style="color:{{ block.settings.sub_color }}">{{ block.settings['sub-heading'] }}</h3>
+                  </div>
+                  {% if block.settings.button_link != blank %}
+                    <div class="scale-button">
+                      <a
+                        href="{{ block.settings.button_link }}"
+                        style="background-color:{{ block.settings.button_color }};color:{{ block.settings.button_text_color }}"
+                        class="btn btn--cta"
+                      >
+                        {{ block.settings.button_linktext -}}
+                      </a>
+                      <a
+                        href="{{ block.settings.link_new }}"
+                        style="background-color:{{ block.settings.button_color }};color:{{ block.settings.button_text_color }}"
+                        class="btn btn--cta"
+                      >
+                        {{ block.settings.linktext_new -}}
+                      </a>
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+  {% unless settings.use_fullwidth_layout %}{% endunless %}
+ 
+</div>
+{% schema %}
+{
+  "name": "New Slideshow",
+  "max_blocks": 8,
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Primary image",
+          "info": "1200px wide minimum"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Mobile image"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Slide link"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text"
+        },
+        {
+        "type": "text",
+        "id": "heading_new",
+        "label":"Title"
+      },
+        {
+          "type": "color",
+          "id": "heading_color",
+          "label": "heading_text_color",
+          "default": "#ffffff"
+        },
+        {
+        "type": "text",
+        "id": "sub-heading",
+        "label":"Sub Heading"
+      },
+        {
+          "type": "color",
+          "id": "sub_color",
+          "label": "Sub_heading_text_colour",
+          "default": "#ffffff"
+        },
+  {
+    "id": "button_linktext",
+    "type": "text",
+    "label": "Button text",
+    "default": "Click here"
+  },
+    {
+    "id": "button_link",
+    "type": "url",
+    "label": "Button link"
+  },
+  {
+    "id": "linktext_new",
+    "type": "text",
+    "label": "Button text",
+    "default": "Click here"
+  },
+                  {
+    "id": "link_new",
+    "type": "url",
+    "label": "Button link"
+  },
+        {
+          "type": "select",
+          "id": "position",
+          "label": "Text alignment for large screens",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "centre",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ],
+          "default": "centre"
+        },
+        {
+          "type": "color",
+          "id": "button_color",
+          "label": "Button colour",
+          "default": "#000"
+        },
+        {
+          "type": "color",
+          "id": "button_text_color",
+          "label": "Button text colour",
+          "default": "#ffffff"
+        }
+      ]
+    }
+
+  ],
+  "presets": [
+    {
+      "name": "New Slideshow",
+      "category": "Image",
+      "settings": {
+      },
+      "blocks": [
+        {
+          "type": "image"
+        },
+         {
+          "type": "image"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+  <style>
+ #shopify-section-{{ section.id }} h1 {
+      font-size: 54px;
+       margin:0;
+  }
+#shopify-section-{{ section.id }} h3 {
+      font-size: 20px;
+      line-height: 1.2;
+       margin:0;
+  }
+#shopify-section-{{ section.id }} a.btn.btn--cta {
+      font-size: 20px;
+      padding: 10px 25px;
+      border-radius: 8px;
+  }
+#shopify-section-{{ section.id }} .overlay {
+      display: none;
+  }
+#shopify-section-{{ section.id }} .overlay-text .text>div {
+    padding: 50px 1em;
+  }
+#shopify-section-{{ section.id }} .overlay-text {
+      align-items: flex-end;
+  }
+@media screen and (max-width:749px) {
+    #shopify-section-{{ section.id }} h1{
+      font-size: 38px;
+    }
+#shopify-section-{{ section.id }} h3 {
+      font-size: 18px;
+  }
+#shopify-section-{{ section.id }} a.btn.btn--cta {
+      font-size: 16px;
+  }
+#shopify-section-{{ section.id }} .slideshow .slide .overlay-text:not(.overlay-text--no-mobile-stack) {
+      position: absolute;
+      top: 5%;
+      left: 20%;
+  }
+#shopify-section-{{ section.id }} .overlay-text .text > div {
+      line-height: 1.2em;
+      padding: 15px 0em;
+      display: inline-block;
+  }
+
+    }
+@media screen and (min-width:750px) and (max-width:990px) {
+  #shopify-section-{{ section.id }} h1{
+      font-size: 45px;
+  }
+#shopify-section-{{ section.id }} h3 {
+      font-size: 24px;
+  }
+#shopify-section-{{ section.id }} a.btn.btn--cta {
+      font-size: 18px;
+  }
+#shopify-section-{{ section.id }} .overlay-text .text>div {
+    padding: 0px 1em;
+}
+    }
+#shopify-section-{{ section.id }}  .scale-button a.btn.btn--cta {
+      font-size: 15px !important;
+      background: #fff;
+      color: #000 !important;
+      font-weight: 600;
+      width: 180px;
+      height: 35px;
+      display: inline-flex;
+      /* flex-wrap:wrap */
+      margin: 0 auto;
+      align-items: center;
+      justify-content: space-around;
+      margin-top: 20px;
+      border-radius: 8px;
+  }
+@media screen and (max-width:767px){
+#shopify-section-{{ section.id }}   .scale-button a.btn.btn--cta {
+    width: 140px;
+}
+}
+#shopify-section-{{ section.id }}  .overlay-text {
+    height: 90%;
+}
+#shopify-section-{{ section.id }} a.btn.btn--cta:hover {
+    background: #367bbb !important;
+   color: #fff !important;
+}
+  </style>

@@ -1,0 +1,83 @@
+<div class="accordion-container page-width">
+  {% for block in section.blocks %}
+  <div class="set">
+    <button class="accordion">
+      {{ block.settings.title }}
+    </button>
+    {% if block.settings.title != blank %}
+      <div class="panel">
+        {{ block.settings.answer }}
+      </div>
+    {% endif %}
+  </div>
+  {% endfor %}
+</div>
+
+
+
+
+<style>
+#shopify-section-{{ section.id }} .accordion-container {
+    padding: 0px 25px;
+    background-color: #fff;
+}
+#shopify-section-{{ section.id }} .accordion {
+    border: none;
+    width: 100%;
+    cursor: pointer;
+    padding: 18px 0;
+    background: #fff;
+    outline: none;
+    text-align: left;
+    font-size: 16px;
+    border-top: 1px solid #ccc;
+    margin-top: 15px;
+}
+#shopify-section-{{ section.id }} .accordion:after{
+    content: "\002b";
+    color: #000;
+    font-weight: 500;
+    font-size: 18px;
+    float: right;
+    margin-left: 5px;
+    
+}
+#shopify-section-{{ section.id }} .active:after{
+     content: '\2212';
+}
+#shopify-section-{{ section.id }} .panel{
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out;
+    color: rgb(0, 0, 0 , 0.5);
+    text-align: justify;
+   
+}  
+@media only screen and (min-width:769px){
+    #shopify-section-{{ section.id }}{
+    	display:none;
+    }
+}
+</style>
+
+
+
+<script>
+var acc = document.getElementsByClassName("accordion");
+    var i;
+    for (i = 0 ; i < acc.length ; i++){
+      acc[i].addEventListener("click" , function(){
+        this.classList.toggle("active");
+        var panel = this.nextElementSibling;
+        if(panel.style.maxHeight){
+          panel.style.maxHeight = null;
+        }
+        else{
+          panel.style.maxHeight = panel.scrollHeight + "px"
+        }
+      });
+
+      
+    }
+
+</script>

@@ -1,0 +1,19 @@
+{% if shop.metafields.loox["global_stats"] %}
+{% assign looxstats = shop.metafields.loox["global_stats"] | split: "," %}
+<div itemscope itemtype="https://schema.org/Product">
+<meta itemprop="name" content="{{ shop.name | escape }}"/>
+<div itemprop="aggregateRating" itemscope itemtype="https://schema.org/AggregateRating">
+<meta itemprop="ratingValue" content="{{ looxstats[0] }}"/>
+<meta itemprop="ratingCount" content="{{ looxstats[1] }}"/>
+</div>
+</div>
+{% endif %}
+<div class="container cf">
+  <div class="page-header cf">
+    <h1 class="majortitle">{{ page.title }}</h1>
+  </div>
+  <div class="user-content row-spacing">
+    {{ page.content }}
+  </div>
+</div>
+<div id="looxReviews" data-loox-aggregate="" class="loox-reviews-default"></div>

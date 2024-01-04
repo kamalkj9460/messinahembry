@@ -1,0 +1,214 @@
+{%- assign product_limit = 20 -%}
+{%- assign collection = collections[section.settings.collection] -%}
+{%- assign bg_alpha = section.settings.background_color | color_extract: 'alpha' -%}
+<div
+  class="{% if section.settings.use_carousel %}collection-slider-row{% else %}padded-row{% endif %} {% if section.settings.background_color == settings.bg_col or bg_alpha == 0 %}no-bg{% endif %} section-id-{{ section.id }}"
+  data-section-type="featured-collection"
+>
+  {% unless settings.use_fullwidth_layout %}
+    <div class="container {% unless section.settings.use_carousel %}uncontain-desktop-down{% endunless %}">
+  {% endunless %}
+
+  <div class="{% if section.settings.use_carousel %}collection-slider{% endif %}">
+    <h1 class="hometitle h4-style align-center has-paging">
+      {% if section.settings.use_carousel -%}
+        <a class="prev" href="#">{% include 'svg-chevron-left' %}</a>
+      {%- endif %}
+      <a href="{{ collection.url }}"
+        ><span>{{ section.settings.title | escape }}</span></a
+      >
+      {% if section.settings.use_carousel -%}
+        <a class="next" href="#">{% include 'svg-chevron-right' %}</a>
+      {%- endif %}
+    </h1>
+
+    <div class="view-all align-center">
+      <a
+        href="{{ section.settings.link }}"
+        class="btn btn--cta"
+      >
+        {{ section.settings.linktext }}
+      </a>
+    </div>
+
+    <div class="collection-listing {% unless settings.use_fullwidth_layout %}fixed-mode{% endunless %}">
+      <div class="product-list product-list--per-row-{{ section.settings.products_per_row }} product-list--image-shape-{{ settings.prod_thumb_shape }} {% if section.settings.use_carousel %}carousel{% endif %}">
+        {% if section.settings.collection == blank %}
+          {% for i in (1..6) %}
+            {% include 'onboarding-product-block' %}
+          {% endfor %}
+
+        {% else %}
+          {% for product in collection.products limit: product_limit %}
+            {% include 'product-block' with product,
+              manual_image_load: section.settings.use_carousel,
+              no_quick_buy_markup: section.settings.use_carousel
+            %}
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  {% unless settings.use_fullwidth_layout %}</div>{% endunless %}
+
+  {% if settings.prod_thumb_detail_show and section.settings.use_carousel %}
+    <div class="quickbuy-container">
+      <a href="#" class="close-detail" aria-label="{{ 'products.quick_buy.close' | t }}" tabindex="-1">
+        {%- include 'svg-x' -%}
+      </a>
+      <div class="inner"></div>
+    </div>
+  {% endif %}
+</div>
+
+<style type="text/css">
+  .section-id-{{ section.id }} {
+    background-color: {{ section.settings.background_color }};
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Featured collection",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Featured collection"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_carousel",
+      "label": "Enable carousel"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#f5f5f5"
+    },
+    {
+      "type": "range",
+      "id": "products_per_row",
+      "label": "Products per row",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    },
+    {
+    "id": "link",
+    "type": "url",
+    "label": "Button link"
+  },
+  {
+    "id": "linktext",
+    "type": "text",
+    "label": "Button text",
+    "default": "Click here"
+  }
+  ],
+  "presets": [
+    {
+      "name": "Featured collection",
+      "category": "Collection",
+      "settings": {
+        "title": "Featured collection",
+        "collection": "",
+        "use_carousel": true
+      }
+    }
+  ]
+}
+{% endschema %}
+<style>
+        #shopify-section-{{ section.id }} .title{
+            color: #000 !important;
+            font-weight: 600;
+        font-size: 12px;
+        line-height: 17px;
+    }
+
+        #shopify-section-{{ section.id }} span.money, #shopify-section-{{ section.id }} a.view-button {
+            color: #8a8f93;
+        }
+        #shopify-section-{{ section.id }} {
+            position: relative;
+        }
+        #shopify-section-{{ section.id }} a.prev {
+            position: absolute;
+            top: 40%;
+            left: -4%;
+            z-index: 999;
+        }
+        #shopify-section-{{ section.id }} a.next {
+           position: absolute;
+           top: 40%;
+           right: -4%;
+           z-index: 999;
+        }
+        #shopify-section-{{ section.id }} .view-all.align-center {
+            padding-bottom: 25px;
+        }
+        #shopify-section-{{ section.id }} a.btn.btn--cta {
+            color: #8a8f93;
+            font-size: 15px;
+        }
+          @media screen and (min-width:1440px) {
+            #shopify-section-{{ section.id }} .owl-item.cloned {
+            width: 250px !important;
+              padding: 20px;
+        }
+        #shopify-section-{{ section.id }} .collection-slider .product-list--per-row-5 .product-block {
+            width: calc(100vw / 8);
+        }
+          }
+        @media screen and (max-width:767px) {
+        #shopify-section-{{ section.id }} a.next {
+           right: 0%;
+        }
+ h1.majortitle.in-content {
+    margin-bottom: 0 !important;
+}
+        #shopify-section-{{ section.id }} a.prev {
+            left: 0%;
+        }
+        #shopify-section-{{ section.id }} .collection-listing .product-block .image-cont {
+            height: 0;
+            /* padding-top: 50%; */
+        }
+        #shopify-section-{{ section.id }} .block-inner {
+            min-height: 213.537px !important;
+        }
+          #shopify-section-{{ section.id }}  h1.hometitle.h4-style.align-center.has-paging span {
+            font-size: 18px;
+        }
+          #shopify-section-{{ section.id }} a.prev {
+            top: 180px;
+          }
+            #shopify-section-{{ section.id }} a.next {
+            top: 180px;
+        }
+        }
+        #shopify-section-{{ section.id }} .collection-slider h1{
+          /* font-family: forma-djr- display!important;
+          font-weight: 700!important;
+          letter-spacing: 1px !important;
+          font-size: 30px !important;
+          color: #3f4b57 !important;
+          line-height: 1.2em !important; */
+          /* margin-bottom: 10px !important; */
+      }
+    #shopify-section-{{ section.id }} span.productlabel.general {
+      background: none !important;
+  }
+
+  
+</style>

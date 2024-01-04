@@ -1,0 +1,132 @@
+<div class="w-row two-column-content" style="padding-top:{{ section.settings.space_top }};padding-bottom:{{ section.settings.space_bottom }};background-color:{{ section.settings.background_color }}">
+  
+  <div class="w-row-container">
+
+          <div class="tcc-item">
+
+            <img class="tcc-item-img" src="https:{{ section.settings.image_icon | img_url: '400x' }}">
+
+            <div class="tcc-text">{{ section.settings.text }}</div>
+
+          </div>
+    
+          <div class="tcc-item">
+
+            <img class="tcc-item-img" src="https:{{ section.settings.image_right | img_url: '400x' }}">
+
+            <div class="tcc-text">{{ section.settings.text-two }}</div>
+              
+          </div>
+            
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Content (2 Col)",
+  "settings": [
+		{
+          "type": "color",
+          "id": "background_color",
+          "label": "Background colour",
+          "default": "#FFF"
+        },
+        {
+          "id": "space_top",
+          "type": "text",
+          "label": "Margin top",
+		  "default": "30px"
+        },
+        {
+          "id": "space_bottom",
+          "type": "text",
+          "label": "Margin bottom",
+		  "default": "30px"
+        },
+		{
+          "id": "image_icon",
+          "type": "image_picker",
+          "label": "Image Left"
+        },
+        {
+          "id": "text",
+          "type": "textarea",
+          "label": "Text Left"
+        },
+        {
+          "id": "image_right",
+          "type": "image_picker",
+          "label": "Image Right"
+        },
+        {
+          "id": "text-two",
+          "type": "textarea",
+          "label": "Text Right"
+        }
+   ],
+  "presets": [
+     {
+       "name": "Content (2 Col)"
+     }
+   ]
+}
+{% endschema %}
+
+
+
+
+{% stylesheet %}
+
+.two-column-content {
+  margin-left: auto;
+margin-right: auto;
+display: flex;
+}
+
+.w-row-container {
+  width: 1000px;
+  margin: 0 auto;
+}
+
+
+.tcc-item {
+  width: 50%;
+  padding: 15px;
+text-align: center;
+}
+
+@media screen and (max-width:1030px) {
+.tcc-item {
+margin:0 auto;
+width:470px;
+}
+}
+
+@media screen and (max-width:505px) {
+.tcc-item {
+width:100%;
+}
+}
+
+
+@media screen and (min-width:1031px) {
+.tcc-item {
+float:left;
+}
+.tcc-text {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+}
+
+.tcc-item-imgicon {
+  width: 150px;
+  margin-bottom: 20px;
+}
+
+
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

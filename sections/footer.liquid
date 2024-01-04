@@ -1,0 +1,305 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+<div data-section-type="footer">
+  {% if linklists[section.settings.menu_linklist].links.size > 0 %}
+  <div class="footer row" role="navigation" aria-label="{{ 'layout.footer.navigation_aria_label' | t | escape }}">
+    <div class="col-md-4">
+  
+        <ul>
+          {% for link in linklists[section.settings.menu_linklist].links %}
+          <li {% if link.active %}class="active"{% endif %}>
+            <a href="{{ link.url }}" {% if link.links != blank %}class="has-children" aria-haspopup="true"{% endif %}>
+              {{ link.title }}
+              {% if link.links != blank %}
+              <span class="exp"><span>+</span>{% include 'icon-toggle-menu' %}</span>
+              {% endif %}
+            </a>
+
+            {% if link.links != blank %}
+            <ul>
+              {% for child_link in link.links %}
+              <li {% if child_link.active %}class="active"{% endif %}>
+                <a href="{{ child_link.url }}" class="{% if child_link.links != blank %}has-children {% if child_link.title contains 'LISTED' %}listing-title{% endif %}{% endif %}" {% if child_link.links != blank %}aria-haspopup="true"{% endif %}>
+                  {{ child_link.title | remove: ' LISTED' }}
+                  {% if child_link.links != blank %}
+                  <span class="exp"><span>+</span>{% include 'icon-toggle-menu' %}</span>
+                  {% endif %}
+                </a>
+
+                {% if child_link.links != blank %}
+                <ul{% if child_link.title contains 'LISTED' %} class="listed"{% endif %}>
+                  {% for child_child_link in child_link.links %}
+                  <li {% if child_child_link.active %}class="active"{% endif %}>
+                    <a href="{{ child_child_link.url }}">{{ child_child_link.title }}</a>
+                  </li>
+                  {% endfor %}
+                </ul>
+                {% endif %}
+              </li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+    </div>
+    <div class="col-md-4">
+       {%- form 'customer', id: 'ContactFooter', class: 'footer__newsletter newsletter-form' -%}
+              <input type="hidden" name="contact[tags]" value="newsletter">
+              <div class="newsletter-form__field-wrapper">
+                <div class="field">
+                  <input
+                    id="NewsletterForm--{{ section.id }}"
+                    type="email"
+                    name="contact[email]"
+                    class="field__input"
+                    value="{{ form.email }}"
+                    aria-required="true"
+                    autocorrect="off"
+                    autocapitalize="off"
+                    autocomplete="email"
+                    {% if form.errors %}
+                      autofocus
+                      aria-invalid="true"
+                      aria-describedby="ContactFooter-error"
+                    {% elsif form.posted_successfully? %}
+                      aria-describedby="ContactFooter-success"
+                    {% endif %}
+                    placeholder="{{ section.settings.newsletter_heading }}"
+                    required
+                  >
+                  <label class="field__label" for="NewsletterForm--{{ section.id }}">
+                   
+                  </label>
+                  <button type="submit" class="newsletter-form__button field__button" name="commit" id="Subscribe">
+                    JOIN
+                  </button>
+                </div>
+                {%- if form.errors -%}
+                  <small class="newsletter-form__message form__message" id="ContactFooter-error">{% render 'icon-error' %}{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}</small>
+                {%- endif -%}
+              </div>
+              {%- if form.posted_successfully? -%}
+                <h3 class="newsletter-form__message newsletter-form__message--success form__message" id="ContactFooter-success" tabindex="-1" autofocus>{% render 'icon-success' %}{{ 'newsletter.success' | t }}</h3>
+              {%- endif -%}
+            {%- endform -%}
+
+      {% if section.settings.show_social_icons %}
+      {% capture icon_size %}{% if settings.soc_icons_double %}x46{% else %}x30{% endif %}{% endcapture %}
+      {% include 'social-icons', icon_setting: settings.social_custom_icon, icon_size: icon_size %}
+    {% endif %}
+
+    
+    </div>
+    <div class="footer_col3 col-md-4">
+      <div class="trustpilot-img">
+           <a href="https://messinahembry.com/pages/reviews">  <img src="{{ section.settings.rev_img | img_url: 'master' }}"></a>
+        </div>
+    </div>
+  </div><!-- /.nav-row -->
+  <div class="second_row row">
+    <div class="payment-strip">
+             <img src="{{ section.settings.payment_img | img_url: 'master' }}">
+        </div>
+    <div class="copyright">
+      <span class="copy">&copy; {{ "now" | date: "%Y" }} <a href="{{ routes.root_url }}">{{ shop.name }}</a>.</span>
+
+      {{ powered_by_link }}
+
+    </div><!-- /.copyright -->
+  </div>
+  {% endif %}
+  <style>
+    div#shopify-section-footer .row {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 0px;
+    display:flex;
+}
+    .footer.row ul li {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    list-style: none;
+}
+    .col-md-4{
+      width: 33.33%;
+    }
+    div#shopify-section-footer .field {
+    display: flex;
+}
+    button#Subscribe {
+    background-color: #000;
+}
+    div#shopify-section-footer ul.social-links__list {
+    text-align: center;
+    align-items: center;
+    margin: 0 auto;
+    display: block;
+}
+    .footer_col3 {
+    align-items: center;
+    vertical-align: middle;
+    text-align: right;
+}
+    .second_row.row {
+    display: block !important;
+    width: 40% !important;
+    text-align: center;
+    padding: 0 !important;
+}
+    .footer_col3 {
+    align-items: flex-end;
+    vertical-align: bottom;
+    text-align: right;
+    bottom: 0;
+    display: flex;
+    justify-content: flex-end;
+    align-content: flex-start;
+    flex-wrap: wrap;
+}
+    @media screen and (max-width:767px){
+     .col-md-4{
+       width:100%;
+     } 
+#shopify-section-{{ section.id }} .col-md-2{
+        display:block !important;
+      }
+      .boxes{
+        Width: 100% !important;
+      }
+      div#shopify-section-footer .row{
+        display: block !important;
+      }
+      .footer_col3{
+        display: block;
+        text-align: center !important;
+      }
+      .second_row.row{
+        padding: 0!important;
+        Width:100% !important;
+      }
+      .threecr-item {
+        width: 100% !important;
+    }
+      .collection-listing .product-list .product-block {
+    width: 100%;
+}
+    }
+  </style>
+{% schema %}
+  {
+    "name": "Footer",
+    "settings": [
+      {
+        "type": "link_list",
+        "id": "menu_linklist",
+        "label": "Menu",
+        "default": "footer"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_social_icons",
+        "label": "Show social icons",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Language Selector",
+        "info": "To add a language, go to your [language settings.](/admin/settings/languages)"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_locale_selector",
+        "label": "Show language selector",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Currency Selector",
+        "info": "To add a currency, go to your [payment settings.](/admin/settings/payments)"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_currency_selector",
+        "label": "Show currency selector",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Newsletter"
+      },
+      {
+        "type": "checkbox",
+        "id": "signup_show",
+        "label": "Show newsletter signup",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "newsletter_title",
+        "label": "Heading",
+        "default": "Signup for our newsletter"
+      },
+      {
+        "type": "richtext",
+        "id": "newsletter_text",
+        "label": "Subheading"
+      },
+       {
+      "type": "checkbox",
+      "id": "newsletter_enable",
+      "default": true,
+      "label": "Newsletter"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_heading",
+      "default": "Subscribe to our emails",
+      "label": "Newsletter Heading"
+    },
+      {
+        "type": "image_picker",
+        "id": "payment_img",
+        "label": "Payment Strip"
+      },
+      {
+        "type": "image_picker",
+        "id": "rev_img",
+        "label": "Review Image"
+      }
+    ]
+  }
+{% endschema %}
+<style>
+#shopify-section-{{ section.id }} newsletter-form__field-wrapper {
+    padding: 0 15px;
+}
+#shopify-section-{{ section.id }} .trustpilot-img img {
+    max-width: 200px;
+    height: auto;
+}
+  @media screen and (max-width:749px) {
+#shopify-section-{{ section.id }} .newsletter-form__field-wrapper, #shopify-section-{{ section.id }} .payment-strip {
+    padding: 0 20px;
+}
+#shopify-section-{{ section.id }} .footer.row li {
+    text-align: center;
+}
+#shopify-section-{{ section.id }} .trustpilot-img img {
+    max-width: 180px;
+}
+  }
+</style>

@@ -1,0 +1,128 @@
+ <div class="w-row-container vintage-collection">
+   <div class= "vintage-wrapper">
+ 
+          <div class="one-box">
+            <div class="threecr-new img" style="background-image:url(https:{{ section.settings.image1 | img_url: 'large' }})">
+              <h3>{{ section.settings.heading1 }}</h3>
+            </div> 
+            <div class="threecr-new" style="background-image:url(https:{{ section.settings.image2 | img_url: 'large' }})">
+              <h3>{{ section.settings.heading2 }}</h3>
+            </div>
+          </div>
+     <div class="vintage-inner">
+        <div class="threecr-item-one" style="background-image:url(https:{{ section.settings.image3 | img_url: 'large' }})">
+              <h3>{{ section.settings.heading3 }}</h3>
+            </div>
+  </div>
+   </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Vintage-collection",
+     "settings": [
+             {
+          "type": "image_picker",
+          "id": "image1",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "heading1",
+          "label": "Heading"
+        },
+        
+                    {
+          "type": "image_picker",
+          "id": "image2",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "heading2",
+          "label": "Heading"
+        },
+        
+                    {
+          "type": "image_picker",
+          "id": "image3",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "heading3",
+          "label": "Heading"
+        }
+       
+    ],
+  "presets": [
+    {
+    "name": "vintage-collection"
+    }
+  ]
+  }
+{% endschema %}
+<style>
+ #shopify-section-{{ section.id }} .one-box,  #shopify-section-{{ section.id }} .vintage-inner {
+    width: 50%;
+}
+ #shopify-section-{{ section.id }} .threecr-item-one,  #shopify-section-{{ section.id }} .threecr-new {
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    background-repeat:no-repeat;
+}
+ 
+ #shopify-section-{{ section.id }} .w-row-container {
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+ #shopify-section-{{ section.id }} .vintage-wrapper {
+    display: flex;
+   padding:0 15px 0 0;
+}
+ #shopify-section-{{ section.id }} .one-box {
+    display: flex;
+    flex-direction: column;
+}
+ #shopify-section-{{ section.id }} .threecr-new {
+    height: 140px;
+    display: flex;
+    align-items: flex-end;
+    margin: 15px 15px;
+    margin-bottom:0;
+}
+ #shopify-section-{{ section.id }} .threecr-item-one {
+    height: 100% !important;
+    display: flex;
+    align-items: flex-end;
+}
+ #shopify-section-{{ section.id }} h3 {
+    font-size: 12px;
+    color: #000;
+    background: #fff;
+    max-width: 178px;
+    height: 41px;
+    border-radius: 8px;
+    margin: 0 auto;
+    display: flex;
+    margin: 30px 10px;
+    padding: 0 20px;
+    align-items: center;
+}
+ #shopify-section-{{ section.id }} .tcr-item:nth-child(2) {
+    padding-left: 0;
+}
+#shopify-section-{{ section.id }} .threecr-item-one {
+    margin: 0 0 0 2px;
+}
+#shopify-section-{{ section.id }} .threecr-new.img {
+    margin-top: 0 !important;
+}
+  @media screen and (min-width:992px) {
+  #shopify-section-{{ section.id }} {
+    display: none;
+}
+}
+</style>

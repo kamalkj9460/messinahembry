@@ -1,0 +1,8 @@
+{%- assign after_view_all = data.after_view_all -%}
+{%- assign after_view_all_url = data.after_view_all_url -%}
+
+{%- if after_view_all != blank and after_view_all_url != blank -%}
+  <div class="view-all text-center">
+    <a href="{{ after_view_all_url }}">View All</a>
+  </div>
+{%- endif -%}

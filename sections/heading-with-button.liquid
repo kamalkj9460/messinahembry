@@ -1,0 +1,104 @@
+<div class="w-row heading-with-button" style="padding-top:{{ section.settings.space_top }};padding-bottom:{{ section.settings.space_bottom }};background-color:{{ section.settings.background_color }}">
+  
+  <div class="w-row-container">
+
+            <h4>{{ section.settings.heading }}</h4>
+
+            <a class="hwb-button button" href="{{ section.settings.link_url }}">{{ section.settings.button_text }}</a>
+  
+  </div>
+
+</div>  
+
+{% schema %}
+{
+  "name": "Heading w/ Button (1 Col)",
+  "settings": [
+		{
+          "type": "color",
+          "id": "background_color",
+          "label": "Background colour",
+          "default": "#FFF"
+        },
+        {
+          "id": "space_top",
+          "type": "text",
+          "label": "Margin top",
+		  "default": "30px"
+        },
+        {
+          "id": "space_bottom",
+          "type": "text",
+          "label": "Margin bottom",
+		  "default": "30px"
+        },
+		{
+          "id": "heading",
+          "type": "text",
+          "label": "Heading"
+        },
+        {
+          "id": "link_url",
+          "type": "url",
+          "label": "URL"
+        },
+        {
+          "id": "button_text",
+          "type": "text",
+          "label": "Button Text"
+        }
+   ],
+  "presets": [
+     {
+       "name": "Heading w/ Button (1 Col)"
+     }
+   ]
+}
+{% endschema %}
+
+
+
+
+{% stylesheet %}
+
+.heading-with-button {
+  margin-left: auto;
+margin-right: auto;
+display: flex;
+}
+
+.w-row-container {
+  width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.heading-with-button .w-row-container {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.heading-with-button h4 {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 28px;
+	margin-bottom:0;
+max-width: 600px;
+margin: 0 auto;
+}
+
+.hwb-button {
+  margin: 20px auto 0 !important;
+  display: inline-block !important;
+  text-align: center !important;
+  text-transform: uppercase;
+padding: 5px 25px;
+}
+
+
+
+
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,44 @@
+<div class="homepage-notice">
+  
+  {% for block in section.blocks %}  
+    
+  
+        <div class="hn-text">{{ block.settings.notice-text }}</div>
+  
+  {% endfor %}
+
+</div>  
+
+{% schema %}
+{
+  "name": "Homepage Notice",
+  "max_blocks": 10,
+  "blocks": [
+    {
+      "type": "Item",
+      "name": "Item",
+      "settings": [
+        {
+          "id": "notice-text",
+          "type": "text",
+          "label": "Text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+     {
+       "name": "Homepage Notice"
+     }
+   ]
+}
+{% endschema %}
+
+
+
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

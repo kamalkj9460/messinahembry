@@ -1,0 +1,150 @@
+{%- assign product_limit = 20 -%}
+{%- assign collection = collections[section.settings.collection] -%}
+{%- assign bg_alpha = block.settings.background_color | color_extract: 'alpha' -%}
+
+ <div class="container">
+    <div class="tab">
+      <div class="tab_header">
+        <ul class="tab_list">
+           {%- for block in section.blocks -%}
+          <li class="tab_item">{{ block.settings.mainTab }}</li>
+              {%- endfor -%}
+        </ul>
+      </div>
+      <div class="tab_content">
+        <ul class="tab_content_list">
+           {%- for block in section.blocks -%}
+          <li class="tab_content_item">
+             <h4>{{ block.settings.tabTitle }}</h4>
+            <div class="{% if block.settings.use_carousel %}collection-slider-row{% else %}padded-row{% endif %} {% if block.settings.background_color == block.bg_col or bg_alpha == 0 %}no-bg{% endif %} section-id-{{ section.id }}" data-section-type="featured-collection"> 
+   <div class="collection-listing {% unless block.use_fullwidth_layout %}fixed-mode{% endunless %}">
+      <div class="product-list product-list--per-row-{{ block.settings.products_per_row }} product-list--image-shape-{{ settings.prod_thumb_shape }} {% if block.settings.use_carousel %}carousel{% endif %}">
+        {% if block.settings.collection == blank %}
+
+        {% for i in (1..6) %}
+        {% include 'onboarding-product-block' %}
+        {% endfor %}
+
+        {% else %}
+
+        {% for product in collection.products limit: product_limit %}
+        {% include 'product-block' with product, manual_image_load: block.settings.use_carousel, no_quick_buy_markup: block.settings.use_carousel %}
+        {% endfor %}
+
+        {% endif %}
+      </div>
+    </div>
+            </div>
+          </li>
+           {%- endfor -%}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+{% schema %}
+  {
+    "name": "Collection Tab",
+    "settings": [
+      {
+        "type": "text",
+        "id": "text",
+        "label": "text"
+      }
+    ],
+    "blocks": [
+      {
+        "name": "Tab",
+        "type": "Tab",
+        "settings": [
+          {
+            "type": "text",
+            "id": "mainTab",
+            "label": "Tab name"
+          },
+          {
+            "type": "text",
+            "id": "tabTitle",
+            "label": "Tab title"
+          },
+          {
+            "type": "richtext",
+            "id": "tabContext",
+            "label": "Tab context"
+          },
+          {
+        "type": "range",
+        "id": "products_per_row",
+        "label": "Products per row",
+        "min": 2,
+        "max": 5,
+        "step": 1,
+        "default": 4
+      },
+      {
+        "type": "checkbox",
+        "id": "use_carousel",
+        "label": "Enable carousel"
+      },
+      {
+        "type": "collection",
+        "id": "collection",
+        "label": "Collection"
+      }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Collection Tab"
+      }
+    ]
+  }
+{% endschema %}
+
+
+
+<script>
+console.log(1);
+
+function tabs(header, tab, content){
+  const headerItem = document.querySelector(header);
+  const tabItem = document.querySelectorAll(tab);
+  const contentItem = document.querySelectorAll(content);
+
+  function hideTab(){
+    contentItem.forEach(item => {
+      item.style.display = 'none';
+    });
+  }
+
+  function showTab(i = 0) {
+    contentItem[i].style.display = 'block';
+  }
+
+  tabItem[0].classList.add('active');
+
+  hideTab();
+  showTab();
+
+  headerItem.addEventListener('click', (e)=> {
+    const target = e.target;
+    if(target.classList.contains(tab.replace(/\./, ''))){
+      tabItem.forEach((item, i) => {
+        item.classList.remove('active');
+        if(target === item) {
+          console.log('ura');
+          hideTab();
+          showTab(i);
+          item.classList.add('active');
+        }
+      });
+    }
+  });
+}
+
+tabs('.tab_header', '.tab_item', '.tab_content_item');
+
+
+</script>

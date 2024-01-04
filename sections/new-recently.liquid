@@ -1,0 +1,187 @@
+
+
+<script>
+jQuery(document).ready(function($) {
+      jQuery('.slider2').slick({
+        dots: false,
+        infinite: false,
+        speed: 500,
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 2000,
+        arrows: true,
+            nextArrow: '<button id="next"><i class="fa fa-long-arrow-right" aria-hidden="true"></i>',
+        prevArrow: '<button id="previous"><i class="fa fa-long-arrow-left" aria-hidden="true"></i>',  
+        responsive: [{
+          breakpoint: 768,
+          settings: {
+            arrows: true,
+            slidesToShow: 2,
+            slidesToScroll: 2
+          }
+        }]
+    });
+});
+</script>
+
+<div class="recently-viewed-wrapper page-width heading_style_div">
+    <h2 class="custom_style_heading">Recently Viewed</h2>
+    <ul class="recently-viewed-grid slider2">
+    <!-- Recently viewed products will appear here -->
+    </ul>
+</div>
+
+<script>
+function setRecentlyViewedProducts() {
+  const productData = {
+    productTitle: "{{ product.title }}",
+    productImg: "{{ product.featured_media | img_url: '300x' }}",
+    productPrice: "{{ product.price | money }}",
+    productUrl: "{{ product.url }}",
+    productImageAltText: "{{product.featured_media.alt | escape }}"
+  };
+  const productList = [];
+  let jsonResp, jsonRespArr, jsonRespArrStr;
+  const numberOfProducts = 8;
+  productList.push(productData);
+  const currProductPageTitle = productData.productTitle;
+  const productDataString = JSON.stringify(productList);
+  const localData = localStorage.getItem("recentlyViewedProduct");
+
+  if (localData === null) {
+    localStorage.setItem("recentlyViewedProduct", productDataString);
+  } else if (localData) {
+    const oldProductData = localStorage.getItem("recentlyViewedProduct");
+    const countProductData = (oldProductData.match(/productTitle/g) || []).length;
+    const sameProduct = oldProductData.includes(currProductPageTitle);
+    if (countProductData < numberOfProducts && sameProduct == false) {
+      jsonResp = JSON.parse(oldProductData);
+      jsonRespArr = jsonResp.concat(productList);
+      jsonRespArrStr = JSON.stringify(jsonRespArr);
+      localStorage.setItem("recentlyViewedProduct", jsonRespArrStr);
+    } else if (countProductData >= numberOfProducts && sameProduct == false) {
+      jsonResp = JSON.parse(oldProductData);
+      jsonResp.shift();
+      jsonRespArr = jsonResp.concat(productList);
+      jsonRespArr = JSON.stringify(jsonRespArr);
+      localStorage.setItem("recentlyViewedProduct", jsonRespArr);
+    }
+  }
+}
+
+setRecentlyViewedProducts();
+const localViewed = localStorage.recentlyViewedProduct;
+function getRecentlyViewedProducts() {
+  const productData = JSON.parse(localStorage.getItem("recentlyViewedProduct"));
+  const recentlyViewedHtml = [];
+  productData.map(item => {
+    recentlyViewedHtml.unshift(`
+    <li class="recently-viewed-grid-item">
+      <a class="product_grid" "href="${item.productUrl}"> 
+		<img class="recently-viewed-img" src='${item.productImg}' loading="lazy" alt="${item.productImageAltText}"/>
+      </a>
+       <h3><a class="recently-viewed-a" href="${item.productUrl}">${item.productTitle}</a></h3>
+       <p>${item.productPrice}</p>
+    </li>
+   `);
+  });
+  const newProductData = `${recentlyViewedHtml.join("")}`;
+  const fullContent = document.getElementsByClassName("recently-viewed-grid");
+  fullContent[0].innerHTML = newProductData;
+}
+
+document.addEventListener("DOMContentLoaded", function (event) {
+  getRecentlyViewedProducts();
+});
+
+</script>
+
+
+<style>
+
+  #shopify-section-{{ section.id }} .recently-viewed-wrapper{
+  margin: 1rem auto;
+}
+  
+ #shopify-section-{{ section.id }} .recently-viewed-img {
+  width: 100%;
+}
+  
+ #shopify-section-{{ section.id }} .recently-viewed-grid {
+
+  grid-gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+  list-style: none;
+  margin:0; 
+  padding: 0;
+}
+
+ #shopify-section-{{ section.id }} .recently-viewed-grid-item {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+       padding: 0 5px;
+}
+  
+ #shopify-section-{{ section.id }} .recently-viewed-a {
+  text-decoration: none;
+  color: black;
+}
+  
+   #shopify-section-{{ section.id }} a.product_grid {
+    border: 0.1rem solid #C4C4C4;
+}
+  
+ #shopify-section-{{ section.id }} h2.custom_style_heading {
+    margin: 0;
+    margin-bottom: 3rem;
+}
+    
+   #shopify-section-{{ section.id }} button#previous {
+    position: absolute;
+    z-index: 1;
+    top: 35%;
+    background: #000;
+    color: #fff;
+    border: 0;
+    left: -14px;
+    font-size: 18px;
+    padding: 10px;
+    border-radius: 50px;
+}
+
+ #shopify-section-{{ section.id }} button#next {
+    position: absolute;
+    z-index: 1;
+    top: 35%;
+    background: #000;
+    color: #fff;
+    border: 0;
+right:-14px;
+    font-size: 18px;
+    padding: 10px;
+    border-radius: 50px;
+}
+  
+  #shopify-section-{{ section.id }}  a.recently-viewed-a:hover{
+  border-bottom:1px solid #000;
+  }
+  #shopify-section-{{ section.id }}  h2.custom_style_heading {
+    text-align: center;
+}
+</style>
+
+{% schema %}
+  {
+    "name": "recently_view_products",
+    "settings": [
+	],
+  "presets": [
+    {
+      "name": "recently_view_products",
+      "category": "Product"
+    }
+  ]
+  }
+{% endschema %}

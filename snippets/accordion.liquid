@@ -1,0 +1,105 @@
+<div class="accordion-container page-width">
+  {% for block in section.blocks %}
+  <div class="set_class">
+    <a>
+      {{ block.settings.title }}
+      <i class="fa fa-plus"></i>
+    </a>
+    {% if block.settings.title != blank %}
+    <div class="content_class" id="info_new-{% increment counter %}">
+      <p>{{ block.settings.answer }}</p>
+    </div>{% endif %}
+  </div>
+  {% endfor %}
+</div>
+
+
+<style>
+.accordion-container{
+  position: relative;
+  max-width: 800px;
+  height: auto;
+  margin: 10px auto;
+}
+.accordion-container > h2{
+  text-align: center;
+  color: #fff;
+  padding-bottom: 5px;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #ddd;
+}
+.set_class{
+  position: relative;
+  width: 100%;
+  height: auto;
+  background-color: #ffffff;
+}
+.set_class > a{
+  display: block;
+      margin-bottom: 10px;
+  padding: 10px 15px;
+  text-decoration: none;
+  color: #555;
+  font-weight: 600;
+  border-bottom: 1px solid #ddd;
+  -webkit-transition:all 0.2s linear;
+  -moz-transition:all 0.2s linear;
+  transition:all 0.2s linear;
+}
+.set_class > a i{
+  float: right;
+  margin-top: 2px;
+}
+.set_class > a.active{
+    background-color: #ffff;
+    color: black;
+}
+.content_class {
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+  display:none;
+}
+.content_class p{
+  padding: 10px 15px;
+  margin: 0;
+  color: #333;
+}
+#shopify-section-{{ section.id }}  a:not([href]) {
+    cursor: pointer;
+}
+  div#info_new-0 {
+    display: block;
+}
+</style>
+<script>
+$(document).ready(function() {
+  
+  $(".set_class > a").on("click", function() {
+    $(".set_class > a :first").addClass("active");
+    if ($(this).hasClass("active")) {
+      $(this).removeClass("active");
+      $(this)
+        .siblings(".content_class")
+        .slideUp(200);
+      $(".set_class > a i")
+        .removeClass("fa-minus")
+        .addClass("fa-plus");
+    } else {
+      $(".set_class > a i")
+        .removeClass("fa-minus")
+        .addClass("fa-plus");
+      $(this)
+        .find("i")
+        .removeClass("fa-plus")
+        .addClass("fa-minus");
+      $(".set_class > a").removeClass("active");
+      $(this).addClass("active");
+      $(".content_class").slideUp(200);
+      $(this)
+        .siblings(".content_class")
+        .slideDown(200);
+    }
+  }); 
+});
+</script>

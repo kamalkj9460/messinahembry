@@ -1,0 +1,318 @@
+{% capture chevron_right %}<span class="icon-small icon-natcol">{% include 'svg-chevron-right' %}</span>{% endcapture %}
+<div data-section-type="blog-template">
+  {% paginate blog.articles by 9 %}
+  
+  <div style="margin-bottom: 30px;" class="page-header cf">
+  <div class="container cf">
+    <h1 class="majortitle">THE MESSINA HEMBRY BLOG</h1>
+  </div>
+  </div>
+  
+  <div class="container">
+    <div style="background-color:#fff!important" class="page-header cf">
+
+      {% assign show_tags = false %}
+      {% for tag in blog.all_tags %}
+      {% unless tag contains 'meta-' %}{% assign show_tags = true %}{% endunless %}
+      {% endfor %}
+
+      <div class="filters">
+        {% if show_tags %}
+        <a href="#" data-toggle-target=".tags.nav-row">{{ 'blogs.filtering.filter' | t }} <span class="state">+</span></a>
+        {% endif %}
+      </div><!-- /.filters -->
+
+      {% if section.settings.show_sharing_icons or section.settings.show_rss_icon %}
+        <div class="social-area">
+          {% if section.settings.show_sharing_icons %}
+            {% include 'social-sharing', share_title: blog.title, share_permalink: blog.url, share_image: false %}
+          {% endif %}
+          {% if section.settings.show_rss_icon %}
+            <a class="rsslink" href="{{ blog.url }}.atom" title="{{ blog.title | escape }} RSS">{% include 'svg-rss' %}</a>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+  </div><!-- /.pagetitle -->
+
+  {% if show_tags %}
+  {% assign current_tags_size = current_tags | size %}
+  <div class="tags nav-row spaced-row {% if current_tags_size == 0 %}hidden{% endif %}">
+    <ul>
+      {% for tag in blog.all_tags %}
+      {% unless tag contains 'meta-' %}
+      {% if current_tags contains tag %}
+      <li class="active">{{ tag | append: ' <span class="x">&times;</span>' | link_to_remove_tag: tag }}</li>
+      {% else %}
+      <li>{{ tag | link_to_tag: tag }}</li>
+      {% endif %}
+      {% endunless %}
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  {% if section.settings.layout == 'columns' %}<div class="container">{% endif %}
+
+  {% if section.settings.crop_image and section.settings.layout == 'columns' %}
+    {% assign aspect_ratio_split = section.settings.crop_style | split: '-' %}
+    {% assign aspect_ratio = 1.0 | times: aspect_ratio_split[0] | divided_by: aspect_ratio_split[1] %}
+  {% else %}
+    {% assign aspect_ratio = false %}
+  {% endif %}
+
+  <div class="article-list article-layout--{{ section.settings.layout }}">
+
+    {% for article in blog.articles %}
+
+    <div class="article">
+      <div class="article__inner {% if section.settings.layout != 'columns' %}container{% endif %}">
+
+        {% if article.image %}
+        <div class="article-image">
+          <a href="{{ article.url }}">
+            {% include 'responsive-image', image: article.image, aspect_ratio: aspect_ratio %}
+          </a>
+        </div>
+        {% endif %}
+
+        <h2>{{ article.title | link_to: article.url }}</h2>
+
+        <div class="user-content">
+          {{ article.excerpt_or_content }}
+        </div>
+
+        <div class="meta">
+          <span class="iconmeta time">
+            {% if section.settings.show_date %}
+              {{ article.published_at | date: format: 'month_date_year' }}
+            {% endif %}
+            {% if section.settings.show_author %}
+              {% if section.settings.show_date %}&mdash;{% endif %}
+              <span class="author">{{ article.author }}</span>
+            {% endif %}
+          </span>
+
+          {% if section.settings.show_article_tags %}
+          {% capture tag_markup %}
+          <div class="iconmeta tags">
+            <span class="label">{{ 'blogs.article.tags' | t }}:</span>
+            {% for tag in article.tags %}
+            {% unless tag contains 'meta-' %}
+            {{ tag | link_to_tag: tag }}
+            {% endunless %}
+            {% endfor %}
+          </div>
+          {% endcapture %}
+          {% if tag_markup contains '</a>' %}{{ tag_markup }}{% endif %}
+          {% endif %}
+        </div>
+
+      </div><!-- /.container -->
+    </div><!-- /.article -->
+
+    {% else %}
+
+    <div class="container"><h5 class="align-centre fully-spaced-row">{{ 'blogs.general.no_matches' | t }}</h5></div>
+
+    {% endfor %}
+  </div>
+
+  {% if section.settings.layout == 'columns' %}</div>{% endif %}
+
+  <div class="container pagination-row">{% include 'pagination-control' %}</div>
+
+  {% endpaginate %}
+</div>
+
+<style>
+  
+  .template-blog #content {
+    padding-top: 0;
+}
+  
+   .snize-recommendation .snize-recommendation-title {
+    display: none;
+}
+  
+  .padded-row {
+    padding-top: 20px;
+  }
+  
+  .template-page #content {
+    margin-top: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+  
+  .template-page .user-content.row-spacing {
+    max-width: 100%;
+}
+  
+  .two-row-col {
+    width: 48%;
+    float: left;
+}
+  
+  .trc-1 {
+    margin-right:2%;
+  }
+  .trc-2 {
+    margin-left:2%;
+  }
+  
+  .two-row {
+    width: 100%;
+    clear: both;
+    padding-bottom: 50px !important;
+    display: inline-block;
+}
+  
+  /*.collection-row div {
+    width: 50%;
+    float: left;
+}*/
+  
+  @media screen and (max-width:800px) {
+  .two-row-col {
+    width: 100%;
+    float: left;
+    margin: 0 !important;
+}
+    .two-row {
+    padding-bottom: 0px !important;
+    }
+  }
+  
+  .user-content a.text-link {
+    border-bottom: none;
+  }
+  
+  .page-header {
+    background-color: #197bbd;
+    margin-bottom: 50px;
+    width: 100% !important;
+}
+  
+  .majortitle {
+    text-transform: uppercase;
+    color: #fff;
+    margin-bottom: 0 !important;
+    padding: 10px 0 10px;
+    letter-spacing: 10px;
+    text-align:left !important;
+}
+  
+  @media screen and (max-width:900px) {
+  h1 {
+    font-size: 23px;
+}
+    .majortitle {
+    padding: 15px 0 15px;
+    }
+  }
+  
+  ul {
+    margin-left: 0;
+    margin-right: 0;
+}
+  
+  .template-page #content {
+    margin-top: 0;
+    padding-top: 0;
+  }
+  
+  .page-header {
+    padding-bottom: 0;
+}
+  
+  .article-image {
+    display: none;
+}
+  
+    </style>
+
+
+{% schema %}
+  {
+    "name": "Blog pages",
+    "settings": [
+      {
+        "type": "select",
+        "id": "layout",
+        "label": "Layout",
+        "default": "list",
+        "options": [
+          {
+            "label": "List",
+            "value": "list"
+          },
+          {
+            "label": "Grid",
+            "value": "columns"
+          }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "show_date",
+        "label": "Show date",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_author",
+        "label": "Show author",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_article_tags",
+        "label": "Show tags underneath articles",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_sharing_icons",
+        "label": "Show social sharing icons",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_rss_icon",
+        "label": "Show RSS feed link",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Grid layout"
+      },
+      {
+        "type": "checkbox",
+        "id": "crop_image",
+        "label": "Crop featured images",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "crop_style",
+        "label": "Crop style",
+        "options": [
+          {
+            "value": "1-1",
+            "label": "Square"
+          },
+          {
+            "value": "3-4",
+            "label": "Portrait"
+          },
+          {
+            "value": "16-9",
+            "label": "Landscape"
+          }
+        ],
+        "default": "16-9"
+      }
+    ]
+  }
+{% endschema %}

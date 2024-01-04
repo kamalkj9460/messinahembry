@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="col-md-3">
+      <h2>{{ section.settings.title }}</h2>
+        <div class="single_logo">
+             <img src="{{ section.settings.logo_image | img_url: '150x' }}">
+        </div>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Single Logo",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label":"Title"
+      },
+      {
+          "type": "image_picker",
+          "id": "logo_image",
+          "label": "Logo Image"
+      }
+    ],
+   "presets": [
+    {
+      "category": "image",
+      "name": "Single Logo"
+    }
+  ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

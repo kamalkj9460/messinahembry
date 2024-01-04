@@ -1,0 +1,282 @@
+<div class="slide full-width-image section-id-{{ section.id }}" data-section-type="text-image-overlay">
+  {% unless settings.use_fullwidth_layout %}<div class="container">{% endunless %}
+
+  <div class="scaled-text-base">
+    <{% if section.settings.link_url != blank%}a href="{{ section.settings.link_url }}"{% else %}div{% endif %}
+      class="img-cont {% if section.settings.image != blank %}fade-in lazyload{% endif %}"
+      {% if section.settings.image != blank %}
+      data-bgset="{% include 'bgset', image: section.settings.image %}"
+      data-sizes="auto"
+      data-parent-fit="cover"{% endif %}>
+      {% if section.settings.image == blank %}
+      <div class="placeholder-image placeholder--banner {% if section.settings.title != blank or section.settings.text != blank %}dark{% endif %}">
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      </div>
+      {% else %}
+        {% include 'responsive-image', image: section.settings.image, manual_image_load: true %}
+      {% endif %}
+
+      {% if section.settings.title != blank or section.settings.text != blank %}
+      <div class="overlay-text overlay-{{ section.settings.position }}">
+        <div class="inner">
+          <div class="text">
+            <div class="scaled-text">
+              <div>{{ section.settings.title | escape }}</div>
+              <div class="second-line">{{ section.settings.text | escape }}</div>
+              <a href="{{ section.settings.link }}" 
+         class="btn btn--cta">
+        {{ section.settings.linktext }}
+ </a>
+        </div>
+           
+            </div>
+          </div>
+        </div>
+      {% endif %}
+      <div class="overlay-wrapper">
+        {% for block in section.blocks %}  
+
+          <div class="sale-buttons">
+          <div class="first-button">
+             <a href="{{ block.settings.link1 }}" class="btn btn--cta"> {{ block.settings.linktext1 }} </a>
+          </div>
+            <div class="second-button">
+             <a href="{{ block.settings.link_new }}" class="btn btn--cta"> {{ block.settings.linktext_new }} </a>
+          </div>
+          </div>
+
+        {% endfor %}
+</div>
+    </{% if section.settings.link_url != blank%}a{% else %}div{% endif %}>
+  </div>
+    
+  {% unless settings.use_fullwidth_layout %}</div>{% endunless %}
+</div>
+{%- assign background_alpha = section.settings.overlay_bg | color_extract: 'alpha' -%}
+<style type="text/css">
+  .section-id-{{ section.id }} .overlay-text .text > div {
+    color: {{ section.settings.overlay_color }};
+    background: {% if background_alpha == 0 %}transparent{% else %}{{ section.settings.overlay_bg | color_modify: 'alpha', 0.8 }}{% endif %};
+  }
+</style>
+
+
+{% schema %}
+  {
+    "name": "Summer Vintage",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image",
+        "info": "1200 x 400px (recommended)"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Image with text overlay"
+      },
+      {
+        "type": "text",
+        "id": "text",
+        "label": "Subheading"
+      },
+      {
+        "id": "link",
+        "type": "url",
+        "label": "Link URL"
+      },
+      {
+        "id": "linktext",
+        "type": "text",
+        "label": "Link text",
+        "default": "Click here"
+      },
+      {
+        "type": "select",
+        "id": "position",
+        "label": "Text alignment",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "centre",
+            "label": "Centre"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ],
+        "default": "centre"
+      },
+      {
+        "type": "color",
+        "id": "overlay_color",
+        "label": "Text color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "overlay_bg",
+        "label": "Overlay background",
+        "default": "#464654"
+      },
+      {
+        "type": "url",
+        "id": "link_url",
+        "label": "Link"
+      }
+    ],
+    "blocks":[
+      {
+      "type": "text",
+      "name": "service",
+      "settings": [
+        {
+      "id": "linktext1",
+      "type": "text",
+      "label": "Button text1",
+      "default": "Click here"
+    },
+	 {
+      "id": "link1",
+      "type": "url",
+      "label": "Button link1"
+    },
+         {
+      "id": "linktext_new",
+      "type": "text",
+      "label": "Button text2",
+      "default": "Click here"
+    },
+       {
+      "id": "link_new",
+      "type": "url",
+      "label": "Button link2"
+    }
+   
+      ]
+    }
+    ],
+    "presets": [
+      {
+        "name": "Summer Vintage",
+        "category": "Image",
+        "settings": {
+        "text": "",
+        "position": "centre",
+        "link_url": ""
+        }
+      }
+    ]
+  }
+{% endschema %}
+<style>
+  @media screen and (min-width:767px){
+    #shopify-section-{{ section.id }} .overlay-text {
+    position: absolute;
+    top: 0;
+    left: 0%;
+    width: 50%;
+    height: 55%;
+}
+    #shopify-section-{{ section.id }} .overlay-wrapper {
+    position: absolute;
+    top: 20%;
+    right: 16%;
+}
+  }
+#shopify-section-{{ section.id }} a.btn.btn--cta {
+    font-size: 15px;
+    background: #fff;
+    color: #000 !important;
+    font-weight:600;
+    width: 180px;
+    height: 35px;
+    display: flex;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 20px;
+    border-radius: 8px;
+}
+#shopify-section-{{ section.id }} .slide.full-width-image.section-id-08364f83-622c-4f97-8760-1214955f10ac {
+    height: 600px;
+} 
+
+#shopify-section-{{ section.id }} .scaled-text {
+    font-size: 52px !important;
+}
+
+#shopify-section-{{ section.id }} .sale-buttons  {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+} 
+#shopify-section-{{ section.id }} .first-button {
+    padding-right: 20px;
+}
+    @media screen and (max-width:767px) {
+
+#shopify-section-{{ section.id }} .sale-buttons {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    margin-bottom: 0px;
+    justify-content: center;
+}
+#shopify-section-{{ section.id }} .overlay-wrapper {
+    padding-top: 40px;
+}
+#shopify-section-{{ section.id }} .scaled-text {
+    font-size: 28px !important;
+}
+#shopify-section-{{ section.id }} a.btn.btn--cta {
+    width: 125px;
+}
+#shopify-section-{{ section.id }} .slide.full-width-image.section-id-08364f83-622c-4f97-8760-1214955f10ac {
+    height: 100%;
+}
+#shopify-section-{{ section.id }} .rimage-outer-wrapper {
+    padding: 40px 0;
+}
+  }
+ 
+  @media screen and (min-width:768px) and (max-width:1440px) {
+#shopify-section-{{ section.id }} .overlay-wrapper {
+    position: absolute;
+    top: 27%;
+    right: 4%;
+} 
+#shopify-section-{{ section.id }} .overlay-text {
+    height: 86%;
+}
+#shopify-section-{{ section.id }} .scaled-text {
+    font-size: 28px !important;
+}
+  }
+  @media only screen and (max-width:580px){
+ 
+#shopify-section-{{ section.id }} .img-cont.fade-in.lazyloaded {
+    height: 500px !important;
+}
+  #shopify-section-{{ section.id }} a.btn.btn--cta {
+    font-size: 12px;
+    height: 30px;
+    margin-top: 20px;
+    border-radius: 8px;
+}
+   #shopify-section-{{ section.id }} .slide .overlay-text .text .second-line {
+    font-size: 16px!important;
+}
+}
+ #shopify-section-{{ section.id }} a.btn.btn--cta:hover {
+    background: #367bbb !important;
+   color: #fff !important;
+}
+</style>

@@ -1,0 +1,196 @@
+<div class="w-row two-column-row" style="padding-top:{{ section.settings.space_top }};padding-bottom:{{ section.settings.space_bottom }};background-color:{{ section.settings.background_color }}">
+   
+  <div class="w-row-container">
+
+        {% for block in section.blocks %}  
+
+          <div class="tcr-item">
+
+            <a href="{{ block.settings.link_url }}"><div class="tcr-item-imgsec" style="background-image:url(https:{{ block.settings.image | img_url: '700x' }})">
+              <h3>{{ block.settings.heading }}</h3>
+            </div></a>
+            
+          </div>
+
+        {% endfor %}
+  
+  </div>
+
+</div>  
+
+{% schema %}
+{
+  "name": "Image w/ Link (2 Col)",
+  "settings": [
+     {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "text",
+        "id": "subtitle",
+        "label": "Sub Title"
+      },
+      {
+      "id": "link",
+      "type": "url",
+      "label": "Button link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [
+        {
+          "id": "image",
+          "type": "image_picker",
+          "label": "Image"
+        },
+        {
+          "id": "heading",
+          "type": "text",
+          "label": "Heading"
+        },
+        {
+          "id": "link_url",
+          "type": "url",
+          "label": "URL"
+        }
+      ]
+    }
+  ],
+  "settings": [
+		{
+          "type": "color",
+          "id": "background_color",
+          "label": "Background colour",
+          "default": "#FFF"
+        },
+        {
+          "id": "space_top",
+          "type": "text",
+          "label": "Margin top",
+		  "default": "30px"
+        },
+        {
+          "id": "space_bottom",
+          "type": "text",
+          "label": "Margin bottom",
+		  "default": "30px"
+        }
+   ],
+  "presets": [
+     {
+       "name": "Image w/ Link (2 Col)"
+     }
+   ]
+}
+{% endschema %}
+
+
+
+
+{% stylesheet %}
+
+/* #shopify-section-{{ section.id }} .two-column-row {
+  margin-left: auto;
+margin-right: auto;
+display: flex;
+} */
+
+/* #shopify-section-{{ section.id }} .w-row-container {
+  width: 1000px;
+  margin: 0 auto;
+} */
+
+#shopify-section-{{ section.id }} .two-column {
+    padding-top: 0 !important;
+}
+#shopify-section-{{ section.id }} .tcr-item {
+  width: 50%;
+  padding: 15px;
+text-align: center;
+}
+
+#shopify-section-{{ section.id }} .tcr-item {
+float:left;
+}
+
+#shopify-section-{{ section.id }} .tcr-item-imgsec {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    height: 400px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 15px;
+    
+}
+  
+@media screen and (max-width:930px) {
+#shopify-section-{{ section.id }} .tcr-item-imgsec {
+  height: 300px;
+}
+}
+
+@media screen and (max-width:630px) {
+#shopify-section-{{ section.id }} .tcr-item-imgsec {
+  height: 200px;
+}
+#shopify-section-{{ section.id }} .tcr-item-imgsec h3 {
+    font-size: 18px !important;
+}
+}
+
+@media screen and (max-width:440px) {
+#shopify-section-{{ section.id }} .tcr-item-imgsec {
+  height: 180px;
+}
+}
+
+@media screen and (max-width:400px) {
+#shopify-section-{{ section.id }} .tcr-item-imgsec {
+  height: 155px;
+}
+}
+
+
+#shopify-section-{{ section.id }} .tcr-item h3 {
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 0 0 10px #000;
+  font-size: 28px;
+	margin-bottom:0;
+}
+#shopify-section-{{ section.id }} .vintage-title p {
+    color: #8a8f93;
+} 
+@media screen and (max-width:1030px) {
+#shopify-section-{{ section.id }} .tcr-item h3 {
+  font-size: 22px;
+}
+
+}
+
+#shopify-section-{{ section.id }} .tcr-button {
+  margin: 20px auto 0 !important;
+  display: inline-block !important;
+  text-align: center !important;
+  text-transform: uppercase;
+ padding: 5px 25px;
+}
+
+
+
+
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

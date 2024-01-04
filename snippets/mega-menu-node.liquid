@@ -1,0 +1,70 @@
+{%- assign setting_anchor = 'item_%1_anchor' | replace: '%1', node -%}
+{%- assign anchor = data[setting_anchor] -%}
+{%- assign setting_url = 'item_%1_url' | replace: '%1', node -%}
+{%- assign url = data[setting_url] -%}
+{%- assign setting_image = 'item_%1_image' | replace: '%1', node -%}
+{%- assign image = data[setting_image] -%}
+{%- assign setting_menu = 'item_%1_menu' | replace: '%1', node -%}
+{%- assign menu_list = data[setting_menu] -%}
+{%- assign setting_menu_columns = 'item_%1_menu_columns' | replace: '%1', node -%}
+{%- assign menu_columns = data[setting_menu_columns] -%}
+{%- assign setting_width = 'item_%1_width' | replace: '%1', node -%}
+{%- assign width = data[setting_width] -%}
+
+{%- if anchor != blank -%}
+
+{%- if width == 'auto' -%}
+	{%- assign image_size = '340x' -%}
+	<div class="col-lg">
+{%- elsif width == 'full' -%}
+	{%- assign image_size = '900x' -%}
+	<div class="col-lg-12">
+{%- elsif width == 'half' -%}
+	{%- assign image_size = '900x' -%}
+	<div class="col-lg-6">
+{%- elsif width == 'third' -%}
+	{%- assign image_size = '340x' -%}
+	<div class="col-lg-4">
+{%- elsif width == 'quarter' -%}
+	{%- assign image_size = '430x' -%}
+	<div class="col-lg-3">
+{%- else -%}
+	<div class="col-lg-12">
+{%- endif -%}
+		<div class="menu-node">
+
+			{%- if url != blank -%}
+			<div class="node-heading node-heading-linked">
+				<a href="{{ url }}">{{ anchor }}</a>
+			</div>
+			{%- else -%}
+			<div class="node-heading">{{ anchor }}</div>
+			{%- endif -%}
+
+			{%- if image != blank -%}
+			{%- if url != blank -%}
+			<div class="node-image node-image-linked d-none d-lg-block">
+			{%- else -%}
+			<div class="node-image d-none d-lg-block">
+			{%- endif -%}
+				<div class="node-image-inner" style="background-image: url({{ image | img_url: image_size }})">
+					<img class="lazyload" data-src="{{ image | img_url: image_size }}" src="{{ 'img_lazysrc.png' | asset_url }}" alt="{{ anchor }}">
+					{%- if url != blank -%}
+					<a class="stretched-link" href="{{ url }}"></a>
+					{%- endif -%}
+				</div>
+			</div>
+
+			{%- elsif linklists[menu_list].links.size > 0 %}
+			<nav class="node-nav node-nav-cols-{{ menu_columns }}" role="navigation">
+				<ul>
+					{% for link in linklists[menu_list].links %}
+					<li><a href="{{ link.url }}">{{ link.title }}</a></li>
+					{% endfor %}
+				</ul>
+			</nav>
+			{%- endif -%}
+
+		</div>
+	</div>
+{%- endif -%}

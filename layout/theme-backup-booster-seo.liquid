@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html class="no-js" lang="{{ shop.locale }}">
+<head>
+  
+  <!-- Global Site Tag (gtag.js) - Google AdWords: 913529352 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-913529352"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-913529352', {'send_page_view': false});
+</script>
+  
+  
+  
+
+  
+  <!-- Symmetry 4.9.4 -->
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <meta name="theme-color" content="{{ settings.btn_col }}">
+
+  {% if settings.favicon != blank and settings.favicon contains '.png' %}
+  <link rel="shortcut icon" href="{{ settings.favicon | img_url: 'master' }}" type="image/png" />
+  {% elsif settings.favicon != blank and settings.favicon contains '.ico' %}
+  <link rel="shortcut icon" href="{{ settings.favicon | img_url: 'master' }}" type="image/x-icon" />
+  {% endif %}
+
+  <title>
+    {{ page_title }}{% if current_tags %}{% assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
+  </title>
+  {% if page_description %}
+  <meta name="description" content="{{ page_description | escape }}" />
+  {% endif %}
+  <link rel="canonical" href="{{ canonical_url }}" />
+
+  {% include 'social-meta-tags' %}
+
+  {{ 'styles.scss.css' | asset_url | stylesheet_tag }}
+
+  {{ 'https://code.jquery.com/jquery-3.3.1.min.js' | script_tag }}
+  <script>
+    window.theme = window.theme || {};
+    theme.jQuery = jQuery;
+    theme.money_format = {{ shop.money_format | json }};
+    theme.strings = {
+      previous: {{ 'general.accessibility_labels.previous' | t | json }},
+      next: {{ 'general.accessibility_labels.next' | t | json }},
+      addressError: {{ 'map.errors.address_error' | t | json }},
+      addressNoResults: {{ 'map.errors.address_no_results' | t | json }},
+      addressQueryLimit: {{ 'map.errors.address_query_limit_html' | t | json }},
+      authError: {{ 'map.errors.auth_error_html' | t | json }},
+      icon_labels_left: {{ 'general.icon_labels.left' | t | escape | json }},
+      icon_labels_right: {{ 'general.icon_labels.right' | t | escape | json }},
+      icon_labels_down: {{ 'general.icon_labels.down' | t | escape | json }},
+      icon_labels_close: {{ 'general.icon_labels.close' | t | escape | json }},
+      cart_terms_confirmation: {{ 'cart.terms.confirmation' | t | json }},
+      products_listing_from: {{ 'products.listing.from' | t | json }},
+      layout_live_search_see_all: {{ 'layout.live_search.see_all' | t | json }},
+      products_variant_non_existent: {{ 'products.variant.non_existent' | t | json }},
+      products_product_add_to_cart: {{ 'products.product.add_to_cart' | t | json }},
+      products_variant_no_stock: {{ 'products.variant.no_stock' | t | json }},
+      products_variant_non_existent: {{ 'products.variant.non_existent' | t | json }},
+      products_variant_unit_price_separator: {{ 'products.variant.unit_price_separator' | t | json }},
+      general_navigation_menu_toggle_aria_label: {{ 'general.navigation.menu_toggle_aria_label' | t | json }},
+      products_added_notification_title: {{ 'products.added_notification.title' | t | json }},
+      products_added_notification_item: {{ 'products.added_notification.item' | t | json }},
+      products_added_notification_quantity: {{ 'products.added_notification.quantity' | t | json }},
+      products_added_notification_unit_price: {{ 'products.added_notification.unit_price' | t | json }},
+      products_added_notification_quantity: {{ 'products.added_notification.quantity' | t | json }},
+      products_added_notification_total_price: {{ 'products.added_notification.total_price' | t | json }},
+      products_added_notification_subtotal: {{ 'products.added_notification.subtotal' | t | json }},
+      products_added_notification_shipping_note: {{ 'products.added_notification.shipping_note' | t | json }},
+      products_added_notification_keep_shopping: {{ 'products.added_notification.keep_shopping' | t | json }},
+      products_added_notification_cart: {{ 'products.added_notification.cart' | t | json }},
+      products_product_adding_to_cart: {{ 'products.product.adding_to_cart' | t | json }},
+      products_product_added_to_cart: {{ 'products.product.added_to_cart' | t | json }},
+      products_added_notification_subtotal: {{ 'products.added_notification.subtotal' | t | json }}
+    };
+    theme.routes = {
+      search_url: '{{ routes.search_url }}',
+      cart_url: '{{ routes.cart_url }}',
+      cart_add_url: '{{ routes.cart_add_url }}',
+      cart_change_url: '{{ routes.cart_change_url }}'
+    };
+    document.documentElement.className = document.documentElement.className.replace('no-js', '');
+  </script>
+  
+  {{ '//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css' | stylesheet_tag }}
+
+  {{ content_for_header }}
+
+	{{ shop.metafields.loox["global_html_head"] }}
+</head>
+
+<body class="template-{{ template | split: '.' | first }}">
+  <a class="skip-link visually-hidden" href="#content">{{ 'general.accessibility_labels.skip_to_content' | t }}</a>
+
+  {% section 'header' %}
+
+  <main id="content" role="main">
+    <div class="container cf">
+
+      {{ content_for_layout }}
+
+    </div><!-- /.container -->
+  </main><!-- /#content -->
+
+  <div id="pagefooter">
+    {% section 'cross-page-promos' %}
+
+    {% section 'footer' %}
+  </div><!-- /#pagefooter -->
+
+  {{ 'vendor.js'  | asset_url | script_tag }}
+  {{ 'theme.js'  | asset_url | script_tag }}
+  
+  
+  <script type="text/javascript">
+    
+    jQuery( document ).ready(function() {
+    
+    jQuery(".slideshow-row .slide a").append("<div class='overlay'></div>");
+    jQuery("#shopify-section-1493812685340 .product-list .owl-item .product-link").append("<div class='overlay'></div>"); 
+    
+    
+    jQuery(".product-block[data-collection-id='25588699'] .title").html("Mens");
+    jQuery(".product-block[data-collection-id='25588647'] .title").html("Womens");
+    jQuery(".product-block[data-collection-id='426082115'] .title").html("Boys");
+    jQuery(".product-block[data-collection-id='426082179'] .title").html("Girls");
+    jQuery(".product-block[data-collection-id='23406772256'] .title").html("Baby");
+      
+});
+    
+    
+  </script>
+{{ 'searchanise-custom.js' | asset_url | script_tag }}
+
+	{{ shop.metafields.loox["global_html_body"] }}
+ {% include 'smile-initializer' %}
+
+<!--Gorgias Chat Widget Start--><script id="gorgias-chat-widget-install">!function(_){_.GORGIAS_CHAT_APP_ID="329",_.GORGIAS_CHAT_BASE_URL="us-east1-898b.production.gorgias.chat",_.GORGIAS_API_BASE_URL="config.gorgias.chat";var e=new XMLHttpRequest;e.open("GET","https://config.gorgias.chat/applications/329",!0),e.onload=function(t){if(4===e.readyState)if(200===e.status){var n=JSON.parse(e.responseText);if(!n.application||!n.bundleVersion)throw new Error("Missing fields in the response body - https://config.gorgias.chat/applications/329");if(_.GORGIAS_CHAT_APP=n.application,_.GORGIAS_CHAT_BUNDLE_VERSION=n.bundleVersion,n&&n.texts&&(_.GORGIAS_CHAT_TEXTS=n.texts),n&&n.sspTexts&&(_.GORGIAS_CHAT_SELF_SERVICE_PORTAL_TEXTS=n.sspTexts),!document.getElementById("gorgias-chat-container")){var o=document.createElement("div");o.id="gorgias-chat-container",document.body.appendChild(o);var r=document.createElement("script");r.setAttribute("defer",!0),r.src="https://client-builds.production.gorgias.chat/{bundleVersion}/static/js/main.js".replace("{bundleVersion}",n.bundleVersion),document.body.appendChild(r)}}else console.error("Failed request GET - https://config.gorgias.chat/applications/329")},e.onerror=function(_){console.error(_)},e.send()}(window||{});</script><script id="gorgias-chat-shopify-install">!function(_){_.SHOPIFY_PERMANENT_DOMAIN="{{shop.permanent_domain}}",_.SHOPIFY_CUSTOMER_ID="{{customer.id}}",_.SHOPIFY_CUSTOMER_EMAIL="{{customer.email}}"}(window||{});</script><!--Gorgias Chat Widget End-->
+  
+<!-- google dynamic remarketing tag for theme.liquid -->
+{% if template contains 'product' %}
+<script type="text/javascript">
+  var json_product = {{ product | json }};
+</script>
+<script>
+  var ecomm_prodid=[];
+  for(var i=0;i<json_product.variants.length;i++)
+    ecomm_prodid.push('shopify_GB_{{product.id}}_'+json_product.variants[i].id);
+</script>
+<script type="text/javascript">
+  var google_tag_params = {
+    ecomm_prodid: ecomm_prodid,
+    ecomm_pagetype: 'product',
+    ecomm_totalvalue: parseFloat('{{ product.price | money_without_currency | remove: ","}}')
+  };
+</script>
+{% elsif template contains 'collection' %}
+<script type="text/javascript">
+  var google_tag_params = {
+    ecomm_pagetype: 'category'
+  };
+</script>
+{% elsif template contains 'cart' %}
+<script type="text/javascript">
+  var id = new Array();
+  {% for item in cart.items %}
+  id.push('shopify_GB_{{item.product.id}}_{{item.variant.id}}');
+   {% endfor %}
+
+   var google_tag_params = {
+     ecomm_prodid: id,
+     ecomm_pagetype: 'cart',
+     ecomm_totalvalue: parseFloat('{{ cart.total_price | money_without_currency | remove: ","}}')
+   };
+</script>
+{% elsif template contains 'search' %}
+<script type="text/javascript">
+  var google_tag_params = {
+    ecomm_pagetype: 'searchresults'
+  };
+</script>
+{% elsif template contains 'index' %}
+<script type="text/javascript">
+  var google_tag_params = {
+    ecomm_pagetype: 'home'
+  };
+</script>
+{% else %}
+<script type="text/javascript">
+  var google_tag_params = {
+    ecomm_pagetype: 'other'
+  };
+</script>
+{% endif %}
+<script>
+  gtag('event', 'page_view', {'send_to': 'AW-913529352',
+                              'ecomm_prodid':window.google_tag_params.ecomm_prodid,
+                              'ecomm_pagetype': window.google_tag_params.ecomm_pagetype,
+                              'ecomm_totalvalue':window.google_tag_params.ecomm_totalvalue
+                             });
+</script>
+  
+{% if template == 'index' %}
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+  $('.scroll-text-init').slick({
+            prevArrow: false,
+            nextArrow: false,
+            speed: 9500,
+            autoplay: true,
+            autoplaySpeed: 0,
+            centerMode: true,
+            cssEase: 'linear',
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            variableWidth: true,
+            infinite: true,
+            initialSlide: 1,
+          loop:true,
+            arrows: false,
+            buttons: false,
+            pauseOnHover: true,
+      });
+      $('.scroll-text').removeClass('not-loaded');
+      $('.st-item').removeClass('not-loaded');
+    });
+  </script>
+{% endif %}  
+  
+  
+</body>
+</html>
+
+

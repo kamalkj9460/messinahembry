@@ -1,0 +1,254 @@
+<div class="page-header cf">
+  <div class="container cf">
+    <h1 class="majortitle">{{ page.title }}</h1>
+  </div>
+  </div>
+
+<div class="container cf brandstemplate">
+  <div class="user-content row-spacing">
+    
+
+
+              <div class="Brand_list_letter" id="Brand_list_letter">
+                  <ul class="clearfix">
+                    <li class="A_brands"><a href="#letter-0" class="A_brands">a</a></li>
+                    <li class="B_brands"><a href="#letter-1" class="B_brands">b</a></li>
+                    <li class="C_brands"><a href="#letter-2" class="C_brands">c</a></li>
+                    <li class="D_brands"><a href="#letter-3" class="D_brands">d</a></li>
+                    <li class="E_brands"><a href="#letter-4" class="E_brands">e</a></li>
+                    <li class="F_brands"><a href="#letter-5" class="F_brands">f</a></li>
+                    <li class="G_brands"><a href="#letter-6" class="G_brands">g</a></li>
+                    <li class="H_brands"><a href="#letter-7" class="H_brands">h</a></li>
+                    <li class="I_brands"><a href="#letter-8" class="I_brands">i</a></li>
+                    <li class="J_brands"><a href="#letter-9" class="J_brands">j</a></li>
+                    <li class="K_brands"><a href="#letter-10" class="K_brands">k</a></li>
+                    <li class="L_brands"><a href="#letter-11" class="L_brands">l</a></li>
+                    <li class="M_brands"><a href="#letter-12" class="M_brands">m</a></li>
+                    <li class="N_brands"><a href="#letter-13" class="N_brands">n</a></li>
+                    <li class="O_brands"><a href="#letter-14" class="O_brands">o</a></li>
+                    <li class="P_brands"><a href="#letter-15" class="P_brands">p</a></li>
+                    <li class="Q_brands"><a href="#letter-16" class="Q_brands">q</a></li>
+                    <li class="R_brands"><a href="#letter-17" class="R_brands">r</a></li>
+                    <li class="S_brands"><a href="#letter-18" class="S_brands">s</a></li>
+                    <li class="T_brands"><a href="#letter-19" class="T_brands">t</a></li>
+                    <li class="U_brands"><a href="#letter-20" class="U_brands">u</a></li>
+                    <li class="V_brands"><a href="#letter-21" class="V_brands">v</a></li>
+                    <li class="W_brands"><a href="#letter-22" class="W_brands">w</a></li>
+                    <li class="X_brands"><a href="#letter-23" class="X_brands">x</a></li>
+                    <li class="Y_brands"><a href="#letter-24" class="Y_brands">y</a></li>
+                    <li class="Z_brands"><a href="#letter-25" class="Z_brands">z</a></li>
+                    <li class="searchbychar_last"><a href="#" class="show_all_a_z">Show All</a></li>
+                  </ul>
+              </div>    
+    
+    
+    
+<div class="vendor-list">
+
+  <nav role="navigation">
+  <ul>
+    {%- for link in linklists.brands-a-z.links -%}
+      <li class="az-item">
+        <a href="{{ link.url }}" {% if link.active %}aria-current="page"{% endif %}>
+          {{ link.title }}
+        </a>
+
+        {%- if link.links != blank -%}
+          <ul class="az-childs">
+            {%- for child_link in link.links -%}
+              <li>
+                <a href="{{ child_link.url }}" {% if child_link.active %}aria-current="page"{% endif %}>
+                  {{ child_link.title }}
+                </a>
+
+                {%- if child_link.links != blank -%}
+                  <ul>
+                    {%- for grandchild_link in child_link.links -%}
+                      <li>
+                        <a href="{{ grandchild_link.url }}" {% if grandchild_link.active %}aria-current="page"{% endif %}>
+                          {{ grandchild_link.title }}
+                        </a>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                {%- endif -%}
+
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+      </li>
+    {%- endfor -%}
+  </ul>
+</nav>
+
+  
+</div>
+    
+    
+  </div>
+</div>
+    
+    
+<style>
+  
+  .letter-section {
+    border-top: solid 1px #000;
+    padding-bottom: 25px;
+}
+
+.vendor-list ul li {
+    width: 33.33%;
+    float: left;
+    list-style: none;
+    margin-bottom: 2px;
+}
+
+.letter-section ul {
+    margin-left: 0;
+}
+
+.letter-section ul li a {
+    text-decoration: none !important;
+    border-bottom: none !important;
+}
+
+#section-0, #section-1, #section-2, #section-3, #section-4, #section-5, #section-6, #section-7, #section-8, #section-9 {
+display:none;
+}
+  
+  .vendor-list {
+    clear: both;
+}
+    #vendorlist {
+    margin-top: 0;
+}
+#Brand_list_letter {
+    border-bottom: none;
+  display: inline-block;
+      margin-left: 2em;
+    margin-right: 1em;
+  width: auto;
+}
+  
+  .user-content a.text-link {
+    border-bottom: none;
+  }
+  
+#Brand_list_letter ul li {
+    width: auto;
+    height: auto;
+    padding-right: 10px;
+}
+  
+#Brand_list_letter ul li a {
+    font-family: "Gill Sans Nova", sans-serif;
+}
+  
+  
+  @media screen and (max-width:1000px) {
+  .az-childs li {
+    width: 50%!important;
+  }
+    
+      .searchbychar_last {
+    width: auto !important;
+}
+  }
+  
+  
+  @media screen and (max-width:600px) {
+     .az-childs li {
+    width: 100%!important;
+  } 
+  }
+  
+  
+  .vendor-list ul li {
+    list-style: none;
+}
+ .vendor-list ul ul {
+    margin-left: 0 !important;
+    margin-right: 0;
+}
+  
+  .az-item {
+    width: 100% !important;
+    padding-bottom: 30px;
+    border-bottom: solid 1px #000;
+    margin-bottom: 15px !important;
+padding-top: 15px;
+}
+  
+  .vendor-list {
+    font-family:"Gill Sans Nova", sans-serif !important;
+  }
+  
+  .az-item > .text-link {
+    font-size: 2em;
+    cursor: default;
+}
+  
+  #Brand_list_letter {
+    /*margin-bottom: 30px;*/
+}
+  
+  .page-header {
+    background-color: #197bbd;
+    margin-bottom: 50px;
+    width: 100% !important;
+}
+  
+  .majortitle {
+    text-transform: uppercase;
+    color: #fff;
+    margin-bottom: 0 !important;
+    padding: 10px 0 10px;
+    letter-spacing: 10px;
+    text-align:left !important;
+}
+  
+  @media screen and (max-width:900px) {
+  h1 {
+    font-size: 23px;
+}
+    .majortitle {
+    padding: 15px 0 15px;
+    }
+  }
+  
+  ul {
+    margin-left: 0;
+    margin-right: 0;
+}
+  
+  .template-page #content {
+    margin-top: 0;
+    padding-top: 0;
+  }
+  
+  .page-header {
+    padding-bottom: 0;
+}
+  
+  #Brand_list_letter {
+    margin-left: 0;
+    margin-right: 0;
+}
+  
+    </style>
+
+
+<script type="text/javascript">
+  
+  jQuery( document ).ready(function() {
+
+jQuery('.vendor-list .az-item').each(function(i) {
+ jQuery(this).attr('id','letter-'+i);
+ i++;
+});
+  
+});
+  
+</script>

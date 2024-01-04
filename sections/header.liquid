@@ -1,0 +1,1135 @@
+<style type="text/css">
+  .logo img {
+    /* width: {{ section.settings.logo_img_width | escape }}px; */
+    width:100%;
+    max-width:40%;
+  }
+
+  #mobile-header .logo img {
+    width: {{ section.settings.logo_img_width | at_most: 125 }}px;
+  }
+</style>
+
+{% if template == 'gift_card' %}
+  {% comment %} Gift card template logo {% endcomment %}
+  {% if section.settings.logo != blank %}
+    <h1 class="logo">
+      {% capture img_size %}{{ section.settings.logo_img_width | times: 2 }}x{% endcapture %}
+      <img src="{{ section.settings.logo | img_url: img_size }}" alt="{{ section.settings.logo.alt | escape }}">
+    </h1>
+  {% else %}
+    <h1>{{ shop.name }}</h1>
+  {% endif %}
+
+{% else %}
+  <div data-section-type="header">
+    {% if section.settings.announcement_show %}
+      {% unless template != 'index' and section.settings.announcement_home_only %}
+        <style type="text/css">
+          .announcement {
+            background: {{ section.settings.announcement_bar_col }};
+            color: {{ section.settings.announcement_text_col }};
+          }
+        </style>
+        <div class="announcement">
+          {% if section.settings.announcement_link != blank -%}
+            <a href="{{ section.settings.announcement_link }}">
+          {%- endif %}
+          <div class="announcement__inner">
+            {{ section.settings.announcement_text }}
+          </div>
+          {% if section.settings.announcement_link != blank %}</a>{% endif %}
+        </div>
+      {% endunless %}
+    {% endif %}
+
+    <div id="pageheader">
+      {% capture logo_html %}
+    <div class="logo">
+      <a href="{{ routes.root_url }}" title="{{ shop.name }}">
+        {% if section.settings.logo != blank %}
+        {% capture img_size %}{{ section.settings.logo_img_width | times: 2 }}x{% endcapture %}
+        <img src="{{ section.settings.logo | img_url: img_size }}" alt="{{ section.settings.logo.alt | escape }}" />
+        {% else %}
+        <span class="logotext">{{ shop.name }}</span>
+        {% endif %}
+      </a>
+    </div><!-- /#logo -->
+    {% endcapture %}
+
+      <div id="mobile-header" class="cf">
+        
+        <button
+          class="notabutton mobile-nav-toggle"
+          aria-label="{{ 'general.navigation.menu_toggle_aria_label' | t | escape }}"
+          aria-controls="main-nav"
+        >
+          
+          {% include 'svg-menu' %}
+        </button>
+  
+        {{ logo_html }}
+        {% include 'gtranslate' %}
+        
+        <div class="cart">
+          <a href="{{ routes.cart_url }}" class="cart-count">
+            {% comment %}
+           <span class="beside-svg">({{ cart.item_count }})</span> 
+            {% endcomment %}
+          {% include 'svg-cart' %}
+        </a>
+        </div>
+        <div id="search" class="desktop-3 tablet-1 mobile-3">
+          <form action="/search" method="get">
+            <i class="fa fa-search"></i>
+          </form>
+        </div>
+      </div>
+
+      <div class="logo-area logo-pos-{{ section.settings.logo_pos }} cf">
+        {% unless section.settings.logo_pos == 'below' %}
+          <div class="container">{{ logo_html }}</div>
+        {% endunless %}
+
+        <div class="util-area">
+          <div
+            class="search-box elegant-input"
+            data-live-search="{{ settings.enable_live_search }}"
+            data-live-search-price="{{ settings.live_search_show_price }}"
+            data-live-search-vendor="{{ settings.live_search_show_vendor }}"
+          >
+            <form class="search-form" action="{{ routes.search_url }}" method="get" autocomplete="off">
+              {% include 'svg-search' %}
+              <label class="search-box-label" for="header-search">SEARCH FOR ITEMS & BRANDS</label>
+              <input type="text" id="header-search" name="q" autocomplete="off">
+              <button class="button" type="submit" aria-label="{{ 'layout.header.search_submit' | t }}">
+                <span class="button__icon">{% include 'svg-chevron-right' %}</span>
+              </button>
+              <input type="hidden" name="type" value="{{ settings.search_type }}">
+              <input type="hidden" name="options[prefix]" value="last">
+            </form>
+          </div>
+
+          <div class="utils">
+            <!-- GTranslate: https://gtranslate.io/ -->
+            <style>
+              .switcher {font-family:Arial;font-size:12pt;text-align:left;cursor:pointer;overflow:hidden;width:173px;line-height:17px;}
+              .switcher a {text-decoration:none;display:block;font-size:12pt;-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;}
+              .switcher a img {vertical-align:middle;display:inline;border:0;padding:0;margin:0;opacity:0.8;}
+              .switcher a:hover img {opacity:1;}
+              .switcher .selected {background:#fff linear-gradient(180deg, #ffffff 0%, #fff 70%);position:relative;z-index:9999;}
+              .switcher .selected a {border:1px solid #ffffff;color:#666;padding:3px 5px;width:161px;}
+              .switcher .selected a:after {height:24px;display:inline-block;position:absolute;right:10px;width:15px;background-position:50%;background-size:11px;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 285 285'><path d='M282 76.5l-14.2-14.3a9 9 0 0 0-13.1 0L142.5 174.4 30.3 62.2a9 9 0 0 0-13.2 0L3 76.5a9 9 0 0 0 0 13.1l133 133a9 9 0 0 0 13.1 0l133-133a9 9 0 0 0 0-13z' style='fill:%23666'/></svg>");background-repeat:no-repeat;content:""!important;transition:all .2s;}
+              .switcher .selected a.open:after {-webkit-transform: rotate(-180deg);transform:rotate(-180deg);}
+              .switcher .selected a:hover {background:#fff}
+              .switcher .option {position:relative;z-index:9998;border-left:1px solid #ffffff;border-right:1px solid #ffffff;border-bottom:1px solid #ffffff;background-color:#eaeaea;display:none;width:171px;max-height:198px;-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;overflow-y:auto;overflow-x:hidden;}
+              .switcher .option a {color:#000;padding:3px 5px;}
+              .switcher .option a:hover {background:#fff;}
+              .switcher .option a.selected {background:#fff;}
+              #selected_lang_name {float: none;}
+              .l_name {float: none !important;margin: 0;}
+              .switcher .option::-webkit-scrollbar-track{-webkit-box-shadow:inset 0 0 3px rgba(0,0,0,0.3);border-radius:5px;background-color:#f5f5f5;}
+              .switcher .option::-webkit-scrollbar {width:5px;}
+              .switcher .option::-webkit-scrollbar-thumb {border-radius:5px;-webkit-box-shadow: inset 0 0 3px rgba(0,0,0,.3);background-color:#888;}
+            </style>
+
+            <div class="switcher notranslate">
+              <div class="selected">
+                <a href="#" onclick="return false;"
+                  ><img src="//gtranslate.io/shopify/assets/flags/24/en.png" height="24" width="24" alt="en"> English</a
+                >
+              </div>
+              <div class="option">
+                <a
+                  href="#"
+                  onclick="doGTranslate('en|zh-CN');jQuery('div.switcher div.selected a').html(jQuery(this).html());return false;"
+                  title="Chinese (Simplified)"
+                  class="nturl"
+                  ><img
+                    data-gt-lazy-src="//gtranslate.io/shopify/assets/flags/24/zh-CN.png"
+                    height="24"
+                    width="24"
+                    alt="zh-cn"
+                  >
+                  Chinese (Simplified)</a
+                ><a
+                  href="#"
+                  onclick="doGTranslate('en|cs');jQuery('div.switcher div.selected a').html(jQuery(this).html());return false;"
+                  title="Czech"
+                  class="nturl"
+                  ><img
+                    data-gt-lazy-src="//gtranslate.io/shopify/assets/flags/24/cs.png"
+                    height="24"
+                    width="24"
+                    alt="cs"
+                  >
+                  Czech</a
+                ><a
+                  href="#"
+                  onclick="doGTranslate('en|en');jQuery('div.switcher div.selected a').html(jQuery(this).html());return false;"
+                  title="English"
+                  class="nturl selected"
+                  ><img
+                    data-gt-lazy-src="//gtranslate.io/shopify/assets/flags/24/en.png"
+                    height="24"
+                    width="24"
+                    alt="en"
+                  >
+                  English</a
+                ><a
+                  href="#"
+                  onclick="doGTranslate('en|fr');jQuery('div.switcher div.selected a').html(jQuery(this).html());return false;"
+                  title="French"
+                  class="nturl"
+                  ><img
+                    data-gt-lazy-src="//gtranslate.io/shopify/assets/flags/24/fr.png"
+                    height="24"
+                    width="24"
+                    alt="fr"
+                  >
+                  French</a
+                ><a
+                  href="#"
+                  onclick="doGTranslate('en|de');jQuery('div.switcher div.selected a').html(jQuery(this).html());return false;"
+                  title="German"
+                  class="nturl"
+                  ><img
+                    data-gt-lazy-src="//gtranslate.io/shopify/assets/flags/24/de.png"
+                    height="24"
+                    width="24"
+                    alt="de"
+                  >
+                  German</a
+                ><a
+                  href="#"
+                  onclick="doGTranslate('en|el');jQuery('div.switcher div.selected a').html(jQuery(this).html());return false;"
+                  title="Greek"
+                  class="nturl"
+                  ><img
+                    data-gt-lazy-src="//gtranslate.io/shopify/assets/flags/24/el.png"
+                    height="24"
+                    width="24"
+                    alt="el"
+                  >
+                  Greek</a
+                ><a
+                  href="#"
+                  onclick="doGTranslate('en|it');jQuery('div.switcher div.selected a').html(jQuery(this).html());return false;"
+                  title="Italian"
+                  class="nturl"
+                  ><img
+                    data-gt-lazy-src="//gtranslate.io/shopify/assets/flags/24/it.png"
+                    height="24"
+                    width="24"
+                    alt="it"
+                  >
+                  Italian</a
+                ><a
+                  href="#"
+                  onclick="doGTranslate('en|lv');jQuery('div.switcher div.selected a').html(jQuery(this).html());return false;"
+                  title="Latvian"
+                  class="nturl"
+                  ><img
+                    data-gt-lazy-src="//gtranslate.io/shopify/assets/flags/24/lv.png"
+                    height="24"
+                    width="24"
+                    alt="lv"
+                  >
+                  Latvian</a
+                ><a
+                  href="#"
+                  onclick="doGTranslate('en|lt');jQuery('div.switcher div.selected a').html(jQuery(this).html());return false;"
+                  title="Lithuanian"
+                  class="nturl"
+                  ><img
+                    data-gt-lazy-src="//gtranslate.io/shopify/assets/flags/24/lt.png"
+                    height="24"
+                    width="24"
+                    alt="lt"
+                  >
+                  Lithuanian</a
+                ><a
+                  href="#"
+                  onclick="doGTranslate('en|ru');jQuery('div.switcher div.selected a').html(jQuery(this).html());return false;"
+                  title="Russian"
+                  class="nturl"
+                  ><img
+                    data-gt-lazy-src="//gtranslate.io/shopify/assets/flags/24/ru.png"
+                    height="24"
+                    width="24"
+                    alt="ru"
+                  >
+                  Russian</a
+                ><a
+                  href="#"
+                  onclick="doGTranslate('en|es');jQuery('div.switcher div.selected a').html(jQuery(this).html());return false;"
+                  title="Spanish"
+                  class="nturl"
+                  ><img
+                    data-gt-lazy-src="//gtranslate.io/shopify/assets/flags/24/es.png"
+                    height="24"
+                    width="24"
+                    alt="es"
+                  >
+                  Spanish</a
+                >
+              </div>
+            </div>
+
+            <script>
+              function GTranslateGetCurrentLang() {var keyValue = document.cookie.match('(^|;) ?googtrans=([^;]*)(;|$)');return keyValue ? keyValue[2].split('/')[2] : null;}
+              function gt_loadScript(url,callback){var script=document.createElement("script");script.type="text/javascript";if(script.readyState){script.onreadystatechange=function(){if(script.readyState=="loaded"||script.readyState=="complete"){script.onreadystatechange=null;callback()}}}else{script.onload=function(){callback()}}script.src=url;document.getElementsByTagName("head")[0].appendChild(script)}
+              var gtSwitcherJS = function($){/*{auto_detect_code}*/
+              $('.switcher .selected').click(function() {$('.switcher .option a img').each(function() {if(!$(this)[0].hasAttribute('src'))$(this).attr('src', $(this).attr('data-gt-lazy-src'))});if(!($('.switcher .option').is(':visible'))) {$('.switcher .option').stop(true,true).delay(100).slideDown(500);$('.switcher .selected a').toggleClass('open')}});
+              $('.switcher .option').bind('mousewheel', function(e) {var options = $('.switcher .option');if(options.is(':visible'))options.scrollTop(options.scrollTop() - e.originalEvent.wheelDelta/10);return false;});
+              $('body').not('.switcher').bind('click', function(e) {if($('.switcher .option').is(':visible') && e.target != $('.switcher .option').get(0)) {$('.switcher .option').stop(true,true).delay(100).slideUp(500);$('.switcher .selected a').toggleClass('open')}});
+              if(typeof GTranslateGetCurrentLang == 'function')if(GTranslateGetCurrentLang() != null)$(document).ready(function() {var lang_html = $('div.switcher div.option').find('img[alt="'+GTranslateGetCurrentLang()+'"]').parent().html();if(typeof lang_html != 'undefined')$('div.switcher div.selected a').html(lang_html.replace('data-gt-lazy-', ''));});
+              };
+              gt_loadScript("//code.jquery.com/jquery-1.12.4.min.js", function(){jQuery_gtranslate = jQuery.noConflict(true);gtSwitcherJS(jQuery_gtranslate);});
+            </script>
+
+            <style>
+              #goog-gt-tt {display:none !important;}
+              .goog-te-banner-frame {display:none !important;}
+              .goog-te-menu-value:hover {text-decoration:none !important;}
+              body {top:0 !important;}
+              #google_translate_element2 {display:none!important;}
+            </style>
+
+            <div id="google_translate_element2"></div>
+            <script>
+              function googleTranslateElementInit2() {new google.translate.TranslateElement({pageLanguage: 'en',autoDisplay: false}, 'google_translate_element2');}
+            </script>
+            <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit2" async></script>
+
+            <script>
+              if(typeof GTranslateGetCurrentLang != 'function')function GTranslateGetCurrentLang() {var keyValue = document.cookie.match('(^|;) ?googtrans=([^;]*)(;|$)');return keyValue ? keyValue[2].split('/')[2] : null;}
+              function GTranslateFireEvent(element,event){try{if(document.createEventObject){var evt=document.createEventObject();element.fireEvent('on'+event,evt)}else{var evt=document.createEvent('HTMLEvents');evt.initEvent(event,true,true);element.dispatchEvent(evt)}}catch(e){}}
+              function doGTranslate(lang_pair){if(lang_pair.value)lang_pair=lang_pair.value;if(lang_pair=='')return;var lang=lang_pair.split('|')[1];if(GTranslateGetCurrentLang() == null && lang == lang_pair.split('|')[0])return;if(typeof ga == 'function'){ga('send', 'event', 'GTranslate', lang, location.hostname+location.pathname+location.search);}else{if(typeof _gaq!='undefined')_gaq.push(['_trackEvent', 'GTranslate', lang, location.hostname+location.pathname+location.search]);}var teCombo;var sel=document.getElementsByTagName('select');for(var i=0;i<sel.length;i++)if(/goog-te-combo/.test(sel[i].className))teCombo=sel[i];if(document.getElementById('google_translate_element2')==null||document.getElementById('google_translate_element2').innerHTML.length==0||teCombo.length==0||teCombo.innerHTML.length==0){setTimeout(function(){doGTranslate(lang_pair)},500)}else{teCombo.value=lang;GTranslateFireEvent(teCombo,'change');GTranslateFireEvent(teCombo,'change')}}
+            </script>
+
+            {% if section.settings.show_locale_selector or section.settings.show_currency_selector %}
+              <div class="header-disclosures">
+                {% include 'localization', input_suffix: 'header' %}
+              </div>
+            {% endif %}
+
+            {% if shop.customer_accounts_enabled %}
+              {% if customer %}
+                <div class="header-disclosures">
+                  <div class="disclosure" data-disclosure-account>
+                    <button
+                      type="button"
+                      class="disclosure__toggle"
+                      aria-expanded="false"
+                      aria-controls="lang-list"
+                      aria-describedby="lang-heading"
+                      data-disclosure-toggle
+                    >
+                      {{- 'layout.customer.account' | t -}}
+                      <span class="disclosure__toggle-arrow" role="presentation">
+                        {%- include 'svg-chevron-down.liquid' -%}
+                      </span>
+                    </button>
+                    <ul class="disclosure-list" data-disclosure-list>
+                      <li class="disclosure-list__item your-acct">
+                        <a class="disclosure-list__option" href="{{ routes.account_url }}">
+                          {{- 'layout.customer.my_account' | t -}}
+                        </a>
+                      </li>
+                      <li class="disclosure-list__item logout">
+                        <a class="disclosure-list__option" href="{{ routes.account_logout_url }}">
+                          {{- 'layout.customer.log_out' | t -}}
+                        </a>
+                      </li>
+                    </ul>
+                    <span class="disclosure__arrow" role="presentation"></span>
+                  </div>
+                </div>
+              {% elsif section.settings.nav_show_reg %}
+                <div class="header-disclosures">
+                  <div class="disclosure" data-disclosure-account>
+                    <button
+                      type="button"
+                      class="disclosure__toggle_user"
+                      aria-expanded="false"
+                      aria-controls="lang-list"
+                      aria-describedby="lang-heading"
+
+                      data-disclosure-toggle
+                    >
+                      {% comment %}
+                        {{- 'layout.customer.account' | t -}}
+                        <i class="fa-regular fa-user"></i>
+
+                        <span class="disclosure__toggle-arrow" role="presentation">
+                          {%- include 'svg-chevron-down.liquid' -%}
+                        </span>
+                      {% endcomment %}
+                      <svg width="18" height="21" viewBox="0 0 18 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17 19.3398V17.3398C17 16.2789 16.5786 15.2615 15.8284 14.5114C15.0783 13.7612 14.0609 13.3398 13 13.3398H5C3.93913 13.3398 2.92172 13.7612 2.17157 14.5114C1.42143 15.2615 1 16.2789 1 17.3398V19.3398" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9 9.33978C11.2091 9.33978 13 7.54892 13 5.33978C13 3.13064 11.2091 1.33978 9 1.33978C6.79086 1.33978 5 3.13064 5 5.33978C5 7.54892 6.79086 9.33978 9 9.33978Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </button>
+
+                    <!--
+                      <svg width="18" height="21" viewBox="0 0 18 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17 19.3398V17.3398C17 16.2789 16.5786 15.2615 15.8284 14.5114C15.0783 13.7612 14.0609 13.3398 13 13.3398H5C3.93913 13.3398 2.92172 13.7612 2.17157 14.5114C1.42143 15.2615 1 16.2789 1 17.3398V19.3398" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9 9.33978C11.2091 9.33978 13 7.54892 13 5.33978C13 3.13064 11.2091 1.33978 9 1.33978C6.79086 1.33978 5 3.13064 5 5.33978C5 7.54892 6.79086 9.33978 9 9.33978Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    -->
+
+                    <ul class="disclosure-list" data-disclosure-list>
+                      <li class="disclosure-list__item login">
+                        <a class="disclosure-list__option" href="{{ routes.account_login_url }}">
+                          {{- 'layout.customer.log_in' | t -}}
+                        </a>
+                      </li>
+
+                      <li class="disclosure-list__item register">
+                        <a class="disclosure-list__option" href="{{ routes.account_register_url }}">
+                          {{- 'layout.customer.register' | t -}}
+                        </a>
+                      </li>
+                    </ul>
+                    <span class="disclosure__arrow" role="presentation"></span>
+                  </div>
+                </div>
+              {% else %}
+                <div class="account-links-inline">
+                  <div class="login">
+                    <a href="{{ routes.account_login_url }}">{{ 'layout.customer.log_in' | t }}</a>
+                  </div>
+                </div>
+              {% endif %}
+            {% endif %}
+
+            <div class="cart-summary">
+              <a
+                href="{{ routes.cart_url }}"
+                class="cart-count {% if section.settings.use_btn_style_cart_link %}button{% endif %}"
+              >
+                <!-- <span class="cart-count__text">{{ 'layout.header.cart' | t }} ({{ cart.item_count }})</span> -->
+                {% unless section.settings.use_btn_style_cart_link %}
+                  {% include 'svg-cart' %}
+                {% endunless %}
+              </a>
+            </div>
+          </div>
+          <!-- /. -->
+        </div>
+        <!-- /.util-area -->
+
+        {% if section.settings.logo_pos == 'below' %}
+          <div class="container">{{ logo_html }}</div>
+        {% endif %}
+      </div>
+      <!-- /.logo-area -->
+    </div>
+    <!-- /#pageheader -->
+
+    {% assign featured_links = section.settings.nav_featured_link | split: ', ' %}
+    <div
+      id="main-nav"
+      class="{% if section.settings.nav_autoexpand and section.settings.nav_nested_layout == 'rows click' %}autoexpand{% endif %}"
+    >
+      <div class="mobile-features">
+        <form class="mobile-search" action="{{ routes.search_url }}" method="get">
+          {% comment %}
+          <i></i>
+          <input
+            type="text"
+            name="q"
+            placeholder="SEARCH OF ITEMS & BRANDS"
+            aria-label="{{ 'layout.header.search' | t }}"
+          >
+          {% endcomment %}
+          <button type="submit" class="notabutton">{% include 'svg-search' %}</button>
+          <input type="hidden" name="type" value="{{ settings.search_type }}">
+          <input type="hidden" name="options[prefix]" value="last">
+          <input type="hidden" name="options[unavailable_products]" value="last">
+        </form>
+      </div>
+
+      <div
+        class="nav-row multi-level-nav reveal-on-{{ section.settings.nav_nested_layout | split: ' ' | last }}"
+        role="navigation"
+        aria-label="{{ 'general.navigation.main_navigation_aria_label' | t | escape }}"
+      >
+        <div class="tier-1">
+          <ul>
+            {% for link in linklists[section.settings.menu_linklist].links %}
+              <li class="{% if link.active %}active{% endif %}{% if link.links != blank %} contains-children{% endif %}{% if featured_links contains link.title %} featured-link{% endif %}">
+                <a
+                  href="{{ link.url }}"
+                  {% if link.links != blank %}
+                    class="has-children" aria-haspopup="true"
+                  {% endif %}
+                >
+                  {{ link.title }}
+                  {% if link.links != blank %}
+                    <span class="exp"><span>+</span>{% include 'icon-toggle-menu' %}</span>
+                  {% endif %}
+                </a>
+
+                {% if link.links != blank %}
+                  <ul
+                    {% if link.levels >= 2 and section.settings.nav_nested_layout contains 'columns' %}
+                      class="nav-columns nav-columns--count-{{ link.links.size }}"
+                    {% endif %}
+                  >
+                    {% for child_link in link.links %}
+                      <li class="{% if child_link.active %}active{% endif %}{% if child_link.links != blank %} contains-children{% endif %}{% if featured_links contains child_link.title %} featured-link{% endif %}">
+                        <a
+                          href="{{ child_link.url }}"
+                          class="{% if child_link.links != blank %}has-children {% if section.settings.nav_nested_layout contains 'columns' %}column-title{% endif %}{% endif %}"
+                          {% if child_link.links != blank %}
+                            aria-haspopup="true"
+                          {% endif %}
+                        >
+                          {{ child_link.title }}
+                          {% if child_link.links != blank %}
+                            <span class="exp"><span>+</span>{% include 'icon-toggle-menu' %}</span>
+                          {% endif %}
+                        </a>
+
+                        {% if child_link.links != blank %}
+                          <ul>
+                            {% for child_child_link in child_link.links %}
+                              <li class="{% if child_child_link.active %}active{% endif %}{% if featured_links contains child_child_link.title %} featured-link{% endif %}">
+                                <a href="{{ child_child_link.url }}">{{ child_child_link.title }}</a>
+                              </li>
+                            {% endfor %}
+                          </ul>
+                        {% endif %}
+                      </li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+            <a href="https://messinahembry.com/" class="img-logo">
+                <img src="https://cdn.shopify.com/s/files/1/0573/6433/files/Messina-Hembry-Logo_258x_b5fee4c4-1792-4eb9-a1a3-68b1a3156bd5.jpg?v=1695272384"  alt="header-logo"/>
+            </a>
+         
+
+          {% if shop.customer_accounts_enabled %}
+            <ul class="account-links">
+              {% if customer %}
+                <li class="your-acct">
+                  <a href="{{ routes.account_url }}">{{ 'layout.customer.account' | t }}</a>
+                </li>
+                <li class="logout">
+                  <a href="{{ routes.account_logout_url }}">{{ 'layout.customer.log_out' | t }}</a>
+                </li>
+              {% else %}
+                {% if section.settings.nav_show_reg %}
+                  <li class="login">
+                  <a href="{{ routes.account_login_url }}">{{ 'layout.customer.log_in' | t }}</a>
+                </li>
+                {% endif %} 
+                <li class="register">
+                    <a href="{{ routes.account_register_url }}">{{ 'layout.customer.register' | t }}</a>
+                  </li>
+              {% endif %}
+            </ul>
+            {% endif %}
+        </div>
+      </div>
+      <div class="header-gbp-flag">
+          {% if section.settings.show_locale_selector or section.settings.show_currency_selector %}
+        <div class="mobile-header-localization">
+          {% include 'localization', input_suffix: 'header-mobile' %}
+        </div>
+        <div class="switcher notranslate">
+              <div class="selected">
+                <a href="#" onclick="return false;"
+                  ><img src="//gtranslate.io/shopify/assets/flags/24/en.png" height="24" width="24" alt="en"> English</a
+                >
+              </div>
+              <div class="option">
+                <a
+                  href="#"
+                  onclick="doGTranslate('en|zh-CN');jQuery('div.switcher div.selected a').html(jQuery(this).html());return false;"
+                  title="Chinese (Simplified)"
+                  class="nturl"
+                  ><img
+                    data-gt-lazy-src="//gtranslate.io/shopify/assets/flags/24/zh-CN.png"
+                    height="24"
+                    width="24"
+                    alt="zh-cn"
+                  >
+                  Chinese (Simplified)</a
+                ><a
+                  href="#"
+                  onclick="doGTranslate('en|cs');jQuery('div.switcher div.selected a').html(jQuery(this).html());return false;"
+                  title="Czech"
+                  class="nturl"
+                  ><img
+                    data-gt-lazy-src="//gtranslate.io/shopify/assets/flags/24/cs.png"
+                    height="24"
+                    width="24"
+                    alt="cs"
+                  >
+                  Czech</a
+                ><a
+                  href="#"
+                  onclick="doGTranslate('en|en');jQuery('div.switcher div.selected a').html(jQuery(this).html());return false;"
+                  title="English"
+                  class="nturl selected"
+                  ><img
+                    data-gt-lazy-src="//gtranslate.io/shopify/assets/flags/24/en.png"
+                    height="24"
+                    width="24"
+                    alt="en"
+                  >
+                  English</a
+                ><a
+                  href="#"
+                  onclick="doGTranslate('en|fr');jQuery('div.switcher div.selected a').html(jQuery(this).html());return false;"
+                  title="French"
+                  class="nturl"
+                  ><img
+                    data-gt-lazy-src="//gtranslate.io/shopify/assets/flags/24/fr.png"
+                    height="24"
+                    width="24"
+                    alt="fr"
+                  >
+                  French</a
+                ><a
+                  href="#"
+                  onclick="doGTranslate('en|de');jQuery('div.switcher div.selected a').html(jQuery(this).html());return false;"
+                  title="German"
+                  class="nturl"
+                  ><img
+                    data-gt-lazy-src="//gtranslate.io/shopify/assets/flags/24/de.png"
+                    height="24"
+                    width="24"
+                    alt="de"
+                  >
+                  German</a
+                ><a
+                  href="#"
+                  onclick="doGTranslate('en|el');jQuery('div.switcher div.selected a').html(jQuery(this).html());return false;"
+                  title="Greek"
+                  class="nturl"
+                  ><img
+                    data-gt-lazy-src="//gtranslate.io/shopify/assets/flags/24/el.png"
+                    height="24"
+                    width="24"
+                    alt="el"
+                  >
+                  Greek</a
+                ><a
+                  href="#"
+                  onclick="doGTranslate('en|it');jQuery('div.switcher div.selected a').html(jQuery(this).html());return false;"
+                  title="Italian"
+                  class="nturl"
+                  ><img
+                    data-gt-lazy-src="//gtranslate.io/shopify/assets/flags/24/it.png"
+                    height="24"
+                    width="24"
+                    alt="it"
+                  >
+                  Italian</a
+                ><a
+                  href="#"
+                  onclick="doGTranslate('en|lv');jQuery('div.switcher div.selected a').html(jQuery(this).html());return false;"
+                  title="Latvian"
+                  class="nturl"
+                  ><img
+                    data-gt-lazy-src="//gtranslate.io/shopify/assets/flags/24/lv.png"
+                    height="24"
+                    width="24"
+                    alt="lv"
+                  >
+                  Latvian</a
+                ><a
+                  href="#"
+                  onclick="doGTranslate('en|lt');jQuery('div.switcher div.selected a').html(jQuery(this).html());return false;"
+                  title="Lithuanian"
+                  class="nturl"
+                  ><img
+                    data-gt-lazy-src="//gtranslate.io/shopify/assets/flags/24/lt.png"
+                    height="24"
+                    width="24"
+                    alt="lt"
+                  >
+                  Lithuanian</a
+                ><a
+                  href="#"
+                  onclick="doGTranslate('en|ru');jQuery('div.switcher div.selected a').html(jQuery(this).html());return false;"
+                  title="Russian"
+                  class="nturl"
+                  ><img
+                    data-gt-lazy-src="//gtranslate.io/shopify/assets/flags/24/ru.png"
+                    height="24"
+                    width="24"
+                    alt="ru"
+                  >
+                  Russian</a
+                ><a
+                  href="#"
+                  onclick="doGTranslate('en|es');jQuery('div.switcher div.selected a').html(jQuery(this).html());return false;"
+                  title="Spanish"
+                  class="nturl"
+                  ><img
+                    data-gt-lazy-src="//gtranslate.io/shopify/assets/flags/24/es.png"
+                    height="24"
+                    width="24"
+                    alt="es"
+                  >
+                  Spanish</a
+                >
+              </div>
+            </div>
+      {% endif %}
+        </div>
+      <div class="header-social-icons">
+        {% if section.settings.show_social_icons %}
+      {% capture icon_size %}{% if settings.soc_icons_double %}x46{% else %}x30{% endif %}{% endcapture %}
+      {% include 'social-icons', icon_setting: settings.social_custom_icon, icon_size: icon_size %}
+       {% endif %}
+      </div>
+      <div class="policy">
+          <a href="{{ section.settings.policy-link }}">{{ section.settings.policy-text }}</a>
+      </div>
+      
+    </div>
+                         
+    
+    <!-- /#main-nav -->
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Header",
+  "max_blocks": 3,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "use_btn_style_cart_link",
+      "label": "Show cart link as button",
+      "info": "Only applies to desktop layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "nav_show_reg",
+      "label": "Show 'Register' account link",
+      "info": "Requires customer accounts to be enabled in Settings > Checkout",
+      "default": false
+    },
+    {
+      "type":"url",
+      "id":"policy-link",
+      "label": "Policy Link"
+    },
+    {
+      "type":"textarea",
+      "id":"policy-text",
+      "label": "Policy Text"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social_icons",
+      "label": "Show social icons",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Navigation"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_linklist",
+      "label": "Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "select",
+      "id": "nav_nested_layout",
+      "label": "Nested navigation layout",
+      "info": "On desktop and tablet screens",
+      "default": "rows click",
+      "options": [
+        {
+          "label": "Columns - on click",
+          "value": "columns click"
+        },
+        {
+          "label": "Columns - on hover",
+          "value": "columns hover"
+        },
+        {
+          "label": "Rows - on click",
+          "value": "rows click"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "nav_autoexpand",
+      "label": "Automatically expand navigation to current page",
+      "info": "When using 'Rows - on click' layout",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "nav_featured_link",
+      "label": "Featured link",
+      "info": "Enter the title of a link to highlight it in a different color",
+      "default": "Sale"
+    },
+    {
+      "type": "header",
+      "content": "Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Custom logo image",
+      "info": "520 x 200px (recommended)"
+    },
+    {
+      "type": "text",
+      "id": "logo_img_width",
+      "label": "Logo width",
+      "info": "Defined in pixels. Do not add the 'px' unit.",
+      "default": "300"
+    },
+    {
+      "type": "select",
+      "id": "logo_pos",
+      "label": "Logo position",
+      "options": [
+        {
+          "value": "",
+          "label": "Same row as search\/cart"
+        },
+        {
+          "value": "above",
+          "label": "Above search\/cart"
+        },
+        {
+          "value": "below",
+          "label": "Below search\/cart"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Language Selector",
+      "info": "To add a language, go to your [language settings.](/admin/settings/languages)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_locale_selector",
+      "label": "Show language selector",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Currency Selector",
+      "info": "To add a currency, go to your [payment settings.](/admin/settings/payments)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_currency_selector",
+      "label": "Show currency selector",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Announcement bar"
+    },
+    {
+      "type": "checkbox",
+      "id": "announcement_show",
+      "label": "Show announcement bar",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "announcement_home_only",
+      "label": "Home page only",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "announcement_text",
+      "label": "Text",
+      "default": "Announce something here"
+    },
+    {
+      "type": "url",
+      "id": "announcement_link",
+      "label": "Link"
+    },
+    {
+      "type": "color",
+      "id": "announcement_bar_col",
+      "label": "Bar",
+      "default": "#4a4a4a"
+    },
+    {
+      "type": "color",
+      "id": "announcement_text_col",
+      "label": "Text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Store messages"
+    },
+    {
+      "type": "paragraph",
+      "content": "These are displayed under the main menu - great for promotions and notices"
+    },
+    {
+      "type": "checkbox",
+      "id": "head_not_home_only",
+      "label": "Show only on home page"
+    },
+    {
+      "type": "header",
+      "content": "Mobile store message"
+    },
+    {
+      "type": "checkbox",
+      "id": "head_not_mob_show",
+      "label": "Enable",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "head_not_mob_text",
+      "label": "Text"
+    },
+    {
+      "type": "url",
+      "id": "head_not_mob_url",
+      "label": "Link URL"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "message",
+      "name": "Store message",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "text",
+          "id": "subheading",
+          "label": "Subheading"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Link URL"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+<style>
+  .snize-search {
+    background: #fff !important;
+}
+div.snize-ac-results.snize-ac-results-mobile li.snize-mobile-top-panel input.snize-mobile-input-style {
+    background-color: #fff !important;
+}
+    div.snize-ac-results.snize-ac-results-mobile li.snize-mobile-top-panel .snize-clear-button-container {
+    background: #fff !important;
+}
+    .snize-close-button {
+    display: none !important;
+} 
+ div.snize-ac-results.snize-ac-results-mobile li.snize-mobile-top-panel {
+    border-bottom: unset;
+    background-color: #fff !important;
+}
+div.snize-ac-results.snize-ac-results-mobile li.snize-close-area {
+    margin-top: 1px !important; 
+    
+}
+    #main-nav{
+      background:#fff !important; 
+    }   
+  #shopify-section-{{ section.id }} .tier-1{
+    background: #fff !important;
+}
+ #shopify-section-{{ section.id }} .tier-1 li {
+    border-bottom: 1px solid #f2f2f2 !important;
+}
+ #shopify-section-{{ section.id }}  li.contains-children {
+    background: #fff !important;
+}
+  #mi-1 ul li:first-child ul, #mi-2 ul li:first-child ul {
+    display: inline-block;
+    background: #fff;
+}
+   #shopify-section-{{ section.id }} .img-logo {
+    text-align: center;
+    width: 120px;
+    margin: 0 auto;
+}
+#shopify-section-{{ section.id }} .header-gbp-flag {
+    display: flex;
+    justify-content: space-between;
+}
+
+#shopify-section-{{ section.id }} .header-gbp-flag .switcher.notranslate {
+    margin-right: 20px;
+}
+#shopify-section-{{ section.id }} .header-gbp-flag .switcher img {
+    max-width: 23px;
+    height: 25px;
+}
+#shopify-section-{{ section.id }} .header-gbp-flag .switcher .selected a:after {
+    top: 23px;
+    right:0px;
+}
+#shopify-section-{{ section.id }} .header-social-icons  ul.social-links__list li a {
+    padding: 0px 0px 0 11px;
+} 
+  #shopify-section-{{ section.id }} .header-social-icons  .social-links a svg {
+    width: 20px!important;
+    height: 20px!important;
+}
+#shopify-section-{{ section.id }} .policy {
+    padding: 15px 0 0 0;
+}
+ #shopify-section-{{ section.id }}   .policy a {
+    text-transform: capitalize !important;
+    font-size: 12px;
+}
+
+#shopify-section-{{ section.id }} .cart-summary svg {
+     width: 25px !important;
+     height: 28px !important;
+}
+#shopify-section-{{ section.id }} .disclosure svg {
+    width: 18px !important;
+    height: 20px !important;
+}
+#shopify-section-{{ section.id }}  div#search {
+    position: absolute;
+    right: 3%;
+    top: 22%;
+    z-index:99999;
+ }
+#shopify-section-{{ section.id }}  #mobile-header .switcher {
+    position: absolute;
+    top: 20%;
+    left: 66%;
+}
+#shopify-section-{{ section.id }}  i.fa.fa-search {
+     color: #000;
+     font-size: 16px;
+ }
+#mobile-header .cart-count {
+      position: absolute;
+      top: 50%;
+      right: 11%;
+      margin-top: -18px;
+      font-size: 12px;
+      line-height: 32px;
+  }
+#mobile-header .logo img {
+        width: 85px;
+}
+@media screen and (min-width:698px) and (max-width:767px){
+ #mobile-header .switcher {
+     position: absolute;
+     top: 31%;
+     left: 83% !important;
+ }
+ #mobile-header .cart-count {
+ right: 41px;
+}
+#shopify-section-header  div#search {
+   right: 3%;
+}
+ }
+ @media screen and (min-width:320px) and (max-width:353px) {
+ #shopify-section-header  #mobile-header .switcher {
+    position: absolute;
+    top: 19%;
+    left: 66%;
+ }
+ }
+ #shopify-section-{{ section.id }} .nav-row a {
+    padding: 15px 18px !important;
+  }
+@media screen and (max-width:767px){
+  #main-nav .multi-level-nav {
+     padding-top: 0;
+}
+  .mobile-search .notabutton svg.feather.feather-search {
+   display: none;
+   }
+#shopify-section-{{ section.id }} .switcher.notranslate {
+    display: none;
+}
+ }
+@media screen and (min-width:768px){
+  #shopify-section-{{ section.id }} #main-nav{
+    display:none !important;
+ }
+#shopify-section-{{ section.id }} .header-social-icons  .social-links a svg {
+    display:none !important;
+     }
+ }
+ #pageheader .search-box .search-form .search-box-label {
+     position: absolute;
+     display: inline-block;
+     padding: 11px 10px 11px 42px;
+     font-size: 12px;
+     line-height: 1.2em;
+     color: gray;
+     cursor: text;
+     font-weight: 500;
+}
+ div#shopify-section-header input {
+    padding: 10px 55px 5px;
+}
+#shopify-section-mega-menu #main-menu #main-menu-desktop .menu-dropdown-container .menu-node .node-heading {
+     color: black !important;
+}
+.menu-node a {
+  font-weight: 500 !important;
+   }
+.node-heading a ,.node-heading{
+    font-weight:700 !important;
+  }
+#pageheader .cart-summary svg{
+    fill : black !important;
+}
+#pageheader .utils {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#mobile-header .mobile-nav-toggle .feather {
+   stroke: #000;
+ }
+ #pageheader svg g, #pageheader svg {
+    color:#000 !important;
+}
+ #shopify-section-{{section.id}} svg.feather.feather-chevron-down {
+     width: 14px !important;
+     margin-top: 2px;
+}
+button.disclosure__toggle {
+    margin-top: 2px !important;
+    border:unset !important;
+    padding: .75em 3em .75em 0;
+    }
+</style>
